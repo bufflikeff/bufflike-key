@@ -389,8 +389,16 @@
       }
 
       async function start() {
-        const params = new URLSearchParams(window.location.search);
-        const token = params.get("token");
+        // Tự động bóc tách token bất chấp bên rút gọn link trả về kiểu gì (thiếu ?, thiếu =, hay dạng /token=)
+        let token = new URLSearchParams(window.location.search).get("token");
+
+        if (!token) {
+            const href = window.location.href;
+            const match = href.match(/token[=/]?([a-zA-Z0-9_-]+)/) || href.match(/token=([^&]+)/);
+            if (match) {
+                token = match[1];
+            }
+        }
 
         // Do not call any API when there is no token.
         if (!token) {

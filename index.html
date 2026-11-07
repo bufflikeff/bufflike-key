@@ -22,6 +22,57 @@
             margin: 0 auto;
         }
         
+        /* Khung Đăng Nhập / Nhập ID Game */
+        .login-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 2px solid #0066ff;
+        }
+        .login-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #111;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .login-group {
+            display: flex;
+            gap: 8px;
+        }
+        .login-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+        }
+        .login-input:focus {
+            border-color: #0066ff;
+        }
+        .login-btn {
+            background-color: #0066ff;
+            color: white;
+            border: none;
+            padding: 0 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .user-welcome {
+            font-size: 14px;
+            color: #00b074;
+            font-weight: 600;
+            margin-top: 8px;
+            display: none;
+        }
+
         /* Banner Sự Kiện */
         .event-banner {
             background: linear-gradient(135deg, #ff416c, #ff4b2b);
@@ -245,6 +296,16 @@
 <body>
 
 <div class="container">
+    <!-- Khung Nhập ID Game -->
+    <div class="login-card" id="login-section">
+        <div class="login-title">🎮 Nhập ID Game Free Fire Để Đua Top</div>
+        <div class="login-group">
+            <input type="text" id="game-id-input" class="login-input" placeholder="Nhập ID Game của bạn...">
+            <button class="login-btn" onclick="saveGameId()">Lưu ID</button>
+        </div>
+        <div id="welcome-msg" class="user-welcome"></div>
+    </div>
+
     <!-- Banner sự kiện -->
     <div class="event-banner">
         <h2>🔥 Đua Top Vượt Link 🔥</h2>
@@ -270,19 +331,49 @@
 </a>
 
 <script>
+    // Lấy ID game đã lưu trước đó nếu có
+    let savedGameId = localStorage.getItem('user_game_id') || '';
+    let userScore = parseInt(localStorage.getItem('user_lua_score') || '0');
+
     let leaderboardData = [
-        { name: "Bạn (Tôi)", score: 0, isUser: true },
-        { name: "Lâm Pro FF", score: 4800 },
-        { name: "Văn Hùng 9x", score: 4200 },
-        { name: "Hoàng King", score: 3600 },
-        { name: "Tuấn Gamer", score: 2900 }
+        { name: savedGameId ? `ID: ${savedGameId}` : "Chưa nhập ID", score: userScore, isUser: true },
+        { name: "ID: 83920192", score: 4800 },
+        { name: "ID: 55219384", score: 4200 },
+        { name: "ID: 99182341", score: 3600 },
+        { name: "ID: 11293847", score: 2900 }
     ];
 
+    // Cập nhật trạng thái hiển thị khung nhập ID
+    function checkLoginState() {
+        const input = document.getElementById('game-id-input');
+        const welcome = document.getElementById('welcome-msg');
+        if (savedGameId) {
+            input.value = savedGameId;
+            welcome.style.display = 'block';
+            welcome.innerHTML = `✅ Đã liên kết ID Game: <b>${savedGameId}</b>`;
+        }
+    }
+
+    function saveGameId() {
+        const inputVal = document.getElementById('game-id-input').value.trim();
+        if (!inputVal) {
+            alert('Vui lòng nhập ID Game hợp lệ!');
+            return;
+        }
+        savedGameId = inputVal;
+        localStorage.setItem('user_game_id', savedGameId);
+        
+        // Cập nhật lại tên trên BXH
+        leaderboardData[0].name = `ID: ${savedGameId}`;
+        renderLeaderboard();
+        checkLoginState();
+        alert('Đã lưu ID Game thành công! Hãy bắt đầu làm nhiệm vụ.');
+    }
+
+    // Khởi tạo 20 ô nhiệm vụ
     const tasks = [];
     for (let i = 1; i <= 20; i++) {
         const rewardValue = (Math.floor(Math.random() * 4) + 2) * 100;
-        
-        // Cấu hình link riêng cho nhiệm vụ số 2 theo yêu cầu của bạn
         let targetUrl = `https://link4m.co/Example${i}`;
         if (i === 2) {
             targetUrl = `https://link4m.co/st?api=69477252020111717c5cd887&url=https://bufflikeff.site`;
@@ -299,9 +390,6 @@
             url: targetUrl
         });
     }
-
-    let userScore = parseInt(localStorage.getItem('user_lua_score') || '0');
-    leaderboardData[0].score = userScore;
 
     const savedTasks = localStorage.getItem('tasks_data');
     if (savedTasks) {
@@ -368,6 +456,13 @@
     }
 
     function handleTaskClick(event, index) {
+        if (!savedGameId) {
+            event.preventDefault();
+            alert('Vui lòng nhập ID Game ở khung phía trên trước khi làm nhiệm vụ!');
+            document.getElementById('game-id-input').focus();
+            return;
+        }
+
         if (tasks[index].completed >= tasks[index].maxLimit) {
             event.preventDefault();
             alert('Bạn đã làm hết lượt nhiệm vụ này hôm nay!');
@@ -387,6 +482,8 @@
         }, 300);
     }
 
+    // Khởi chạy ban đầu
+    checkLoginState();
     renderLeaderboard();
     renderTasks();
 </script>

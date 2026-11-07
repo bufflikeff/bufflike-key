@@ -360,18 +360,13 @@
     let savedGameId = localStorage.getItem('user_game_id') || '';
     let userScore = parseInt(localStorage.getItem('user_lua_score') || '0');
     let completedCount = parseInt(localStorage.getItem('completed_links_count') || '0');
+    let isWaitingTask = localStorage.getItem('is_waiting_task') === 'true'; // Đánh dấu trạng thái đang làm nhiệm vụ
     const MAX_LINKS = 40;
 
-    // Cấu hình danh sách 40 link. (Link kèm callback trả về web của bạn)
+    const returnUrl = encodeURIComponent("https://bufflikeff.site/index.html?status=success");
     const linkList = [];
     for (let i = 1; i <= MAX_LINKS; i++) {
-        let domainUrl = "https://bufflikeff.site/index.html?status=success"; // Link trả về khi vượt xong
-        if (i === 2) {
-            linkList.push(`https://link4m.co/st?api=69477252020111717c5cd887&url=${encodeURIComponent(domainUrl)}`);
-        } else {
-            linkList.push(`https://link4m.co/st?api=69477252020111717c5cd887&url=${encodeURIComponent(domainUrl)}`); 
-            // Bạn có thể thay api link4m khác cho các ô còn lại nếu muốn
-        }
+        linkList.push(`https://link4m.co/st?api=69477252020111717c5cd887&url=${returnUrl}`);
     }
 
     let leaderboardData = [
@@ -382,24 +377,36 @@
         { name: "ID: 11293847", score: 5200 }
     ];
 
-    // TỰ ĐỘNG KIỂM TRA NẾU NGƯỜI DÙNG VƯỢT LINK XONG QUAY VỀ
-    function checkCallbackReturn() {
+    // 1. XỬ LÝ KHI ĐƯỢC CHUYỂN HƯỚNG TỪ LINK VƯỢT VỀ WEB (?status=success)
+    function checkUrlCallback() {
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('status') === 'success') {
-            // Kiểm tra xem đã cộng cho lượt này chưa để tránh F5 web cộng điểm nhiều lần
-            let lastCompleted = localStorage.getItem('last_processed_count') || '0';
-            if (completedCount.toString() === lastCompleted && completedCount < MAX_LINKS) {
-                completedCount++;
-                userScore += 300;
-                
-                localStorage.setItem('completed_links_count', completedCount);
-                localStorage.setItem('user_lua_score', userScore);
-                localStorage.setItem('last_processed_count', completedCount.toString());
-                
-                alert('🎉 Vượt link thành công! Đã cộng +300 Lúa vào tài khoản.');
-            }
-            // Xóa sạch tham số trên URL cho sạch thanh địa chỉ
+        if (urlParams.get('status') === 'success' || isWaitingTask) {
+            completeReward();
             window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    }
+
+    // 2. XỬ LÝ KHI NGƯỜI DÙNG CHUYỂN TAB TỪ TRANG VƯỢT LINK QUAY LẠI TRANG NÀY
+    document.addEventListener("visibilitychange", function() {
+        if (!document.hidden && isWaitingTask) {
+            completeReward();
+        }
+    });
+
+    function completeReward() {
+        if (completedCount < MAX_LINKS) {
+            completedCount++;
+            userScore += 300;
+            isWaitingTask = false;
+
+            localStorage.setItem('completed_links_count', completedCount);
+            localStorage.setItem('user_lua_score', userScore);
+            localStorage.setItem('is_waiting_task', 'false');
+
+            leaderboardData.find(u => u.isUser).score = userScore;
+            renderLeaderboard();
+            renderSingleTask();
+            alert('🎉 Hoàn thành vượt link! Đã cộng +300 Lúa.');
         }
     }
 
@@ -430,7 +437,6 @@
     function renderLeaderboard() {
         const lbContainer = document.getElementById('leaderboard');
         lbContainer.innerHTML = '';
-        
         leaderboardData.sort((a, b) => b.score - a.score);
 
         leaderboardData.forEach((item, index) => {
@@ -469,7 +475,7 @@
             </div>
             <div class="task-footer">
                 <span class="task-limit">
-                    ${isFinishedAll ? '🎉 Bạn đã làm xong toàn bộ 40/40 lượt hôm nay!' : `Còn <b>${remaining}/${MAX_LINKS}</b> lượt làm nhiệm vụ hôm nay`}
+                    ${isFinishedAll ? '🎉 Bạn đã hoàn thành toàn bộ 40/40 lượt!' : `Còn <b>${remaining}/${MAX_LINKS}</b> lượt hôm nay`}
                 </span>
             </div>
             <div class="task-actions">
@@ -494,6 +500,10 @@
             alert('Bạn đã hoàn thành đủ 40 lượt vượt link hôm nay!');
             return;
         }
+
+        // Đánh dấu người dùng đang thực hiện nhiệm vụ
+        localStorage.setItem('is_waiting_task', 'true');
+        isWaitingTask = true;
     }
 
     function skipTask() {
@@ -507,9 +517,9 @@
         alert('Đã chuyển sang link nhiệm vụ mới!');
     }
 
-    // Chạy các hàm khởi tạo khi load trang
-    checkCallbackReturn();
+    // Khởi tạo
     checkLoginState();
+    checkUrlCallback();
     leaderboardData.find(u => u.isUser).score = userScore;
     renderLeaderboard();
     renderSingleTask();

@@ -372,7 +372,7 @@
 
     function loadUserData() {
         if (savedGameId) {
-            userScore = parseInt(localStorage.getItem(`lua_score_${savedGameId}`) || '0');
+            userScore = parseInt(localStorage.getItem(`coin_score_${savedGameId}`) || '0');
             completedCount = parseInt(localStorage.getItem(`completed_count_${savedGameId}`) || '0');
         }
     }
@@ -406,10 +406,10 @@
                 userScore += 300;
 
                 localStorage.setItem(`completed_count_${savedGameId}`, completedCount);
-                localStorage.setItem(`lua_score_${savedGameId}`, userScore);
+                localStorage.setItem(`coin_score_${savedGameId}`, userScore);
                 localStorage.setItem(`last_processed_${savedGameId}`, completedCount.toString());
 
-                alert('🎉 Vượt link thành công! Đã cộng +300 Lúa cho ID: ' + savedGameId);
+                alert('🎉 Vượt link thành công! Đã cộng +300 Coin cho ID: ' + savedGameId);
             }
             window.history.replaceState({}, document.title, window.location.pathname);
         }
@@ -422,8 +422,8 @@
         
         if (savedGameId) {
             input.value = savedGameId;
-            input.disabled = true; // Khóa ô nhập không cho sửa
-            btn.disabled = true;  // Khóa nút lưu
+            input.disabled = true;
+            btn.disabled = true;
             btn.style.backgroundColor = "#adb5bd";
             welcome.style.display = 'block';
             welcome.innerHTML = `🔒 Đã khóa cứng ID trên thiết bị này: <b>${savedGameId}</b>`;
@@ -466,7 +466,7 @@
                 <span class="user-name" style="${item.isUser ? 'color:#0066ff; font-weight:700;' : ''}">
                     ${item.name} ${item.isUser ? '(Bạn)' : ''}
                 </span>
-                <span class="user-score">${item.score} Lúa</span>
+                <span class="user-score">${item.score} Coin</span>
             `;
             lbContainer.appendChild(li);
         });
@@ -483,13 +483,13 @@
             <div class="task-header">
                 <div class="task-title-wrapper">
                     <div class="task-icon">🔗</div>
-                    <div class="task-title">Vượt Link Tích Lúa Đua Top</div>
+                    <div class="task-title">Vượt Link Tích Coin Đua Top</div>
                 </div>
                 <div class="task-badge">${completedCount}/${MAX_LINKS}</div>
             </div>
             <div class="task-info">
                 <span class="info-tag">⏱️ ~60s/link</span>
-                <span class="reward-tag">+300 Lúa / link</span>
+                <span class="reward-tag">+300 Coin / link</span>
             </div>
             <div class="task-footer">
                 <span class="task-limit">

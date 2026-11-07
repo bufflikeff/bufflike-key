@@ -362,8 +362,8 @@
     let completedCount = parseInt(localStorage.getItem('completed_links_count') || '0');
     const MAX_LINKS = 40;
 
-    // Link đích bắt buộc phải có ?status=success để trang rút gọn đá về đây mới nhận điểm
-    const returnUrl = encodeURIComponent("https://bufflikeff.github.io/bufflikeff/index.html?status=success"); // Nhớ đổi thành link github pages chuẩn của bạn nếu khác
+    // Link đích chuẩn xác trỏ đến trang của bạn kèm tham số ?status=success
+    const returnUrl = encodeURIComponent("https://bufflikeff.github.io/bufflike-key/?status=success");
     const linkList = [];
     for (let i = 1; i <= MAX_LINKS; i++) {
         linkList.push(`https://link4m.co/st?api=69477252020111717c5cd887&url=${returnUrl}`);
@@ -381,7 +381,6 @@
     function checkUrlCallback() {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('status') === 'success') {
-            // Kiểm tra chống spam f5 hoặc nhận trùng 1 mốc
             let lastProcessed = localStorage.getItem('last_processed_idx') || '-1';
             if (completedCount.toString() !== lastProcessed && completedCount < MAX_LINKS) {
                 completedCount++;
@@ -393,7 +392,6 @@
 
                 alert('🎉 Vượt link thành công! Đã cộng +300 Lúa.');
             }
-            // Xóa sạch tham số trên URL cho sạch sẽ
             window.history.replaceState({}, document.title, window.location.pathname);
         }
     }
@@ -488,7 +486,6 @@
             alert('Bạn đã hoàn thành đủ 40 lượt vượt link hôm nay!');
             return;
         }
-        // Không làm gì thêm, để trình duyệt mở link rút gọn bình thường
     }
 
     function skipTask() {

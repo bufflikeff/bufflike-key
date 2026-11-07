@@ -15,6 +15,7 @@
             background-color: #f4f6f9;
             color: #333;
             padding: 15px;
+            padding-bottom: 70px; /* Tạo khoảng trống không bị che mất nhiệm vụ cuối */
         }
         .container {
             max-width: 500px;
@@ -30,7 +31,6 @@
             text-align: center;
             margin-bottom: 20px;
             box-shadow: 0 4px 15px rgba(255, 65, 108, 0.3);
-            position: relative;
         }
         .event-banner h2 {
             font-size: 20px;
@@ -212,12 +212,40 @@
             cursor: not-allowed;
             box-shadow: none;
         }
+
+        /* Nút Telegram nổi góc phải dưới giống ảnh mẫu */
+        .telegram-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background-color: #0088cc;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
+            z-index: 1000;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        .telegram-float:hover {
+            transform: scale(1.08);
+        }
+        .telegram-float svg {
+            width: 26px;
+            height: 26px;
+            fill: white;
+            margin-left: -2px; /* căn chỉnh icon máy bay giấy cho cân */
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Banner sự kiện có ngày bắt đầu & kết thúc -->
+    <!-- Banner sự kiện thời gian 09/07 - 10/07 -->
     <div class="event-banner">
         <h2>🔥 Đua Top Vượt Link 🔥</h2>
         <p>Top 1 BXH nhận ngay <span class="highlight">🎁 Thẻ Tháng Free Fire</span></p>
@@ -232,11 +260,18 @@
         </ul>
     </div>
 
-    <div class="section-title">📌 Danh Sách Nhiệm Vụ Kiếm Lúa</div>
+    <div class="section-title">📌 Danh Sách Nhiệm Vụ Kiếm Lúa (20 Ô)</div>
     <div id="task-list">
         <!-- Render 20 nhiệm vụ từ JS -->
     </div>
 </div>
+
+<!-- Nút nổi Telegram trỏ đến t.me/tlzproject giống ảnh mẫu -->
+<a href="https://t.me/tlzproject" target="_blank" class="telegram-float" title="Liên hệ Telegram">
+    <svg viewBox="0 0 24 24">
+        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+    </svg>
+</a>
 
 <script>
     // Dữ liệu bảng xếp hạng mẫu
@@ -248,7 +283,7 @@
         { name: "Tuấn Gamer", score: 2900 }
     ];
 
-    // Khởi tạo 20 ô nhiệm vụ
+    // Khởi tạo đúng 20 ô nhiệm vụ
     const tasks = [];
     for (let i = 1; i <= 20; i++) {
         const rewardValue = (Math.floor(Math.random() * 4) + 2) * 100; // 200 - 500 Lúa

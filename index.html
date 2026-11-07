@@ -6,28 +6,28 @@
   <title>BUFF LIKE FREE FIRE - TRANG CHỦ</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #0d0d0d; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+    body { background-color: #0d0d0d; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
 
-    .container { background-color: #1a1a1a; border: 1px solid #333333; border-radius: 12px; padding: 20px 16px; width: 100%; max-width: 420px; box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05); text-align: center; }
-    .badge { display: inline-block; background-color: #22c55e; color: #000000; font-size: 12px; font-weight: bold; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; }
+    .container { background-color: #1a1a1a; border: 1px solid #333333; border-radius: 12px; padding: 18px 14px; width: 100%; max-width: 420px; box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05); text-align: center; }
+    .badge { display: inline-block; background-color: #22c55e; color: #000000; font-size: 12px; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
     
-    /* Khung Tích Lũy / Buff Liên Tục thu gọn */
-    .streak-box { background-color: #262626; border: 1px solid #eab308; border-radius: 8px; padding: 10px; margin-bottom: 10px; text-align: center; }
-    .streak-box .streak-title { font-size: 12px; color: #eab308; font-weight: bold; margin-bottom: 2px; }
-    .streak-box .streak-count { font-size: 16px; color: #22c55e; font-weight: bold; }
-    .streak-box .streak-note { font-size: 10px; color: #aaa; margin-top: 2px; }
+    /* KHUNG GỘP CHUỖI & MỐC THƯỞNG CỰC GỌN */
+    .combined-streak-box { background-color: #262626; border: 1px solid #eab308; border-radius: 8px; padding: 10px; margin-bottom: 12px; text-align: center; }
+    .combined-streak-box .streak-title { font-size: 12px; color: #eab308; font-weight: bold; }
+    .combined-streak-box .streak-count { font-size: 17px; color: #22c55e; font-weight: bold; margin: 2px 0; }
+    .combined-streak-box .streak-note { font-size: 10px; color: #aaa; margin-bottom: 8px; }
 
-    /* Bảng Mốc Thưởng Tích Lũy thu gọn */
-    .milestone-section { background-color: #262626; border: 1px solid #444; border-radius: 8px; padding: 10px; margin-bottom: 12px; text-align: left; }
-    .milestone-section h4 { font-size: 12px; color: #38bdf8; margin-bottom: 6px; text-align: center; }
-    .milestone-row { display: flex; justify-content: space-between; align-items: center; background-color: #1f1f1f; padding: 6px 8px; border-radius: 5px; border: 1px solid #333; margin-bottom: 5px; }
+    /* Bảng mốc nhỏ bên trong khung gộp */
+    .milestone-container { border-top: 1px solid #444; padding-top: 8px; text-align: left; }
+    .milestone-title-mini { font-size: 11px; color: #38bdf8; font-weight: bold; text-align: center; margin-bottom: 6px; }
+    .milestone-row { display: flex; justify-content: space-between; align-items: center; background-color: #1f1f1f; padding: 5px 8px; border-radius: 5px; border: 1px solid #333; margin-bottom: 4px; }
     .milestone-info { font-size: 11px; color: #ddd; }
-    .btn-claim { background-color: #eab308; color: #000; border: none; padding: 4px 8px; font-weight: bold; font-size: 10px; border-radius: 4px; cursor: pointer; transition: 0.2s; }
+    .btn-claim { background-color: #eab308; color: #000; border: none; padding: 3px 8px; font-weight: bold; font-size: 10px; border-radius: 4px; cursor: pointer; transition: 0.2s; }
     .btn-claim:hover { background-color: #ca8a04; color: #fff; }
 
-    h2 { color: #ffffff; margin-bottom: 12px; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #333; padding-bottom: 8px; line-height: 1.4; }
+    h2 { color: #ffffff; margin-bottom: 10px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #333; padding-bottom: 8px; line-height: 1.4; }
     
-    .input-group { margin-bottom: 12px; text-align: left; }
+    .input-group { margin-bottom: 10px; text-align: left; }
     .input-group label { display: block; font-size: 12px; color: #aaaaaa; margin-bottom: 4px; }
     .input-group input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #444; background-color: #262626; color: #fff; font-size: 14px; outline: none; }
     .input-group input:focus { border-color: #22c55e; }
@@ -39,8 +39,8 @@
     .btn-guide { background-color: #3b82f6; color: #ffffff; margin-top: 2px; }
     .btn-guide:hover { background-color: #2563eb; }
 
-    .notice { background-color: #262626; border-left: 4px solid #eab308; padding: 10px; font-size: 11px; color: #ccc; text-align: left; border-radius: 4px; margin-top: 12px; line-height: 1.5; word-break: break-all; }
-    #statusMsg { margin-top: 10px; font-size: 13px; color: #f87171; word-break: break-all; }
+    .notice { background-color: #262626; border-left: 4px solid #eab308; padding: 10px; font-size: 11px; color: #ccc; text-align: left; border-radius: 4px; margin-top: 10px; line-height: 1.5; word-break: break-all; }
+    #statusMsg { margin-top: 8px; font-size: 12px; color: #f87171; word-break: break-all; }
 
     .modal { display: none; position: fixed; z-index: 9999999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); justify-content: center; align-items: center; padding: 15px; }
     .modal-content { background-color: #1a1a1a; padding: 20px; border-radius: 12px; width: 100%; max-width: 420px; border: 1px solid #444; position: relative; }
@@ -53,32 +53,31 @@
   <div class="container">
     <span class="badge">🔥 HỆ THỐNG BUFF LIKE</span>
 
-    <!-- KHUNG TÍCH LŨY BUFF LIÊN TỤC -->
-    <div class="streak-box">
+    <!-- KHUNG GỘP CHUỖI & MỐC THƯỞNG GỌN GÀNG -->
+    <div class="combined-streak-box">
       <div class="streak-title">🔥 CHUỖI BUFF LIKE LIÊN TỤC</div>
       <div class="streak-count" id="streakDisplay">0 Ngày</div>
       <div class="streak-note">⚠️ Cần buff mỗi ngày, quên 1 ngày sẽ gãy chuỗi!</div>
-    </div>
 
-    <!-- BẢNG MỐC QUÀ TÍCH LŨY -->
-    <div class="milestone-section">
-      <h4>🎁 Mốc Thưởng Tích Lũy Ngày</h4>
-      
-      <div class="milestone-row">
-        <div class="milestone-info"><b>Mốc 14 Ngày:</b> 25 Kim Cương</div>
-        <button class="btn-claim" onclick="claimMilestone(14)">🚀 Rút</button>
-      </div>
-      <div class="milestone-row">
-        <div class="milestone-info"><b>Mốc 30 Ngày:</b> 50 Kim Cương</div>
-        <button class="btn-claim" onclick="claimMilestone(30)">🚀 Rút</button>
-      </div>
-      <div class="milestone-row">
-        <div class="milestone-info"><b>Mốc 60 Ngày:</b> 113 Kim Cương</div>
-        <button class="btn-claim" onclick="claimMilestone(60)">👑 Rút</button>
-      </div>
-      <div class="milestone-row">
-        <div class="milestone-info"><b>Mốc 120 Ngày:</b> Thẻ Tuần</div>
-        <button class="btn-claim" onclick="claimMilestone(120)">💎 Nhận</button>
+      <div class="milestone-container">
+        <div class="milestone-title-mini">🎁 Mốc Thưởng Tích Lũy Ngày</div>
+        
+        <div class="milestone-row">
+          <span class="milestone-info">Mốc 14 Ngày: <b>25 Kim Cương</b></span>
+          <button class="btn-claim" onclick="claimMilestone(14)">🚀 Rút</button>
+        </div>
+        <div class="milestone-row">
+          <span class="milestone-info">Mốc 30 Ngày: <b>50 Kim Cương</b></span>
+          <button class="btn-claim" onclick="claimMilestone(30)">🚀 Rút</button>
+        </div>
+        <div class="milestone-row">
+          <span class="milestone-info">Mốc 60 Ngày: <b>113 Kim Cương</b></span>
+          <button class="btn-claim" onclick="claimMilestone(60)">👑 Rút</button>
+        </div>
+        <div class="milestone-row" style="margin-bottom: 0;">
+          <span class="milestone-info">Mốc 120 Ngày: <b>Thẻ Tuần</b></span>
+          <button class="btn-claim" onclick="claimMilestone(120)">💎 Nhận</button>
+        </div>
       </div>
     </div>
 
@@ -97,7 +96,7 @@
     <button class="btn btn-guide" onclick="openGuide()">🎬 Bấm Vào Đây Để Xem Cách Lấy Key</button>
 
     <!-- Ô nhập Key và Xác nhận Buff -->
-    <div class="input-group" style="margin-top: 12px;">
+    <div class="input-group" style="margin-top: 10px;">
       <label for="keyInput">Nhập Mã Key đã lấy:</label>
       <input type="text" id="keyInput" placeholder="Dán mã Key vào đây...">
     </div>
@@ -112,18 +111,18 @@
       • Nếu không thấy key là hết like quay lại 30p nha<br><br>
       
       <!-- PHẦN LIÊN HỆ -->
-      <div style="margin-top: 6px; font-weight: bold; margin-bottom: 5px;">💬 Support mua gói like ibox:</div>
-      <div style="display: flex; flex-direction: column; gap: 5px;">
-        <a href="https://www.tiktok.com/@hvpcutis1tg" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #000; color: #fff; padding: 7px; border-radius: 6px; text-decoration: none; border: 1px solid #444; font-size: 12px;">
+      <div style="margin-top: 4px; font-weight: bold; margin-bottom: 4px;">💬 Support mua gói like ibox:</div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <a href="https://www.tiktok.com/@hvpcutis1tg" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #000; color: #fff; padding: 6px; border-radius: 6px; text-decoration: none; border: 1px solid #444; font-size: 11px;">
           🎵 TikTok: @hvpcutis1tg
         </a>
-        <a href="https://t.me/tlzproject" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #229ED9; color: #fff; padding: 7px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold;">
+        <a href="https://t.me/tlzproject" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #229ED9; color: #fff; padding: 6px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: bold;">
           ✈️ Telegram: @tlzproject
         </a>
-        <a href="https://t.me/tlzchat" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #2b5278; color: #fff; padding: 7px; border-radius: 6px; text-decoration: none; font-size: 12px;">
+        <a href="https://t.me/tlzchat" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #2b5278; color: #fff; padding: 6px; border-radius: 6px; text-decoration: none; font-size: 11px;">
           👥 Nhóm Chat Telegram: @tlzchat
         </a>
-        <a href="https://tiktok.me/group/ZSgWYffCH/" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #111; color: #38bdf8; padding: 7px; border-radius: 6px; text-decoration: none; font-size: 11px; border: 1px dashed #38bdf8;">
+        <a href="https://tiktok.me/group/ZSgWYffCH/" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #111; color: #38bdf8; padding: 6px; border-radius: 6px; text-decoration: none; font-size: 11px; border: 1px dashed #38bdf8;">
           📢 Kênh Thông Báo TikTok
         </a>
       </div>
@@ -233,10 +232,9 @@
           localStorage.setItem("tiz_current_uid", uid);
           localStorage.setItem("tiz_pending_token", uniqueToken);
           
-          // Mặc định link Việt Nam
           let baseLink = "https://link4m.org/DRDP9J";
 
-          // Tự động chuyển link quốc tế nếu phát hiện IP ngoại
+          // Tự động nhận diện IP nước ngoài để chuyển sang link quốc tế
           try {
             const geoRes = await fetch('https://ipapi.co/json/');
             const geoData = await geoRes.json();
@@ -299,4 +297,3 @@
   </script>
 </body>
 </html>
-

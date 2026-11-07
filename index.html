@@ -22,7 +22,7 @@
             margin: 0 auto;
         }
         
-        /* Khung Đăng Nhập / Nhập ID Game */
+        /* Khung Nhập ID Game */
         .login-card {
             background: #ffffff;
             border-radius: 16px;
@@ -173,19 +173,20 @@
             color: #444;
         }
 
-        /* Task Card */
-        .task-card {
+        /* Task Card duy nhất */
+        .single-task-card {
             background: #ffffff;
             border-radius: 16px;
-            padding: 16px;
+            padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            border: 1px solid #eef2ff;
         }
         .task-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
         .task-title-wrapper {
             display: flex;
@@ -193,61 +194,66 @@
             gap: 10px;
         }
         .task-icon {
-            width: 34px;
-            height: 34px;
-            background-color: #eef2ff;
-            color: #3b82f6;
-            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: #ffeef2;
+            color: #ff3366;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 20px;
         }
         .task-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             color: #111;
         }
         .task-badge {
             background-color: #ffeef2;
             color: #ff3366;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
         }
         .task-info {
             display: flex;
             gap: 10px;
             font-size: 13px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         .info-tag {
             background: #f0f2f5;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 6px;
             color: #666;
         }
         .reward-tag {
             color: #00b074;
             background: #e6f9f2;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 6px;
             font-weight: 600;
         }
         .task-footer {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         .task-limit {
-            font-size: 13px;
-            color: #777;
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+        .task-actions {
+            display: flex;
+            gap: 10px;
         }
         .btn-do-task {
-            width: 100%;
+            flex: 2;
             background-color: #0066ff;
             color: white;
             border: none;
-            padding: 12px;
+            padding: 14px;
             border-radius: 12px;
             font-size: 15px;
             font-weight: 600;
@@ -255,13 +261,31 @@
             text-align: center;
             display: block;
             text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0, 102, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25);
+            transition: all 0.2s;
         }
         .btn-do-task.completed {
             background-color: #e0e0e0;
             color: #888;
             cursor: not-allowed;
             box-shadow: none;
+            flex: 1;
+        }
+        .btn-skip-task {
+            flex: 1;
+            background-color: #f1f3f5;
+            color: #555;
+            border: 1px solid #ddd;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .btn-skip-task:hover {
+            background-color: #e9ecef;
         }
 
         /* Nút Telegram nổi */
@@ -319,8 +343,12 @@
         <ul class="leaderboard-list" id="leaderboard"></ul>
     </div>
 
-    <div class="section-title">📌 Danh Sách Nhiệm Vụ Kiếm Lúa (20 Ô)</div>
-    <div id="task-list"></div>
+    <div class="section-title">📌 Nhiệm Vụ Rút Gọn Chuỗi (40 Link)</div>
+    
+    <!-- 1 Ô Nhiệm Vụ Duy Nhất Chuỗi 40 Link kèm nút đổi link -->
+    <div class="single-task-card" id="task-card-single">
+        <!-- Render bằng JS -->
+    </div>
 </div>
 
 <!-- Nút Telegram -->
@@ -331,19 +359,30 @@
 </a>
 
 <script>
-    // Lấy ID game đã lưu trước đó nếu có
     let savedGameId = localStorage.getItem('user_game_id') || '';
     let userScore = parseInt(localStorage.getItem('user_lua_score') || '0');
+    let completedCount = parseInt(localStorage.getItem('completed_links_count') || '0');
+    const MAX_LINKS = 40;
+
+    // Danh sách 40 link khác nhau
+    const linkList = [];
+    for (let i = 1; i <= MAX_LINKS; i++) {
+        if (i === 2) {
+            // Link chính chủ của bạn cho nhiệm vụ 2
+            linkList.push(`https://link4m.co/st?api=69477252020111717c5cd887&url=https://bufflikeff.site`);
+        } else {
+            linkList.push(`https://link4m.co/ExampleTask${i}`);
+        }
+    }
 
     let leaderboardData = [
         { name: savedGameId ? `ID: ${savedGameId}` : "Chưa nhập ID", score: userScore, isUser: true },
-        { name: "ID: 83920192", score: 4800 },
-        { name: "ID: 55219384", score: 4200 },
-        { name: "ID: 99182341", score: 3600 },
-        { name: "ID: 11293847", score: 2900 }
+        { name: "ID: 83920192", score: 11800 },
+        { name: "ID: 55219384", score: 9400 },
+        { name: "ID: 99182341", score: 7600 },
+        { name: "ID: 11293847", score: 5200 }
     ];
 
-    // Cập nhật trạng thái hiển thị khung nhập ID
     function checkLoginState() {
         const input = document.getElementById('game-id-input');
         const welcome = document.getElementById('welcome-msg');
@@ -362,43 +401,10 @@
         }
         savedGameId = inputVal;
         localStorage.setItem('user_game_id', savedGameId);
-        
-        // Cập nhật lại tên trên BXH
         leaderboardData[0].name = `ID: ${savedGameId}`;
         renderLeaderboard();
         checkLoginState();
-        alert('Đã lưu ID Game thành công! Hãy bắt đầu làm nhiệm vụ.');
-    }
-
-    // Khởi tạo 20 ô nhiệm vụ
-    const tasks = [];
-    for (let i = 1; i <= 20; i++) {
-        const rewardValue = (Math.floor(Math.random() * 4) + 2) * 100;
-        let targetUrl = `https://link4m.co/Example${i}`;
-        if (i === 2) {
-            targetUrl = `https://link4m.co/st?api=69477252020111717c5cd887&url=https://bufflikeff.site`;
-        }
-
-        tasks.push({
-            id: i,
-            name: i === 2 ? `Vượt Link Rút Gọn #2 (Link Chính Chủ)` : `Vượt Link Rút Gọn #${i}`,
-            time: `~${Math.floor(Math.random() * 30) + 45}s`,
-            rewardAmount: rewardValue,
-            rewardText: `${rewardValue} Lúa`,
-            maxLimit: 2,
-            completed: 0,
-            url: targetUrl
-        });
-    }
-
-    const savedTasks = localStorage.getItem('tasks_data');
-    if (savedTasks) {
-        const parsed = JSON.parse(savedTasks);
-        if(parsed.length === 20) {
-            tasks.forEach((t, idx) => {
-                tasks[idx].completed = parsed[idx].completed;
-            });
-        }
+        alert('Đã lưu ID Game thành công!');
     }
 
     function renderLeaderboard() {
@@ -422,70 +428,84 @@
         });
     }
 
-    function renderTasks() {
-        const taskContainer = document.getElementById('task-list');
-        taskContainer.innerHTML = '';
+    function renderSingleTask() {
+        const cardContainer = document.getElementById('task-card-single');
+        const isFinishedAll = completedCount >= MAX_LINKS;
+        const currentLinkIndex = Math.min(completedCount, MAX_LINKS - 1);
+        const currentTargetUrl = linkList[currentLinkIndex];
+        const remaining = MAX_LINKS - completedCount;
 
-        tasks.forEach((task, index) => {
-            const remaining = task.maxLimit - task.completed;
-            const isFinished = remaining <= 0;
-
-            const card = document.createElement('div');
-            card.className = 'task-card';
-            card.innerHTML = `
-                <div class="task-header">
-                    <div class="task-title-wrapper">
-                        <div class="task-icon">🔗</div>
-                        <div class="task-title">${task.name}</div>
-                    </div>
-                    <div class="task-badge">${task.completed}/${task.maxLimit}</div>
+        cardContainer.innerHTML = `
+            <div class="task-header">
+                <div class="task-title-wrapper">
+                    <div class="task-icon">🔗</div>
+                    <div class="task-title">Vượt Link Tích Lúa Đua Top</div>
                 </div>
-                <div class="task-info">
-                    <span class="info-tag">⏱️ ${task.time}</span>
-                    <span class="reward-tag">+${task.rewardText}</span>
-                </div>
-                <div class="task-footer">
-                    <span class="task-limit">Còn ${remaining}/${task.maxLimit} lượt hôm nay</span>
-                </div>
-                <a href="${isFinished ? '#' : task.url}" target="_blank" class="btn-do-task ${isFinished ? 'completed' : ''}" onclick="handleTaskClick(event, ${index})">
-                    ${isFinished ? 'Đã hoàn thành' : '▶ Làm nhiệm vụ'}
+                <div class="task-badge">${completedCount}/${MAX_LINKS}</div>
+            </div>
+            <div class="task-info">
+                <span class="info-tag">⏱️ ~60s/link</span>
+                <span class="reward-tag">+300 Lúa / link</span>
+            </div>
+            <div class="task-footer">
+                <span class="task-limit">
+                    ${isFinishedAll ? '🎉 Bạn đã làm xong toàn bộ 40/40 lượt hôm nay!' : `Còn <b>${remaining}/${MAX_LINKS}</b> lượt làm nhiệm vụ hôm nay`}
+                </span>
+            </div>
+            <div class="task-actions">
+                <a href="${isFinishedAll ? '#' : currentTargetUrl}" target="_blank" class="btn-do-task ${isFinishedAll ? 'completed' : ''}" onclick="handleTaskClick(event)">
+                    ${isFinishedAll ? 'Đã hoàn thành tất cả' : `▶ Làm nhiệm vụ (Lần ${completedCount + 1}/${MAX_LINKS})`}
                 </a>
-            `;
-            taskContainer.appendChild(card);
-        });
+                ${!isFinishedAll ? `<button class="btn-skip-task" onclick="skipTask()">🔄 Đổi link</button>` : ''}
+            </div>
+        `;
     }
 
-    function handleTaskClick(event, index) {
+    function handleTaskClick(event) {
         if (!savedGameId) {
             event.preventDefault();
-            alert('Vui lòng nhập ID Game ở khung phía trên trước khi làm nhiệm vụ!');
+            alert('Vui lòng nhập ID Game ở khung phía trên trước khi bắt đầu!');
             document.getElementById('game-id-input').focus();
             return;
         }
 
-        if (tasks[index].completed >= tasks[index].maxLimit) {
+        if (completedCount >= MAX_LINKS) {
             event.preventDefault();
-            alert('Bạn đã làm hết lượt nhiệm vụ này hôm nay!');
+            alert('Bạn đã hoàn thành đủ 40 lượt vượt link hôm nay!');
             return;
         }
 
-        tasks[index].completed++;
-        userScore += tasks[index].rewardAmount;
+        // Tăng lượt và cộng điểm Lúa (+300 Lúa cho mỗi lượt)
+        completedCount++;
+        userScore += 300;
         leaderboardData.find(u => u.isUser).score = userScore;
 
+        localStorage.setItem('completed_links_count', completedCount);
         localStorage.setItem('user_lua_score', userScore);
-        localStorage.setItem('tasks_data', JSON.stringify(tasks));
 
         setTimeout(() => {
             renderLeaderboard();
-            renderTasks();
+            renderSingleTask();
         }, 300);
     }
 
-    // Khởi chạy ban đầu
+    // Hàm đổi link nếu gặp lỗi hoặc không muốn làm link hiện tại
+    function skipTask() {
+        if (completedCount >= MAX_LINKS - 1) {
+            alert('Đây là link cuối cùng rồi, không thể đổi thêm!');
+            return;
+        }
+        // Đẩy link hiện tại xuống cuối mảng để đổi sang link tiếp theo ngay lập tức
+        const skipped = linkList.shift();
+        linkList.push(skipped);
+        renderSingleTask();
+        alert('Đã chuyển sang link nhiệm vụ mới!');
+    }
+
+    // Khởi chạy
     checkLoginState();
     renderLeaderboard();
-    renderTasks();
+    renderSingleTask();
 </script>
 
 </body>

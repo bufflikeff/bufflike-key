@@ -264,6 +264,10 @@
             box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25);
             transition: all 0.2s;
         }
+        .btn-do-task.waiting {
+            background-color: #ff9800;
+            box-shadow: none;
+        }
         .btn-do-task.completed {
             background-color: #e0e0e0;
             color: #888;
@@ -360,8 +364,8 @@
     let savedGameId = localStorage.getItem('user_game_id') || '';
     let userScore = parseInt(localStorage.getItem('user_lua_score') || '0');
     let completedCount = parseInt(localStorage.getItem('completed_links_count') || '0');
-    let isWaitingTask = localStorage.getItem('is_waiting_task') === 'true'; // Đánh dấu trạng thái đang làm nhiệm vụ
     const MAX_LINKS = 40;
+    const WAIT_SECONDS = 60; // Thời gian chờ tối thiểu (60 giây)
 
     const returnUrl = encodeURIComponent("https://bufflikeff.site/index.html?status=success");
     const linkList = [];
@@ -377,19 +381,25 @@
         { name: "ID: 11293847", score: 5200 }
     ];
 
-    // 1. XỬ LÝ KHI ĐƯỢC CHUYỂN HƯỚNG TỪ LINK VƯỢT VỀ WEB (?status=success)
+    // 1. KIỂM TRA NẾU TRANG RÚT GỌN CHUYỂN HƯỚNG CHÍNH THỨC VỀ (?status=success)
     function checkUrlCallback() {
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('status') === 'success' || isWaitingTask) {
+        if (urlParams.get('status') === 'success') {
             completeReward();
             window.history.replaceState({}, document.title, window.location.pathname);
         }
     }
 
-    // 2. XỬ LÝ KHI NGƯỜI DÙNG CHUYỂN TAB TỪ TRANG VƯỢT LINK QUAY LẠI TRANG NÀY
+    // 2. KIỂM TRA ĐỦ THỜI GIAN KHI CHUYỂN TAB QUAY LẠI
     document.addEventListener("visibilitychange", function() {
-        if (!document.hidden && isWaitingTask) {
-            completeReward();
+        if (!document.hidden) {
+            const startTime = parseInt(localStorage.getItem('task_start_time') || '0');
+            if (startTime > 0) {
+                const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+                if (elapsedSeconds >= WAIT_SECONDS) {
+                    completeReward();
+                }
+            }
         }
     });
 
@@ -397,16 +407,15 @@
         if (completedCount < MAX_LINKS) {
             completedCount++;
             userScore += 300;
-            isWaitingTask = false;
+            localStorage.removeItem('task_start_time');
 
             localStorage.setItem('completed_links_count', completedCount);
             localStorage.setItem('user_lua_score', userScore);
-            localStorage.setItem('is_waiting_task', 'false');
 
             leaderboardData.find(u => u.isUser).score = userScore;
             renderLeaderboard();
             renderSingleTask();
-            alert('🎉 Hoàn thành vượt link! Đã cộng +300 Lúa.');
+            alert('🎉 Vượt link thành công! Đã cộng +300 Lúa.');
         }
     }
 
@@ -501,9 +510,8 @@
             return;
         }
 
-        // Đánh dấu người dùng đang thực hiện nhiệm vụ
-        localStorage.setItem('is_waiting_task', 'true');
-        isWaitingTask = true;
+        // Lưu thời điểm bắt đầu bấm làm nhiệm vụ
+        localStorage.setItem('task_start_time', Date.now().toString());
     }
 
     function skipTask() {

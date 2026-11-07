@@ -345,10 +345,8 @@
 
     <div class="section-title">📌 Nhiệm Vụ Rút Gọn Chuỗi (40 Link)</div>
     
-    <!-- 1 Ô Nhiệm Vụ Duy Nhất Chuỗi 40 Link kèm nút đổi link -->
-    <div class="single-task-card" id="task-card-single">
-        <!-- Render bằng JS -->
-    </div>
+    <!-- Ô Nhiệm Vụ Chuỗi 40 Link -->
+    <div class="single-task-card" id="task-card-single"></div>
 </div>
 
 <!-- Nút Telegram -->
@@ -364,14 +362,15 @@
     let completedCount = parseInt(localStorage.getItem('completed_links_count') || '0');
     const MAX_LINKS = 40;
 
-    // Danh sách 40 link khác nhau
+    // Cấu hình danh sách 40 link. (Link kèm callback trả về web của bạn)
     const linkList = [];
     for (let i = 1; i <= MAX_LINKS; i++) {
+        let domainUrl = "https://bufflikeff.site/index.html?status=success"; // Link trả về khi vượt xong
         if (i === 2) {
-            // Link chính chủ của bạn cho nhiệm vụ 2
-            linkList.push(`https://link4m.co/st?api=69477252020111717c5cd887&url=https://bufflikeff.site`);
+            linkList.push(`https://link4m.co/st?api=69477252020111717c5cd887&url=${encodeURIComponent(domainUrl)}`);
         } else {
-            linkList.push(`https://link4m.co/ExampleTask${i}`);
+            linkList.push(`https://link4m.co/st?api=69477252020111717c5cd887&url=${encodeURIComponent(domainUrl)}`); 
+            // Bạn có thể thay api link4m khác cho các ô còn lại nếu muốn
         }
     }
 
@@ -382,6 +381,27 @@
         { name: "ID: 99182341", score: 7600 },
         { name: "ID: 11293847", score: 5200 }
     ];
+
+    // TỰ ĐỘNG KIỂM TRA NẾU NGƯỜI DÙNG VƯỢT LINK XONG QUAY VỀ
+    function checkCallbackReturn() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('status') === 'success') {
+            // Kiểm tra xem đã cộng cho lượt này chưa để tránh F5 web cộng điểm nhiều lần
+            let lastCompleted = localStorage.getItem('last_processed_count') || '0';
+            if (completedCount.toString() === lastCompleted && completedCount < MAX_LINKS) {
+                completedCount++;
+                userScore += 300;
+                
+                localStorage.setItem('completed_links_count', completedCount);
+                localStorage.setItem('user_lua_score', userScore);
+                localStorage.setItem('last_processed_count', completedCount.toString());
+                
+                alert('🎉 Vượt link thành công! Đã cộng +300 Lúa vào tài khoản.');
+            }
+            // Xóa sạch tham số trên URL cho sạch thanh địa chỉ
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    }
 
     function checkLoginState() {
         const input = document.getElementById('game-id-input');
@@ -474,36 +494,23 @@
             alert('Bạn đã hoàn thành đủ 40 lượt vượt link hôm nay!');
             return;
         }
-
-        // Tăng lượt và cộng điểm Lúa (+300 Lúa cho mỗi lượt)
-        completedCount++;
-        userScore += 300;
-        leaderboardData.find(u => u.isUser).score = userScore;
-
-        localStorage.setItem('completed_links_count', completedCount);
-        localStorage.setItem('user_lua_score', userScore);
-
-        setTimeout(() => {
-            renderLeaderboard();
-            renderSingleTask();
-        }, 300);
     }
 
-    // Hàm đổi link nếu gặp lỗi hoặc không muốn làm link hiện tại
     function skipTask() {
         if (completedCount >= MAX_LINKS - 1) {
             alert('Đây là link cuối cùng rồi, không thể đổi thêm!');
             return;
         }
-        // Đẩy link hiện tại xuống cuối mảng để đổi sang link tiếp theo ngay lập tức
         const skipped = linkList.shift();
         linkList.push(skipped);
         renderSingleTask();
         alert('Đã chuyển sang link nhiệm vụ mới!');
     }
 
-    // Khởi chạy
+    // Chạy các hàm khởi tạo khi load trang
+    checkCallbackReturn();
     checkLoginState();
+    leaderboardData.find(u => u.isUser).score = userScore;
     renderLeaderboard();
     renderSingleTask();
 </script>

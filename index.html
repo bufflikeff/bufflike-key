@@ -1,485 +1,657 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Trang nhận key BuffLike an toàn dành cho người dùng đến từ bot Telegram."
-    />
-    <meta name="theme-color" content="#f3f1e9" />
-    <title>BuffLike · Nhận key</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiếm Lúa Mới - Vượt Link Làm Nhiệm Vụ</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-      :root {
-        color-scheme: light;
-        font-family:
-          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
-        background: #f3f1e9;
-        color: #123d39;
-        font-synthesis: none;
-        text-rendering: optimizeLegibility;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        min-width: 320px;
-        min-height: 100vh;
-        margin: 0;
-        display: grid;
-        place-items: center;
-        padding: 28px 16px;
-        background:
-          radial-gradient(circle at 15% 12%, rgba(255, 255, 255, 0.9), transparent 31rem),
-          radial-gradient(circle at 90% 90%, rgba(221, 231, 218, 0.72), transparent 30rem),
-          #f3f1e9;
-      }
-
-      .portal {
-        width: min(100%, 520px);
-        overflow: hidden;
-        border: 1px solid rgba(18, 61, 57, 0.14);
-        border-radius: 28px;
-        background: rgba(255, 255, 252, 0.86);
-        box-shadow: 0 24px 80px rgba(22, 53, 48, 0.12);
-      }
-
-      .topline {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 24px;
-        border-bottom: 1px solid rgba(18, 61, 57, 0.12);
-        color: #58716c;
-        font-size: 11px;
-        font-weight: 750;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-      }
-
-      .live-mark {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: #39756c;
-        letter-spacing: 0.08em;
-      }
-
-      .live-mark::before {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: #e2824c;
-        content: "";
-        box-shadow: 0 0 0 4px rgba(226, 130, 76, 0.13);
-      }
-
-      .content {
-        padding: 36px 28px 30px;
-      }
-
-      .kicker {
-        margin: 0 0 12px;
-        color: #e2824c;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-      }
-
-      h1 {
-        margin: 0;
-        color: #123d39;
-        font-size: clamp(30px, 7vw, 42px);
-        font-weight: 750;
-        letter-spacing: -0.055em;
-        line-height: 1.05;
-      }
-
-      .intro {
-        max-width: 390px;
-        margin: 14px 0 28px;
-        color: #637873;
-        font-size: 15px;
-        line-height: 1.65;
-      }
-
-      .status-card {
-        min-height: 126px;
-        padding: 20px;
-        border: 1px solid rgba(18, 61, 57, 0.13);
-        border-radius: 18px;
-        background: #f7f7f1;
-      }
-
-      .status-heading {
-        display: flex;
-        align-items: flex-start;
-        gap: 13px;
-      }
-
-      .status-icon {
-        display: grid;
-        flex: 0 0 36px;
-        width: 36px;
-        height: 36px;
-        place-items: center;
-        border-radius: 12px;
-        background: #e5eee8;
-        color: #38766c;
-        font-size: 20px;
-        font-weight: 700;
-      }
-
-      .status-card[data-state="error"] .status-icon {
-        background: #f9e8dd;
-        color: #b9552b;
-      }
-
-      .status-card[data-state="success"] .status-icon {
-        background: #e5eee8;
-        color: #28665c;
-      }
-
-      .status-title {
-        margin: 2px 0 5px;
-        color: #123d39;
-        font-size: 15px;
-        font-weight: 750;
-        line-height: 1.4;
-      }
-
-      .status-copy {
-        margin: 0;
-        color: #667b76;
-        font-size: 13px;
-        line-height: 1.55;
-        overflow-wrap: anywhere;
-      }
-
-      .spinner {
-        width: 17px;
-        height: 17px;
-        margin: 8px 0 0 49px;
-        border: 2px solid rgba(56, 118, 108, 0.2);
-        border-top-color: #38766c;
-        border-radius: 50%;
-        animation: spin 0.75s linear infinite;
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .key-box {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 14px;
-        margin-top: 18px;
-        padding: 14px 14px 14px 18px;
-        border: 1px solid rgba(18, 61, 57, 0.16);
-        border-radius: 16px;
-        background: #fffefa;
-      }
-
-      .key-label {
-        display: block;
-        margin-bottom: 6px;
-        color: #72837d;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-      }
-
-      .key-value {
-        color: #123d39;
-        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-        font-size: clamp(18px, 5vw, 24px);
-        font-weight: 750;
-        letter-spacing: 0.04em;
-      }
-
-      button {
-        flex: 0 0 auto;
-        min-height: 42px;
-        padding: 0 15px;
-        border: 0;
-        border-radius: 11px;
-        background: #123d39;
-        color: white;
-        font: inherit;
-        font-size: 13px;
-        font-weight: 700;
-        cursor: pointer;
-        transition:
-          transform 140ms ease,
-          background 140ms ease;
-      }
-
-      button:hover {
-        transform: translateY(-1px);
-        background: #20564e;
-      }
-
-      button:focus-visible {
-        outline: 3px solid rgba(226, 130, 76, 0.6);
-        outline-offset: 3px;
-      }
-
-      .expiry {
-        margin: 12px 2px 0;
-        color: #70817b;
-        font-size: 12px;
-        line-height: 1.5;
-      }
-
-      .footer {
-        display: flex;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 17px 24px;
-        border-top: 1px solid rgba(18, 61, 57, 0.12);
-        color: #85918c;
-        font-size: 11px;
-      }
-
-      .hidden {
-        display: none !important;
-      }
-
-      @media (max-width: 460px) {
-        .content {
-          padding: 30px 20px 24px;
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --header-bg: #0d1527;
+            --primary-blue: #2563eb;
+            --primary-blue-hover: #1d4ed8;
+            --accent-green: #10b981;
+            --accent-pink: #ec4899;
+            --accent-purple: #a855f7;
+            --modal-bg: #111827;
+            --modal-card: #1f2937;
+            --border-color: #e2e8f0;
         }
 
-        .topline {
-          padding: 18px 20px;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
-        .key-box {
-          align-items: stretch;
-          flex-direction: column;
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding-bottom: 40px;
         }
 
-        button {
-          width: 100%;
+        /* Top Header Navigation */
+        .navbar {
+            background-color: var(--header-bg);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .footer {
-          padding: 16px 20px;
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-      }
 
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          scroll-behavior: auto !important;
-          transition-duration: 0.01ms !important;
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
         }
-      }
+
+        .balance-badge {
+            background: #1e293b;
+            border: 1px solid #3b82f6;
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border: 2px solid white;
+        }
+
+        /* Container */
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Banner Rút Tiền Thành Công */
+        .alert-banner {
+            background-color: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .alert-icon {
+            background-color: var(--accent-green);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .alert-content h4 {
+            color: #065f46;
+            font-size: 15px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-tag {
+            background: #d1fae5;
+            color: #047857;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: normal;
+        }
+
+        .alert-content p {
+            color: #047857;
+            font-size: 13px;
+        }
+
+        /* Grid Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        .stat-info .label {
+            font-size: 11px;
+            color: var(--text-sub);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .stat-info .val {
+            font-size: 16px;
+            font-weight: 800;
+            margin-top: 2px;
+        }
+
+        /* Info Device Card */
+        .info-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #3b82f6;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .ip-address {
+            font-size: 22px;
+            font-weight: 900;
+            margin: 8px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .info-desc {
+            font-size: 12px;
+            color: var(--text-sub);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .device-badge {
+            background: #f1f5f9;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Task Cards */
+        .task-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .task-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .task-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #ffe4e6;
+            color: #f43f5e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .task-name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .task-sub {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .badge-time {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        .badge-reward {
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .task-counter {
+            color: #ec4899;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .task-remaining {
+            font-size: 12px;
+            color: var(--text-sub);
+            border-top: 1px dashed var(--border-color);
+            padding-top: 8px;
+        }
+
+        .btn-task {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .btn-task:hover {
+            background: var(--primary-blue-hover);
+        }
+
+        .pin-icon {
+            color: #cbd5e1;
+            position: absolute;
+            top: 16px;
+            right: 16px;
+        }
+
+        /* Modal Popup (Ảnh 3) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background: #0f172a;
+            border: 1px solid #3b82f6;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 420px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .modal-header-icon {
+            width: 44px;
+            height: 44px;
+            background: #1e3a8a;
+            border: 1px solid #3b82f6;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #60a5fa;
+            font-size: 20px;
+        }
+
+        .modal-header-text h3 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .modal-header-text p {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .modal-reward-box {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .reward-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .reward-row .label { color: #94a3b8; }
+        .reward-row .val { font-weight: bold; }
+        .reward-row .val-green { color: #4ade80; font-weight: bold; }
+
+        .rules-title {
+            font-size: 11px;
+            font-weight: bold;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .rules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        .rule-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #60a5fa;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-start {
+            flex: 1.5;
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
     </style>
-  </head>
-  <body>
-    <main class="portal">
-      <div class="topline">
-        <span>BuffLike · Key Portal</span>
-        <span class="live-mark">Secure session</span>
-      </div>
-      <section class="content" aria-labelledby="page-title">
-        <p class="kicker">Telegram task exchange</p>
-        <h1 id="page-title">Nhận key của bạn</h1>
-        <p class="intro">
-          Trang chỉ cấp key cho phiên nhiệm vụ hợp lệ được mở từ bot Telegram.
-        </p>
+</head>
+<body>
 
-        <div
-          id="status-card"
-          class="status-card"
-          data-state="loading"
-          role="status"
-          aria-live="polite"
-        >
-          <div class="status-heading">
-            <span id="status-icon" class="status-icon" aria-hidden="true">···</span>
-            <div>
-              <p id="status-title" class="status-title">Đang kiểm tra phiên</p>
-              <p id="status-copy" class="status-copy">
-                Vui lòng giữ trang mở trong giây lát.
-              </p>
+    <!-- Header Navigation -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <button class="nav-btn"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn balance-badge">
+                <i class="fa-solid fa-wallet"></i> <span id="user-balance">850</span> <i class="fa-solid fa-rotate-right"></i>
+            </button>
+            <button class="nav-btn"><i class="fa-solid fa-moon"></i></button>
+            <button class="nav-btn"><i class="fa-solid fa-bell"></i></button>
+            <div class="avatar">O</div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Alert Banner -->
+        <div class="alert-banner">
+            <div class="alert-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="alert-content">
+                <h4>RÚT TIỀN THÀNH CÔNG <span class="alert-tag">Tham gia Nhóm telegram</span></h4>
+                <p>TK <b>89******60</b> rút thành công — Số tiền <b>12.340 đ</b></p>
+                <p style="font-size: 11px; color: #6b7280; margin-top: 4px;">Thời gian <b>3 ngày trước</b></p>
             </div>
-          </div>
-          <div id="spinner" class="spinner" aria-hidden="true"></div>
         </div>
 
-        <div id="key-box" class="key-box hidden">
-          <div>
-            <span class="key-label">Dynamic key</span>
-            <code id="key-value" class="key-value"></code>
-          </div>
-          <button id="copy-button" type="button">Sao chép key</button>
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #10b981;"><i class="fa-solid fa-dollar-sign"></i></div>
+                <div class="stat-info">
+                    <div class="label">HÔM NAY</div>
+                    <div class="val" style="color: #10b981;">+<span id="today-lua">0</span> Lúa</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #3b82f6;"><i class="fa-solid fa-list-check"></i></div>
+                <div class="stat-info">
+                    <div class="label">TỔNG VƯỢT LINK</div>
+                    <div class="val">750 Lúa</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #a855f7;"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <div class="stat-info">
+                    <div class="label">NV ĐÃ LÀM (07/11/2026)</div>
+                    <div class="val" id="task-completed-count">2</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #ef4444;"><i class="fa-solid fa-rotate"></i></div>
+                <div class="stat-info">
+                    <div class="label">RESET SAU</div>
+                    <div class="val" style="color: #ef4444;" id="timer">15:22:49</div>
+                </div>
+            </div>
         </div>
-        <p id="expiry" class="expiry hidden"></p>
-      </section>
-      <footer class="footer">
-        <span>Phiên dùng một lần</span>
-        <span>Key có hiệu lực 30 phút</span>
-      </footer>
-    </main>
 
-    <script>
-      // Replace this with the deployed API origin before uploading to GitHub Pages.
-      // Example format: https://your-published-api-domain/api
-      const API_BASE_URL = "https://REPLACE_WITH_YOUR_REPLIT_API_DOMAIN/api";
+        <!-- IP Information -->
+        <div class="info-card">
+            <div class="info-header">
+                <i class="fa-solid fa-globe"></i> IP hiện tại
+            </div>
+            <div class="ip-address">125.235.229.249</div>
+            <div class="info-desc">
+                Quota chặn theo <b>mã thiết bị</b> và <b>địa chỉ IP</b> — đổi IP/VPN/4G không giúp vượt giới hạn.
+            </div>
+            <div class="device-badge">
+                <i class="fa-solid fa-mobile-screen"></i> Đã định danh thiết bị <span style="margin-left:auto; color:#94a3b8;">25adfa7971...</span>
+            </div>
+        </div>
 
-      const statusCard = document.getElementById("status-card");
-      const statusIcon = document.getElementById("status-icon");
-      const statusTitle = document.getElementById("status-title");
-      const statusCopy = document.getElementById("status-copy");
-      const spinner = document.getElementById("spinner");
-      const keyBox = document.getElementById("key-box");
-      const keyValue = document.getElementById("key-value");
-      const expiry = document.getElementById("expiry");
-      const copyButton = document.getElementById("copy-button");
+        <!-- Task List -->
+        <div class="task-card">
+            <i class="fa-solid fa-thumbtack pin-icon"></i>
+            <div class="task-header">
+                <div class="task-title-group">
+                    <div class="task-icon"><i class="fa-solid fa-link"></i></div>
+                    <div>
+                        <div class="task-name">Vượt Link4M</div>
+                        <div class="task-sub">
+                            <span class="badge-time"><i class="fa-regular fa-clock"></i> ~90s</span>
+                            <span class="badge-reward">+400 Lúa</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-counter">0/2</div>
+            </div>
+            <div class="task-remaining">Còn 2/2 lượt hôm nay</div>
+            <button class="btn-task" onclick="openTaskModal('Vượt Link4M', 400)">
+                <i class="fa-solid fa-play"></i> Làm nhiệm vụ
+            </button>
+        </div>
 
-      function showStatus(state, icon, title, copy) {
-        statusCard.dataset.state = state;
-        statusIcon.textContent = icon;
-        statusTitle.textContent = title;
-        statusCopy.textContent = copy;
-        spinner.classList.add("hidden");
-      }
+        <div class="task-card">
+            <i class="fa-solid fa-thumbtack pin-icon"></i>
+            <div class="task-header">
+                <div class="task-title-group">
+                    <div class="task-icon"><i class="fa-solid fa-link"></i></div>
+                    <div>
+                        <div class="task-name">Link BBMKTS (CHECK)</div>
+                        <div class="task-sub">
+                            <span class="badge-time"><i class="fa-regular fa-clock"></i> ~90s</span>
+                            <span class="badge-reward">+400 Lúa</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-counter">0/1</div>
+            </div>
+            <div class="task-remaining">Còn 1/1 lượt hôm nay</div>
+            <button class="btn-task" onclick="openTaskModal('Link BBMKTS (CHECK)', 400)">
+                <i class="fa-solid fa-play"></i> Làm nhiệm vụ
+            </button>
+        </div>
 
-      function showInvalidAccess() {
-        showStatus(
-          "error",
-          "×",
-          "❌ Truy cập không hợp lệ!",
-          "Vui lòng mở link từ Bot Telegram để thực hiện nhiệm vụ.",
-        );
-      }
+        <div class="task-card">
+            <i class="fa-solid fa-thumbtack pin-icon"></i>
+            <div class="task-header">
+                <div class="task-title-group">
+                    <div class="task-icon" style="background:#f0abfc; color:#c026d3;"><i class="fa-solid fa-link"></i></div>
+                    <div>
+                        <div class="task-name">Link Traffic Việt</div>
+                        <div class="task-sub">
+                            <span class="badge-time"><i class="fa-regular fa-clock"></i> ~90s</span>
+                            <span class="badge-reward" style="background:#fef08a; color:#a16207;">+350 Lúa</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-counter">0/2</div>
+            </div>
+            <div class="task-remaining">Còn 2/2 lượt hôm nay</div>
+            <button class="btn-task" onclick="openTaskModal('Link Traffic Việt', 350)">
+                <i class="fa-solid fa-play"></i> Làm nhiệm vụ
+            </button>
+        </div>
+    </div>
 
-      function getApiBaseUrl() {
-        const configured =
-          window.BUFFLIKE_API_BASE_URL || API_BASE_URL;
-        if (configured.includes("REPLACE_WITH_YOUR_REPLIT_API_DOMAIN")) {
-          return null;
-        }
-        return configured.replace(/\/+$/, "");
-      }
+    <!-- Modal Popup Xác Nhận (Ảnh 3) -->
+    <div class="modal-overlay" id="taskModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-header-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="modal-header-text">
+                    <h3>Xác nhận nhiệm vụ</h3>
+                    <p>Đọc kỹ trước khi bắt đầu</p>
+                </div>
+            </div>
 
-      async function postJson(apiBaseUrl, path, body) {
-        const response = await fetch(`${apiBaseUrl}${path}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-          cache: "no-store",
-        });
-        const payload = await response.json().catch(() => ({}));
-        return { response, payload };
-      }
+            <div class="modal-reward-box">
+                <div class="reward-row">
+                    <span class="label">Nhiệm vụ</span>
+                    <span class="val" id="modal-task-name">Link PCS</span>
+                </div>
+                <div class="reward-row">
+                    <span class="label">Thưởng</span>
+                    <span class="val-green" id="modal-task-reward">+200 Lúa</span>
+                </div>
+            </div>
 
-      async function start() {
-        // Tự động bóc tách token bất chấp bên rút gọn link trả về kiểu gì (thiếu ?, thiếu =, hay dạng /token=)
-        let token = new URLSearchParams(window.location.search).get("token");
+            <div class="rules-title">QUY TẮC BẮT BUỘC</div>
 
-        if (!token) {
-            const href = window.location.href;
-            const match = href.match(/token[=/]?([a-zA-Z0-9_-]+)/) || href.match(/token=([^&]+)/);
-            if (match) {
-                token = match[1];
-            }
-        }
-
-        // Do not call any API when there is no token.
-        if (!token) {
-          showInvalidAccess();
-          return;
-        }
-
-        const apiBaseUrl = getApiBaseUrl();
-        if (!apiBaseUrl) {
-          showStatus(
-            "error",
-            "!",
-            "Trang chưa được cấu hình",
-            "Hãy điền API_BASE_URL bằng URL API Replit đã xuất bản rồi tải lại trang.",
-          );
-          return;
-        }
-
-        try {
-          const validation = await postJson(
-            apiBaseUrl,
-            "/session/validate",
-            { token },
-          );
-          if (!validation.response.ok || validation.payload.valid !== true) {
-            showInvalidAccess();
-            return;
-          }
-
-          // The API consumes the token atomically. Never retry this request.
-          const generated = await postJson(apiBaseUrl, "/generate-key", {
-            token,
-          });
-          if (!generated.response.ok || !generated.payload.key) {
-            showInvalidAccess();
-            return;
-          }
-
-          history.replaceState({}, document.title, window.location.pathname);
-          showStatus(
-            "success",
-            "✓",
-            "Key đã sẵn sàng",
-            `Nhiệm vụ ${validation.payload.taskNumber} đã được xác nhận. Hãy gửi key này về bot Telegram.`,
-          );
-          keyValue.textContent = generated.payload.key;
-          keyBox.classList.remove("hidden");
-          const expiresAt = new Date(generated.payload.expiresAt);
-          expiry.textContent = `Key hết hạn lúc ${new Intl.DateTimeFormat(
-            "vi-VN",
-            {
-              dateStyle: "short",
-              timeStyle: "short",
-              timeZone: "Asia/Ho_Chi_Minh",
-            },
-          ).format(expiresAt)} (giờ Việt Nam).`;
-          expiry.classList.remove("hidden");
-        } catch {
-          showStatus(
-            "error",
-            "!",
-            "Không thể kết nối API",
-            "Hãy kiểm tra cấu hình API hoặc mở lại link nhiệm vụ trong bot Telegram.",
-          );
-        }
-      }
-
-      copyButton.addEventListener("click", async () => {
-        const key = keyValue.textContent || "";
-        try {
-          await navigator.clipboard.writeText(key);
-          copyButton.textContent = "Đã sao chép";
-          window.setTimeout(() => {
-            copyButton.textContent = "Sao chép key";
-          }, 1500);
-        } catch {
-          copyButton.textContent = "Không sao chép được";
-        }
-      });
-
-      void start();
-    </script>
-  </body>
-</html>
+            <d

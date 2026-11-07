@@ -370,10 +370,31 @@
     let userScore = 0;
     let completedCount = 0;
 
+    // Lấy ngày hiện tại định dạng YYYY-MM-DD theo giờ Việt Nam
+    function getCurrentDate() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
     function loadUserData() {
         if (savedGameId) {
             userScore = parseInt(localStorage.getItem(`coin_score_${savedGameId}`) || '0');
-            completedCount = parseInt(localStorage.getItem(`completed_count_${savedGameId}`) || '0');
+            
+            // Kiểm tra reset theo ngày cho số lượt hoàn thành nhiệm vụ
+            const today = getCurrentDate();
+            const lastActiveDate = localStorage.getItem(`active_date_${savedGameId}`) || '';
+            
+            if (lastActiveDate !== today) {
+                // Nếu sang ngày mới, reset số lượt làm trong ngày về 0 nhưng GIỮ NGUYÊN tổng Coin tích lũy
+                completedCount = 0;
+                localStorage.setItem(`completed_count_${savedGameId}`, 0);
+                localStorage.setItem(`active_date_${savedGameId}`, today);
+            } else {
+                completedCount = parseInt(localStorage.getItem(`completed_count_${savedGameId}`) || '0');
+            }
         }
     }
     loadUserData();
@@ -408,6 +429,7 @@
                 localStorage.setItem(`completed_count_${savedGameId}`, completedCount);
                 localStorage.setItem(`coin_score_${savedGameId}`, userScore);
                 localStorage.setItem(`last_processed_${savedGameId}`, completedCount.toString());
+                localStorage.setItem(`active_date_${savedGameId}`, getCurrentDate());
 
                 alert('🎉 Vượt link thành công! Đã cộng +300 Coin cho ID: ' + savedGameId);
             }
@@ -440,6 +462,7 @@
         if (confirm(`Bạn có chắc chắn muốn khóa ID: ${inputVal} không? Sau khi khóa sẽ KHÔNG THỂ thay đổi trên thiết bị này!`)) {
             savedGameId = inputVal;
             localStorage.setItem('locked_game_id', savedGameId);
+            localStorage.setItem(`active_date_${savedGameId}`, getCurrentDate());
             
             loadUserData();
             leaderboardData[0].name = `ID: ${savedGameId}`;
@@ -493,12 +516,12 @@
             </div>
             <div class="task-footer">
                 <span class="task-limit">
-                    ${isFinishedAll ? '🎉 Bạn đã hoàn thành toàn bộ 40/40 lượt!' : `Còn <b>${remaining}/${MAX_LINKS}</b> lượt hôm nay`}
+                    ${isFinishedAll ? '🎉 Bạn đã hoàn thành toàn bộ 40/40 lượt hôm nay!' : `Còn <b>${remaining}/${MAX_LINKS}</b> lượt hôm nay`}
                 </span>
             </div>
             <div class="task-actions">
                 <a href="${isFinishedAll ? '#' : currentTargetUrl}" target="_blank" class="btn-do-task ${isFinishedAll ? 'completed' : ''}" onclick="handleTaskClick(event)">
-                    ${isFinishedAll ? 'Đã hoàn thành tất cả' : `▶ Làm nhiệm vụ (Lần ${completedCount + 1}/${MAX_LINKS})`}
+                    ${isFinishedAll ? 'Hết lượt hôm nay' : `▶ Làm nhiệm vụ (Lần ${completedCount + 1}/${MAX_LINKS})`}
                 </a>
                 ${!isFinishedAll ? `<button class="btn-skip-task" onclick="skipTask()">🔄 Đổi link</button>` : ''}
             </div>
@@ -515,7 +538,7 @@
 
         if (completedCount >= MAX_LINKS) {
             event.preventDefault();
-            alert('Bạn đã hoàn thành đủ 40 lượt vượt link hôm nay!');
+            alert('Bạn đã hoàn thành đủ 40 lượt vượt link hôm nay! Hãy quay lại vào ngày mai nhé.');
             return;
         }
     }

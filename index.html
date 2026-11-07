@@ -15,7 +15,7 @@
             background-color: #f4f6f9;
             color: #333;
             padding: 15px;
-            padding-bottom: 70px; /* Tạo khoảng trống không bị che mất nhiệm vụ cuối */
+            padding-bottom: 70px;
         }
         .container {
             max-width: 500px;
@@ -213,7 +213,7 @@
             box-shadow: none;
         }
 
-        /* Nút Telegram nổi góc phải dưới giống ảnh mẫu */
+        /* Nút Telegram nổi */
         .telegram-float {
             position: fixed;
             bottom: 20px;
@@ -238,14 +238,14 @@
             width: 26px;
             height: 26px;
             fill: white;
-            margin-left: -2px; /* căn chỉnh icon máy bay giấy cho cân */
+            margin-left: -2px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Banner sự kiện thời gian 09/07 - 10/07 -->
+    <!-- Banner sự kiện -->
     <div class="event-banner">
         <h2>🔥 Đua Top Vượt Link 🔥</h2>
         <p>Top 1 BXH nhận ngay <span class="highlight">🎁 Thẻ Tháng Free Fire</span></p>
@@ -255,18 +255,14 @@
     <!-- Bảng xếp hạng -->
     <div class="leaderboard-card">
         <div class="leaderboard-title">🏆 Bảng Xếp Hạng Đua Top</div>
-        <ul class="leaderboard-list" id="leaderboard">
-            <!-- Render từ JS -->
-        </ul>
+        <ul class="leaderboard-list" id="leaderboard"></ul>
     </div>
 
     <div class="section-title">📌 Danh Sách Nhiệm Vụ Kiếm Lúa (20 Ô)</div>
-    <div id="task-list">
-        <!-- Render 20 nhiệm vụ từ JS -->
-    </div>
+    <div id="task-list"></div>
 </div>
 
-<!-- Nút nổi Telegram trỏ đến t.me/tlzproject giống ảnh mẫu -->
+<!-- Nút Telegram -->
 <a href="https://t.me/tlzproject" target="_blank" class="telegram-float" title="Liên hệ Telegram">
     <svg viewBox="0 0 24 24">
         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
@@ -274,7 +270,6 @@
 </a>
 
 <script>
-    // Dữ liệu bảng xếp hạng mẫu
     let leaderboardData = [
         { name: "Bạn (Tôi)", score: 0, isUser: true },
         { name: "Lâm Pro FF", score: 4800 },
@@ -283,23 +278,28 @@
         { name: "Tuấn Gamer", score: 2900 }
     ];
 
-    // Khởi tạo đúng 20 ô nhiệm vụ
     const tasks = [];
     for (let i = 1; i <= 20; i++) {
-        const rewardValue = (Math.floor(Math.random() * 4) + 2) * 100; // 200 - 500 Lúa
+        const rewardValue = (Math.floor(Math.random() * 4) + 2) * 100;
+        
+        // Cấu hình link riêng cho nhiệm vụ số 2 theo yêu cầu của bạn
+        let targetUrl = `https://link4m.co/Example${i}`;
+        if (i === 2) {
+            targetUrl = `https://link4m.co/st?api=69477252020111717c5cd887&url=https://bufflikeff.site`;
+        }
+
         tasks.push({
             id: i,
-            name: `Vượt Link Rút Gọn #${i}`,
+            name: i === 2 ? `Vượt Link Rút Gọn #2 (Link Chính Chủ)` : `Vượt Link Rút Gọn #${i}`,
             time: `~${Math.floor(Math.random() * 30) + 45}s`,
             rewardAmount: rewardValue,
             rewardText: `${rewardValue} Lúa`,
             maxLimit: 2,
             completed: 0,
-            url: `https://link4m.co/Example${i}`
+            url: targetUrl
         });
     }
 
-    // Tải điểm & trạng thái từ LocalStorage
     let userScore = parseInt(localStorage.getItem('user_lua_score') || '0');
     leaderboardData[0].score = userScore;
 

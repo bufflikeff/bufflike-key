@@ -264,10 +264,6 @@
             box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25);
             transition: all 0.2s;
         }
-        .btn-do-task.waiting {
-            background-color: #ff9800;
-            box-shadow: none;
-        }
         .btn-do-task.completed {
             background-color: #e0e0e0;
             color: #888;
@@ -365,9 +361,9 @@
     let userScore = parseInt(localStorage.getItem('user_lua_score') || '0');
     let completedCount = parseInt(localStorage.getItem('completed_links_count') || '0');
     const MAX_LINKS = 40;
-    const WAIT_SECONDS = 60; // Thời gian chờ tối thiểu (60 giây)
 
-    const returnUrl = encodeURIComponent("https://bufflikeff.site/index.html?status=success");
+    // Link đích bắt buộc phải có ?status=success để trang rút gọn đá về đây mới nhận điểm
+    const returnUrl = encodeURIComponent("https://bufflikeff.github.io/bufflikeff/index.html?status=success"); // Nhớ đổi thành link github pages chuẩn của bạn nếu khác
     const linkList = [];
     for (let i = 1; i <= MAX_LINKS; i++) {
         linkList.push(`https://link4m.co/st?api=69477252020111717c5cd887&url=${returnUrl}`);
@@ -381,41 +377,24 @@
         { name: "ID: 11293847", score: 5200 }
     ];
 
-    // 1. KIỂM TRA NẾU TRANG RÚT GỌN CHUYỂN HƯỚNG CHÍNH THỨC VỀ (?status=success)
+    // CHỈ CỘNG ĐIỂM KHI TRANG RÚT GỌN ĐÁ VỀ KÈM TÍN HIỆU ?status=success
     function checkUrlCallback() {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('status') === 'success') {
-            completeReward();
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-    }
+            // Kiểm tra chống spam f5 hoặc nhận trùng 1 mốc
+            let lastProcessed = localStorage.getItem('last_processed_idx') || '-1';
+            if (completedCount.toString() !== lastProcessed && completedCount < MAX_LINKS) {
+                completedCount++;
+                userScore += 300;
 
-    // 2. KIỂM TRA ĐỦ THỜI GIAN KHI CHUYỂN TAB QUAY LẠI
-    document.addEventListener("visibilitychange", function() {
-        if (!document.hidden) {
-            const startTime = parseInt(localStorage.getItem('task_start_time') || '0');
-            if (startTime > 0) {
-                const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
-                if (elapsedSeconds >= WAIT_SECONDS) {
-                    completeReward();
-                }
+                localStorage.setItem('completed_links_count', completedCount);
+                localStorage.setItem('user_lua_score', userScore);
+                localStorage.setItem('last_processed_idx', completedCount.toString());
+
+                alert('🎉 Vượt link thành công! Đã cộng +300 Lúa.');
             }
-        }
-    });
-
-    function completeReward() {
-        if (completedCount < MAX_LINKS) {
-            completedCount++;
-            userScore += 300;
-            localStorage.removeItem('task_start_time');
-
-            localStorage.setItem('completed_links_count', completedCount);
-            localStorage.setItem('user_lua_score', userScore);
-
-            leaderboardData.find(u => u.isUser).score = userScore;
-            renderLeaderboard();
-            renderSingleTask();
-            alert('🎉 Vượt link thành công! Đã cộng +300 Lúa.');
+            // Xóa sạch tham số trên URL cho sạch sẽ
+            window.history.replaceState({}, document.title, window.location.pathname);
         }
     }
 
@@ -509,9 +488,7 @@
             alert('Bạn đã hoàn thành đủ 40 lượt vượt link hôm nay!');
             return;
         }
-
-        // Lưu thời điểm bắt đầu bấm làm nhiệm vụ
-        localStorage.setItem('task_start_time', Date.now().toString());
+        // Không làm gì thêm, để trình duyệt mở link rút gọn bình thường
     }
 
     function skipTask() {

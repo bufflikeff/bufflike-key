@@ -55,6 +55,11 @@
         .login-input:focus {
             border-color: #0066ff;
         }
+        .login-input:disabled {
+            background-color: #f1f3f5;
+            color: #555;
+            cursor: not-allowed;
+        }
         .login-btn {
             background-color: #0066ff;
             color: white;
@@ -64,6 +69,10 @@
             font-weight: 600;
             cursor: pointer;
             font-size: 14px;
+        }
+        .login-btn:disabled {
+            background-color: #adb5bd;
+            cursor: not-allowed;
         }
         .user-welcome {
             font-size: 14px;
@@ -322,10 +331,10 @@
 <div class="container">
     <!-- Khung Nhập ID Game -->
     <div class="login-card" id="login-section">
-        <div class="login-title">🎮 Nhập ID Game Free Fire Để Đua Top</div>
+        <div class="login-title">🎮 Khóa ID Game Đua Top</div>
         <div class="login-group">
             <input type="text" id="game-id-input" class="login-input" placeholder="Nhập ID Game của bạn...">
-            <button class="login-btn" onclick="saveGameId()">Lưu ID</button>
+            <button class="login-btn" id="save-id-btn" onclick="saveGameId()">Khóa ID</button>
         </div>
         <div id="welcome-msg" class="user-welcome"></div>
     </div>
@@ -357,12 +366,19 @@
 </a>
 
 <script>
-    let savedGameId = localStorage.getItem('user_game_id') || '';
-    let userScore = parseInt(localStorage.getItem('user_lua_score') || '0');
-    let completedCount = parseInt(localStorage.getItem('completed_links_count') || '0');
-    const MAX_LINKS = 40;
+    let savedGameId = localStorage.getItem('locked_game_id') || '';
+    let userScore = 0;
+    let completedCount = 0;
 
-    // Link đích chuẩn xác trỏ đến trang của bạn kèm tham số ?status=success
+    function loadUserData() {
+        if (savedGameId) {
+            userScore = parseInt(localStorage.getItem(`lua_score_${savedGameId}`) || '0');
+            completedCount = parseInt(localStorage.getItem(`completed_count_${savedGameId}`) || '0');
+        }
+    }
+    loadUserData();
+
+    const MAX_LINKS = 40;
     const returnUrl = encodeURIComponent("https://bufflikeff.github.io/bufflike-key/?status=success");
     const linkList = [];
     for (let i = 1; i <= MAX_LINKS; i++) {
@@ -370,27 +386,30 @@
     }
 
     let leaderboardData = [
-        { name: savedGameId ? `ID: ${savedGameId}` : "Chưa nhập ID", score: userScore, isUser: true },
+        { name: savedGameId ? `ID: ${savedGameId}` : "Chưa khóa ID", score: userScore, isUser: true },
         { name: "ID: 83920192", score: 11800 },
         { name: "ID: 55219384", score: 9400 },
         { name: "ID: 99182341", score: 7600 },
         { name: "ID: 11293847", score: 5200 }
     ];
 
-    // CHỈ CỘNG ĐIỂM KHI TRANG RÚT GỌN ĐÁ VỀ KÈM TÍN HIỆU ?status=success
     function checkUrlCallback() {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('status') === 'success') {
-            let lastProcessed = localStorage.getItem('last_processed_idx') || '-1';
+            if (!savedGameId) {
+                alert('Vui lòng khóa ID Game trước khi nhận thưởng!');
+                return;
+            }
+            let lastProcessed = localStorage.getItem(`last_processed_${savedGameId}`) || '-1';
             if (completedCount.toString() !== lastProcessed && completedCount < MAX_LINKS) {
                 completedCount++;
                 userScore += 300;
 
-                localStorage.setItem('completed_links_count', completedCount);
-                localStorage.setItem('user_lua_score', userScore);
-                localStorage.setItem('last_processed_idx', completedCount.toString());
+                localStorage.setItem(`completed_count_${savedGameId}`, completedCount);
+                localStorage.setItem(`lua_score_${savedGameId}`, userScore);
+                localStorage.setItem(`last_processed_${savedGameId}`, completedCount.toString());
 
-                alert('🎉 Vượt link thành công! Đã cộng +300 Lúa.');
+                alert('🎉 Vượt link thành công! Đã cộng +300 Lúa cho ID: ' + savedGameId);
             }
             window.history.replaceState({}, document.title, window.location.pathname);
         }
@@ -399,10 +418,15 @@
     function checkLoginState() {
         const input = document.getElementById('game-id-input');
         const welcome = document.getElementById('welcome-msg');
+        const btn = document.getElementById('save-id-btn');
+        
         if (savedGameId) {
             input.value = savedGameId;
+            input.disabled = true; // Khóa ô nhập không cho sửa
+            btn.disabled = true;  // Khóa nút lưu
+            btn.style.backgroundColor = "#adb5bd";
             welcome.style.display = 'block';
-            welcome.innerHTML = `✅ Đã liên kết ID Game: <b>${savedGameId}</b>`;
+            welcome.innerHTML = `🔒 Đã khóa cứng ID trên thiết bị này: <b>${savedGameId}</b>`;
         }
     }
 
@@ -412,12 +436,20 @@
             alert('Vui lòng nhập ID Game hợp lệ!');
             return;
         }
-        savedGameId = inputVal;
-        localStorage.setItem('user_game_id', savedGameId);
-        leaderboardData[0].name = `ID: ${savedGameId}`;
-        renderLeaderboard();
-        checkLoginState();
-        alert('Đã lưu ID Game thành công!');
+
+        if (confirm(`Bạn có chắc chắn muốn khóa ID: ${inputVal} không? Sau khi khóa sẽ KHÔNG THỂ thay đổi trên thiết bị này!`)) {
+            savedGameId = inputVal;
+            localStorage.setItem('locked_game_id', savedGameId);
+            
+            loadUserData();
+            leaderboardData[0].name = `ID: ${savedGameId}`;
+            leaderboardData.find(u => u.isUser).score = userScore;
+            
+            checkLoginState();
+            renderLeaderboard();
+            renderSingleTask();
+            alert('Đã khóa cứng ID thành công!');
+        }
     }
 
     function renderLeaderboard() {
@@ -476,7 +508,7 @@
     function handleTaskClick(event) {
         if (!savedGameId) {
             event.preventDefault();
-            alert('Vui lòng nhập ID Game ở khung phía trên trước khi bắt đầu!');
+            alert('Vui lòng khóa ID Game ở khung phía trên trước khi bắt đầu!');
             document.getElementById('game-id-input').focus();
             return;
         }

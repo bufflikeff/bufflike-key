@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đua Top Vượt Link</title>
+    <title>Đua Top Vượt Link - Thẻ Tháng</title>
     <style>
         * {
             box-sizing: border-box;
@@ -21,7 +21,7 @@
             margin: 0 auto;
         }
         
-        /* Banner Thẻ Tháng */
+        /* Banner Sự Kiện */
         .event-banner {
             background: linear-gradient(135deg, #ff416c, #ff4b2b);
             color: white;
@@ -30,6 +30,7 @@
             text-align: center;
             margin-bottom: 20px;
             box-shadow: 0 4px 15px rgba(255, 65, 108, 0.3);
+            position: relative;
         }
         .event-banner h2 {
             font-size: 20px;
@@ -41,6 +42,7 @@
             font-size: 14px;
             opacity: 0.95;
             font-weight: 500;
+            margin-bottom: 8px;
         }
         .event-banner .highlight {
             background: #fff;
@@ -48,6 +50,14 @@
             padding: 2px 8px;
             border-radius: 12px;
             font-weight: bold;
+        }
+        .event-time {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
         }
 
         /* Bảng Xếp Hạng */
@@ -207,10 +217,11 @@
 <body>
 
 <div class="container">
-    <!-- Banner sự kiện -->
+    <!-- Banner sự kiện có ngày bắt đầu & kết thúc -->
     <div class="event-banner">
         <h2>🔥 Đua Top Vượt Link 🔥</h2>
         <p>Top 1 BXH nhận ngay <span class="highlight">🎁 Thẻ Tháng Free Fire</span></p>
+        <div class="event-time">📅 Thời gian: <b>09/07 - 10/07</b></div>
     </div>
 
     <!-- Bảng xếp hạng -->
@@ -228,7 +239,7 @@
 </div>
 
 <script>
-    // Dữ liệu bảng xếp hạng mẫu (Top cao thủ)
+    // Dữ liệu bảng xếp hạng mẫu
     let leaderboardData = [
         { name: "Bạn (Tôi)", score: 0, isUser: true },
         { name: "Lâm Pro FF", score: 4800 },
@@ -249,11 +260,11 @@
             rewardText: `${rewardValue} Lúa`,
             maxLimit: 2,
             completed: 0,
-            url: `https://link4m.co/Example${i}` // Thay link rút gọn thực tế vào đây
+            url: `https://link4m.co/Example${i}`
         });
     }
 
-    // Tải điểm & trạng thái cũ từ LocalStorage
+    // Tải điểm & trạng thái từ LocalStorage
     let userScore = parseInt(localStorage.getItem('user_lua_score') || '0');
     leaderboardData[0].score = userScore;
 
@@ -271,7 +282,6 @@
         const lbContainer = document.getElementById('leaderboard');
         lbContainer.innerHTML = '';
         
-        // Sắp xếp danh sách theo điểm Lúa từ cao đến thấp
         leaderboardData.sort((a, b) => b.score - a.score);
 
         leaderboardData.forEach((item, index) => {
@@ -329,23 +339,19 @@
             return;
         }
 
-        // Tăng lượt hoàn thành & cộng điểm Lúa đua top
         tasks[index].completed++;
         userScore += tasks[index].rewardAmount;
         leaderboardData.find(u => u.isUser).score = userScore;
 
-        // Lưu vào bộ nhớ trình duyệt
         localStorage.setItem('user_lua_score', userScore);
         localStorage.setItem('tasks_data', JSON.stringify(tasks));
 
-        // Cập nhật giao diện
         setTimeout(() => {
             renderLeaderboard();
             renderTasks();
         }, 300);
     }
 
-    // Chạy render ban đầu
     renderLeaderboard();
     renderTasks();
 </script>

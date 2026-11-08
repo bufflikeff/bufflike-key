@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đua Top Vượt Link & Điểm Danh Chuỗi</title>
+    <title>Đua Top Vượt Link - Thẻ Tháng Free Fire</title>
     <style>
         * {
             box-sizing: border-box;
@@ -22,101 +22,117 @@
             margin: 0 auto;
         }
 
-        /* Khung Tiến Trình Chuỗi Buff (Mới) */
-        .streak-card {
-            background: linear-gradient(135deg, #131c31, #0f172a);
-            border: 2px solid #3b82f6;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
-        }
-        .streak-header-badge {
-            background: #10b981;
-            color: #fff;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 4px 12px;
+        /* Khung Top 3 Đua Top (Thay thế mục chuỗi) */
+        .podium-card {
+            background: linear-gradient(135deg, #4c1d95, #3b0764, #581c87);
+            border: 2px solid #a855f7;
             border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 10px;
-            text-transform: uppercase;
+            padding: 20px 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        .streak-title {
+        .podium-title {
             font-size: 16px;
-            font-weight: 700;
-            color: #38bdf8;
-            margin-bottom: 4px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #f3e8ff;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+        .podium-flex {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        /* Top chung */
+        .podium-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        /* Top 1 ở giữa cao hơn */
+        .podium-item.top-1 {
+            transform: translateY(-10px);
+            flex: 1.2;
+        }
+        .avatar-circle {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            color: #fff;
+            margin-bottom: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 2px solid #fff;
         }
-        .streak-subtitle {
+        .top-1 .avatar-circle {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            border-color: #ffd700;
+            font-size: 15px;
+            box-shadow: 0 0 15px rgba(255, 65, 108, 0.6);
+        }
+        .top-2 .avatar-circle {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-color: #93c5fd;
+        }
+        .top-3 .avatar-circle {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-color: #fde68a;
+        }
+        .podium-name {
             font-size: 13px;
-            color: #94a3b8;
-            margin-bottom: 12px;
-        }
-        .progress-bar-container {
-            background: #1e293b;
-            border-radius: 10px;
-            height: 12px;
-            width: 100%;
-            margin-bottom: 15px;
+            font-weight: 700;
+            color: #fff;
+            max-width: 100px;
             overflow: hidden;
-            position: relative;
-        }
-        .progress-bar-fill {
-            background: linear-gradient(90deg, #3b82f6, #10b981);
-            height: 100%;
-            width: 0%;
-            border-radius: 10px;
-            transition: width 0.4s ease;
-        }
-        .milestones-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-        }
-        .milestone-item {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 10px;
-            padding: 8px 4px;
-            text-align: center;
-        }
-        .milestone-days {
-            font-size: 11px;
-            color: #cbd5e1;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             margin-bottom: 2px;
         }
-        .milestone-reward {
+        .podium-score {
             font-size: 12px;
-            font-weight: 700;
-            color: #fbbf24;
-            margin-bottom: 6px;
-        }
-        .milestone-btn {
-            background: #3b82f6;
-            color: #white;
-            border: none;
-            width: 100%;
-            padding: 4px 0;
-            border-radius: 6px;
-            font-size: 11px;
             font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
+            color: #fde047;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 8px;
+            border-radius: 10px;
         }
-        .milestone-btn.claimed {
-            background: #334155;
-            color: #64748b;
-            cursor: not-allowed;
+
+        /* Nút hành động nhanh trong khung podium */
+        .podium-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
-        .milestone-btn.ready {
-            background: #10b981;
+        .podium-btn {
+            background: #1e1b4b;
             color: #fff;
+            border: 1px solid #7c3aed;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-        
+        .podium-btn:hover {
+            background: #7c3aed;
+        }
+
         /* Khung Nhập ID Game */
         .login-card {
             background: #131c31;
@@ -218,7 +234,7 @@
             font-weight: 600;
         }
 
-        /* Bảng Xếp Hạng */
+        /* Bảng Xếp Hạng Chi Tiết */
         .leaderboard-card {
             background: #131c31;
             border-radius: 16px;
@@ -428,37 +444,33 @@
 <body>
 
 <div class="container">
-    <!-- Khung Tiến Trình Chuỗi Buff (Mới Thêm) -->
-    <div class="streak-card" id="streak-section">
-        <div class="streak-header-badge">🎄 Giáng Sinh An Lành 🎄</div>
-        <div class="streak-title">🛡️ TIẾN TRÌNH CHUỖI BUFF</div>
-        <div class="streak-subtitle" id="streak-days-text">Chuỗi hiện tại: 0 / 120 Ngày</div>
-        
-        <div class="progress-bar-container">
-            <div class="progress-bar-fill" id="progress-bar"></div>
+    <!-- KHUNG TOP 3 ĐUA TOP (Thay thế mục chuỗi) -->
+    <div class="podium-card">
+        <div class="podium-title">🌲 Bảng Xếp Hạng Đua Top Nhận Thẻ Tháng 🌲</div>
+        <div class="podium-flex">
+            <!-- Top 2 -->
+            <div class="podium-item top-2">
+                <div class="avatar-circle">TOP 2</div>
+                <div class="podium-name" id="podium-2-name">ID: 8392...</div>
+                <div class="podium-score" id="podium-2-score">11800 Coin</div>
+            </div>
+            <!-- Top 1 -->
+            <div class="podium-item top-1">
+                <div class="avatar-circle">👑 TOP 1</div>
+                <div class="podium-name" id="podium-1-name">ID: Loading</div>
+                <div class="podium-score" id="podium-1-score">0 Coin</div>
+            </div>
+            <!-- Top 3 -->
+            <div class="podium-item top-3">
+                <div class="avatar-circle">TOP 3</div>
+                <div class="podium-name" id="podium-3-name">ID: 5521...</div>
+                <div class="podium-score" id="podium-3-score">9400 Coin</div>
+            </div>
         </div>
-
-        <div class="milestones-grid">
-            <div class="milestone-item">
-                <div class="milestone-days">14 Ngày</div>
-                <div class="milestone-reward">25 KC</div>
-                <button class="milestone-btn" id="btn-m-14" onclick="claimMilestone(14)">Nhận</button>
-            </div>
-            <div class="milestone-item">
-                <div class="milestone-days">30 Ngày</div>
-                <div class="milestone-reward">50 KC</div>
-                <button class="milestone-btn" id="btn-m-30" onclick="claimMilestone(30)">Nhận</button>
-            </div>
-            <div class="milestone-item">
-                <div class="milestone-days">60 Ngày</div>
-                <div class="milestone-reward">113 KC</div>
-                <button class="milestone-btn" id="btn-m-60" onclick="claimMilestone(60)">Nhận</button>
-            </div>
-            <div class="milestone-item">
-                <div class="milestone-days">120 Ngày</div>
-                <div class="milestone-reward">Thẻ Tuần</div>
-                <button class="milestone-btn" id="btn-m-120" onclick="claimMilestone(120)">Nhận</button>
-            </div>
+        
+        <div class="podium-actions">
+            <button class="podium-btn" onclick="scrollToTask()">Kiếm Coin</button>
+            <button class="podium-btn" onclick="skipTask()">Đổi Nhiệm Vụ</button>
         </div>
     </div>
 
@@ -479,9 +491,9 @@
         <div class="event-time">📅 Thời gian: <b>09/07 - 10/07</b></div>
     </div>
 
-    <!-- Bảng xếp hạng -->
+    <!-- Bảng xếp hạng chi tiết -->
     <div class="leaderboard-card">
-        <div class="leaderboard-title">🏆 Bảng Xếp Hạng Đua Top</div>
+        <div class="leaderboard-title">🏆 Bảng Xếp Hạng Chi Tiết</div>
         <ul class="leaderboard-list" id="leaderboard"></ul>
     </div>
 
@@ -502,7 +514,6 @@
     let savedGameId = localStorage.getItem('locked_game_id') || '';
     let userScore = 0;
     let completedCount = 0;
-    let streakDays = 0; // Số ngày chuỗi buff
 
     function getCurrentDate() {
         const now = new Date();
@@ -515,7 +526,6 @@
     function loadUserData() {
         if (savedGameId) {
             userScore = parseInt(localStorage.getItem(`coin_score_${savedGameId}`) || '0');
-            streakDays = parseInt(localStorage.getItem(`streak_days_${savedGameId}`) || '0');
             
             const today = getCurrentDate();
             const lastActiveDate = localStorage.getItem(`active_date_${savedGameId}`) || '';
@@ -558,18 +568,6 @@
                 completedCount++;
                 userScore += 300;
 
-                // Nếu vừa hoàn thành đủ 40/40 link trong ngày, tăng 1 ngày chuỗi lên!
-                if (completedCount === MAX_LINKS) {
-                    let lastCompletedDayDate = localStorage.getItem(`streak_counted_date_${savedGameId}`) || '';
-                    const today = getCurrentDate();
-                    if (lastCompletedDayDate !== today) {
-                        streakDays++;
-                        localStorage.setItem(`streak_days_${savedGameId}`, streakDays);
-                        localStorage.setItem(`streak_counted_date_${savedGameId}`, today);
-                        alert(`🔥 Chúc mừng! Bạn đã hoàn thành đủ 40/40 link hôm nay và tích lũy thêm 1 ngày chuỗi (Tổng: ${streakDays} Ngày)!`);
-                    }
-                }
-
                 localStorage.setItem(`completed_count_${savedGameId}`, completedCount);
                 localStorage.setItem(`coin_score_${savedGameId}`, userScore);
                 localStorage.setItem(`last_processed_${savedGameId}`, completedCount.toString());
@@ -581,35 +579,51 @@
         }
     }
 
-    // Nhận thưởng mốc ngày (14, 30, 60, 120)
-    function claimMilestone(targetDays) {
-        if (!savedGameId) {
-            alert('Vui lòng khóa ID Game trước!');
-            return;
+    function checkLoginState() {
+        const input = document.getElementById('game-id-input');
+        const welcome = document.getElementById('welcome-msg');
+        const btn = document.getElementById('save-id-btn');
+        
+        if (savedGameId) {
+            input.value = savedGameId;
+            input.disabled = true;
+            btn.disabled = true;
+            btn.style.backgroundColor = "#334155";
+            welcome.style.display = 'block';
+            welcome.innerHTML = `🔒 Đã khóa cứng ID trên thiết bị này: <b>${savedGameId}</b>`;
         }
-        let claimedStatus = localStorage.getItem(`claimed_milestone_${savedGameId}_${targetDays}`) === 'true';
-        if (claimedStatus) {
-            alert('Bạn đã nhận phần thưởng mốc này rồi!');
-            return;
-        }
-        if (streakDays < targetDays) {
-            alert(`Chưa đủ điều kiện! Cần đạt ${targetDays} ngày chuỗi (Hiện tại: ${streakDays} ngày).`);
-            return;
-        }
-
-        localStorage.setItem(`claimed_milestone_${savedGameId}_${targetDays}`, 'true');
-        alert(`🎁 Thành công! Bạn đã nhận phần thưởng mốc ${targetDays} ngày. Hãy liên hệ Admin Telegram để nhận thưởng nhé!`);
-        updateStreakUI();
     }
 
-    function updateStreakUI() {
-        const streakText = document.getElementById('streak-days-text');
-        const progressBar = document.getElementById('progress-bar');
-        
-        streakText.innerHTML = `Chuỗi hiện tại: ${streakDays} / 120 Ngày`;
-        let percent = Math.min((streakDays / 120) * 100, 100);
-        progressBar.style.width = percent + '%';
+    function saveGameId() {
+        const inputVal = document.getElementById('game-id-input').value.trim();
+        if (!inputVal) {
+            alert('Vui lòng nhập ID Game hợp lệ!');
+            return;
+        }
 
-        // Check trạng thái nút nhận của từng mốc
-        [14, 30, 60, 120].forEach(days => {
-            const btn = document.getElementById(`btn-m-${days}`
+        if (confirm(`Bạn có chắc chắn muốn khóa ID: ${inputVal} không? Sau khi khóa sẽ KHÔNG THỂ thay đổi trên thiết bị này!`)) {
+            savedGameId = inputVal;
+            localStorage.setItem('locked_game_id', savedGameId);
+            localStorage.setItem(`active_date_${savedGameId}`, getCurrentDate());
+            
+            loadUserData();
+            leaderboardData[0].name = `ID: ${savedGameId}`;
+            leaderboardData.find(u => u.isUser).score = userScore;
+            
+            checkLoginState();
+            renderLeaderboard();
+            renderSingleTask();
+            alert('Đã khóa cứng ID thành công!');
+        }
+    }
+
+    function renderLeaderboard() {
+        leaderboardData.find(u => u.isUser).score = userScore;
+        leaderboardData.sort((a, b) => b.score - a.score);
+
+        // Cập nhật lên khung Podium Top 3 phía trên
+        if(leaderboardData.length >= 3) {
+            document.getElementById('podium-1-name').innerText = leaderboardData[0].name;
+            document.getElementById('podium-1-score').innerText = leaderboardData[0].score + ' Coin';
+
+            document.getElementById('podium-2-name'

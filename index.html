@@ -118,7 +118,6 @@
       border-color: #fde68a;
     }
 
-    /* Hiệu ứng chạy ngang cho ID Top 1, 2, 3 */
     .podium-name-running {
       font-size: 11px;
       font-weight: 700;
@@ -301,7 +300,7 @@
       <div class="podium-actions-3">
         <button class="podium-btn" onclick="scrollToKeySection()">Kiếm Vàng</button>
         <button class="podium-btn" onclick="alert('Đã làm mới nhiệm vụ!')">Đổi Nhiệm Vụ</button>
-        <button class="podium-btn" onclick="lockIdAction()">Nhập ID Đua Top</button>
+        <button class="podium-btn" onclick="focusAndLockIdInput()">Nhập ID Đua Top</button>
       </div>
     </div>
 
@@ -391,7 +390,6 @@
             let userScore = localStorage.getItem(`score_${uid}`) || '0';
             scoreBtnEl.innerText = `${userScore} Vàng`;
             
-            // Hiệu ứng chạy ngang nếu ID dài
             if (uid.length > 6) {
                 idBtnEl.innerHTML = `<marquee scrollamount="2">${uid}</marquee>`;
             } else {
@@ -415,25 +413,18 @@
       }
     }
 
-    // Chức năng Nhập/Khóa ID Đua Top ngay khi bấm nút
-    function lockIdAction() {
+    // Hàm bấm nút "Nhập ID Đua Top" ở trên: tự động trượt xuống và focus vào ô nhập ID
+    function focusAndLockIdInput() {
       const inputEl = document.getElementById("uidInput");
-      const uid = inputEl.value.trim();
+      const isLocked = localStorage.getItem("tiz_id_locked") === "true";
 
-      if (!uid) {
-        alert("Vui lòng nhập ID Game vào ô trước khi bấm khóa!");
-        inputEl.focus();
-        scrollToKeySection();
+      if (isLocked) {
+        alert("🔒 ID của bạn đã được khóa cứng trên thiết bị này rồi!");
         return;
       }
 
-      if (confirm(`Bạn có chắc chắn muốn khóa ID: ${uid} để đua top không? Sau khi khóa sẽ không thể thay đổi trên thiết bị này!`)) {
-        localStorage.setItem("tiz_current_uid", uid);
-        localStorage.setItem("tiz_id_locked", "true");
-        inputEl.disabled = true;
-        updateTop1Display(uid);
-        alert("🔒 Đã khóa cứng ID thành công trên thiết bị này!");
-      }
+      document.getElementById("controlPanelSection").scrollIntoView({ behavior: 'smooth' });
+      inputEl.focus();
     }
 
     function scrollToKeySection() {
@@ -467,7 +458,7 @@
     async function goToGetKey() {
       const inputEl = document.getElementById("uidInput");
       const uid = inputEl.value.trim();
-      if (!uid) { alert("Vui lòng nhập ID Game (UID) của bạn trước khi đi lấy Key!"); return; }
+      if (!uid) { alert("Vui lòng nhập ID Game (UID) của bạn trước khi đi lấy Key!"); inputEl.focus(); return; }
 
       // Tự động khóa cứng luôn khi bấm Lấy Key nếu chưa khóa
       if (localStorage.getItem("tiz_id_locked") !== "true") {
@@ -537,4 +528,13 @@
         msgDiv.innerText = data.message;
         
         if (data.status === "success") {
-          alert(data.mes
+          alert(data.message + " 🎉 Đã buff like thành công cho ID: " + uid);
+        }
+      } catch (err) { 
+        msgDiv.style.color = "#f87171"; 
+        msgDiv.innerText = "Không thể kết nối đến Server!"; 
+      }
+    }
+  </script>
+</body>
+</html>

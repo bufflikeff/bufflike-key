@@ -1,629 +1,440 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đua Top Vượt Link - Thẻ Tháng Free Fire</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-        body {
-            background-color: #0b0f19;
-            color: #fff;
-            padding: 15px;
-            padding-bottom: 70px;
-        }
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUFF LIKE FREE FIRE - TRANG CHỦ</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    
+    body { background-color: #0b0f19; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; position: relative; overflow-x: hidden; }
 
-        /* Khung Top 3 Đua Top (Thay thế mục chuỗi) */
-        .podium-card {
-            background: linear-gradient(135deg, #4c1d95, #3b0764, #581c87);
-            border: 2px solid #a855f7;
-            border-radius: 20px;
-            padding: 20px 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .podium-title {
-            font-size: 16px;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: #f3e8ff;
-            margin-bottom: 15px;
-            letter-spacing: 0.5px;
-        }
-        .podium-flex {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-        /* Top chung */
-        .podium-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-        }
-        /* Top 1 ở giữa cao hơn */
-        .podium-item.top-1 {
-            transform: translateY(-10px);
-            flex: 1.2;
-        }
-        .avatar-circle {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 14px;
-            color: #fff;
-            margin-bottom: 6px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            border: 2px solid #fff;
-        }
-        .top-1 .avatar-circle {
-            width: 65px;
-            height: 65px;
-            background: linear-gradient(135deg, #ff416c, #ff4b2b);
-            border-color: #ffd700;
-            font-size: 15px;
-            box-shadow: 0 0 15px rgba(255, 65, 108, 0.6);
-        }
-        .top-2 .avatar-circle {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            border-color: #93c5fd;
-        }
-        .top-3 .avatar-circle {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            border-color: #fde68a;
-        }
-        .podium-name {
-            font-size: 13px;
-            font-weight: 700;
-            color: #fff;
-            max-width: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            margin-bottom: 2px;
-        }
-        .podium-score {
-            font-size: 12px;
-            font-weight: 600;
-            color: #fde047;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 2px 8px;
-            border-radius: 10px;
-        }
+    /* --- HIỆU ỨNG TUYẾT RƠI GIÁNG SINH --- */
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      background: #ffffff;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: fall linear infinite;
+      z-index: 9999;
+    }
 
-        /* Nút hành động nhanh trong khung podium */
-        .podium-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        .podium-btn {
-            background: #1e1b4b;
-            color: #fff;
-            border: 1px solid #7c3aed;
-            padding: 10px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .podium-btn:hover {
-            background: #7c3aed;
-        }
+    @keyframes fall {
+      0% {
+        transform: translateY(-10px) translateX(0);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(50vh) translateX(20px);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(105vh) translateX(-20px);
+        opacity: 0;
+      }
+    }
+    /* ------------------------------------- */
 
-        /* Khung Nhập ID Game */
-        .login-card {
-            background: #131c31;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            border: 2px solid #3b82f6;
-        }
-        .login-title {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .login-group {
-            display: flex;
-            gap: 8px;
-        }
-        .login-input {
-            flex: 1;
-            padding: 10px 14px;
-            background: #0f172a;
-            border: 1px solid #334155;
-            color: #fff;
-            border-radius: 10px;
-            font-size: 14px;
-            outline: none;
-        }
-        .login-input:focus {
-            border-color: #3b82f6;
-        }
-        .login-input:disabled {
-            background-color: #1e293b;
-            color: #94a3b8;
-            cursor: not-allowed;
-        }
-        .login-btn {
-            background-color: #3b82f6;
-            color: white;
-            border: none;
-            padding: 0 16px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .login-btn:disabled {
-            background-color: #334155;
-            color: #64748b;
-            cursor: not-allowed;
-        }
-        .user-welcome {
-            font-size: 13px;
-            color: #10b981;
-            font-weight: 600;
-            margin-top: 8px;
-            display: none;
-        }
+    .container { 
+      background-color: #111827; 
+      border: 1px solid #38bdf8; 
+      border-radius: 14px; 
+      padding: 18px 14px; 
+      width: 100%; 
+      max-width: 420px; 
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.25); 
+      text-align: center; 
+      position: relative;
+      z-index: 10;
+    }
+    
+    .badge { display: inline-block; background-color: #22c55e; color: #000000; font-size: 12px; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+    
+    /* KHUNG TOP 3 ĐUA TOP (Thay thế mục chuỗi) */
+    .podium-card {
+      background: linear-gradient(135deg, #4c1d95, #3b0764, #581c87);
+      border: 2px solid #a855f7;
+      border-radius: 16px;
+      padding: 15px 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+      text-align: center;
+    }
+    .podium-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #f3e8ff;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .podium-flex {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .podium-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+    .podium-item.top-1 {
+      transform: translateY(-8px);
+      flex: 1.2;
+    }
+    .avatar-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 12px;
+      color: #fff;
+      margin-bottom: 5px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      border: 2px solid #fff;
+    }
+    .top-1 .avatar-circle {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      border-color: #ffd700;
+      font-size: 13px;
+      box-shadow: 0 0 15px rgba(255, 65, 108, 0.6);
+    }
+    .top-2 .avatar-circle {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-color: #93c5fd;
+    }
+    .top-3 .avatar-circle {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-color: #fde68a;
+    }
+    .podium-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      max-width: 90px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-bottom: 2px;
+    }
+    .podium-score {
+      font-size: 10px;
+      font-weight: 600;
+      color: #fde047;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
 
-        /* Banner Sự Kiện */
-        .event-banner {
-            background: linear-gradient(135deg, #ff416c, #ff4b2b);
-            color: white;
-            border-radius: 16px;
-            padding: 18px;
-            text-align: center;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.3);
-        }
-        .event-banner h2 {
-            font-size: 18px;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .event-banner p {
-            font-size: 13px;
-            opacity: 0.95;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-        .event-banner .highlight {
-            background: #fff;
-            color: #ff416c;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-weight: bold;
-        }
-        .event-time {
-            display: inline-block;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
+    .podium-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .podium-btn {
+      background: #1e1b4b;
+      color: #fff;
+      border: 1px solid #7c3aed;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .podium-btn:hover { background: #7c3aed; }
 
-        /* Bảng Xếp Hạng Chi Tiết */
-        .leaderboard-card {
-            background: #131c31;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            border: 1px solid #1e293b;
-        }
-        .leaderboard-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #fff;
-        }
-        .leaderboard-list {
-            list-style: none;
-        }
-        .leaderboard-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 12px;
-            border-radius: 10px;
-            margin-bottom: 6px;
-            background: #0f172a;
-        }
-        .leaderboard-item:nth-child(1) {
-            background: #3b280a;
-            border: 1px solid #f59e0b;
-        }
-        .leaderboard-item:nth-child(2) {
-            background: #1e293b;
-        }
-        .leaderboard-item:nth-child(3) {
-            background: #3c1e18;
-        }
-        .user-rank {
-            font-weight: bold;
-            width: 28px;
-        }
-        .user-name {
-            flex-grow: 1;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .user-score {
-            font-weight: 700;
-            color: #10b981;
-            font-size: 14px;
-        }
+    .marquee-container {
+      background-color: #1f2937;
+      border: 1px dashed #38bdf8;
+      border-radius: 6px;
+      padding: 6px 4px;
+      margin-bottom: 10px;
+    }
+    .marquee-container marquee {
+      color: #38bdf8;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .control-panel { background-color: #1f2937; border: 1px solid #38bdf8; border-radius: 10px; padding: 10px; margin-bottom: 10px; text-align: left; box-shadow: 0 0 10px rgba(56, 189, 248, 0.15); }
+    .control-panel label { display: block; font-size: 11px; color: #9ca3af; margin-bottom: 3px; font-weight: 600; }
+    
+    .input-box { width: 100%; padding: 9px 10px; border-radius: 6px; border: 1px solid #4b5563; background-color: #111827; color: #fff; font-size: 13px; outline: none; margin-bottom: 8px; }
+    .input-box:focus { border-color: #38bdf8; box-shadow: 0 0 5px rgba(56, 189, 248, 0.5); }
 
-        /* Section Title */
-        .section-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #cbd5e1;
-        }
+    .btn-row { display: flex; gap: 6px; margin-bottom: 6px; }
+    .btn-action { flex: 1; padding: 10px 6px; border-radius: 6px; font-size: 12px; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; text-align: center; }
+    
+    .btn-key { background: linear-gradient(to bottom, #facc15, #eab308); color: #000; box-shadow: 0 2px 6px rgba(234, 179, 8, 0.3); }
+    .btn-key:hover { opacity: 0.9; }
+    
+    .btn-guide { background: linear-gradient(to bottom, #3b82f6, #2563eb); color: #fff; box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3); }
+    .btn-guide:hover { opacity: 0.9; }
+    
+    .btn-buff { background: linear-gradient(to bottom, #38bdf8, #0284c7); color: #000; box-shadow: 0 0 10px rgba(56, 189, 248, 0.4); font-size: 13px; }
+    .btn-buff:hover { opacity: 0.9; }
 
-        /* Task Card duy nhất */
-        .single-task-card {
-            background: #131c31;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            border: 1px solid #1e293b;
-        }
-        .task-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .task-title-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .task-icon {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 51, 102, 0.15);
-            color: #ff3366;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        .task-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-        }
-        .task-badge {
-            background-color: rgba(255, 51, 102, 0.15);
-            color: #ff3366;
-            font-size: 14px;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 20px;
-        }
-        .task-info {
-            display: flex;
-            gap: 10px;
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
-        .info-tag {
-            background: #0f172a;
-            padding: 4px 10px;
-            border-radius: 6px;
-            color: #94a3b8;
-        }
-        .reward-tag {
-            color: #10b981;
-            background: rgba(16, 185, 129, 0.15);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-weight: 600;
-        }
-        .task-footer {
-            margin-bottom: 12px;
-        }
-        .task-limit {
-            font-size: 14px;
-            color: #94a3b8;
-            font-weight: 500;
-        }
-        .task-actions {
-            display: flex;
-            gap: 10px;
-        }
-        .btn-do-task {
-            flex: 2;
-            background-color: #3b82f6;
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: center;
-            display: block;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-            transition: all 0.2s;
-        }
-        .btn-do-task.completed {
-            background-color: #1e293b;
-            color: #64748b;
-            cursor: not-allowed;
-            box-shadow: none;
-            flex: 1;
-        }
-        .btn-skip-task {
-            flex: 1;
-            background-color: #1e293b;
-            color: #cbd5e1;
-            border: 1px solid #334155;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: center;
-            transition: background 0.2s;
-        }
-        .btn-skip-task:hover {
-            background-color: #334155;
-        }
+    .notice { background-color: #1f2937; border-left: 4px solid #38bdf8; border-top: 1px solid #374151; border-right: 1px solid #374151; border-bottom: 1px solid #374151; padding: 10px; font-size: 11px; color: #d1d5db; text-align: left; border-radius: 6px; margin-top: 10px; line-height: 1.5; word-break: break-all; }
+    #statusMsg { margin-top: 8px; font-size: 12px; color: #f87171; word-break: break-all; font-weight: 600; }
 
-        /* Nút Telegram nổi */
-        .telegram-float {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 55px;
-            height: 55px;
-            background-color: #0088cc;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
-            z-index: 1000;
-            text-decoration: none;
-            transition: transform 0.2s;
-        }
-        .telegram-float:hover {
-            transform: scale(1.08);
-        }
-        .telegram-float svg {
-            width: 26px;
-            height: 26px;
-            fill: white;
-            margin-left: -2px;
-        }
-    </style>
+    .modal { display: none; position: fixed; z-index: 9999999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); justify-content: center; align-items: center; padding: 15px; }
+    .modal-content { background-color: #111827; padding: 20px; border-radius: 12px; width: 100%; max-width: 420px; border: 1px solid #38bdf8; position: relative; box-shadow: 0 0 20px rgba(56, 189, 248, 0.3); }
+    .close-btn { position: absolute; top: 10px; right: 15px; color: #fff; font-size: 24px; font-weight: bold; cursor: pointer; }
+    video { width: 100%; border-radius: 8px; margin-top: 25px; }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- KHUNG TOP 3 ĐUA TOP (Thay thế mục chuỗi) -->
+  <!-- ĐOẠN SCRIPT TẠO HIỆU ỨNG TUYẾT RƠI -->
+  <script>
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      
+      const size = Math.random() * 4 + 2;
+      snowflake.style.width = `${size}px`;
+      snowflake.style.height = `${size}px`;
+      
+      snowflake.style.left = `${Math.random() * window.innerWidth}px`;
+      
+      const duration = Math.random() * 5 + 5;
+      snowflake.style.animationDuration = `${duration}s`;
+      
+      snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+
+      document.body.appendChild(snowflake);
+
+      setTimeout(() => {
+        snowflake.remove();
+      }, duration * 1000);
+    }
+
+    setInterval(createSnowflake, 200);
+  </script>
+
+  <div class="container">
+    <span class="badge">❄️ GIÁNG SINH AN LÀNH ❄️</span>
+
+    <!-- KHUNG TOP 3 ĐUA TOP THAY THẾ CHO CHUỖI -->
     <div class="podium-card">
-        <div class="podium-title">🌲 Bảng Xếp Hạng Đua Top Nhận Thẻ Tháng 🌲</div>
-        <div class="podium-flex">
-            <!-- Top 2 -->
-            <div class="podium-item top-2">
-                <div class="avatar-circle">TOP 2</div>
-                <div class="podium-name" id="podium-2-name">ID: 8392...</div>
-                <div class="podium-score" id="podium-2-score">11800 Coin</div>
-            </div>
-            <!-- Top 1 -->
-            <div class="podium-item top-1">
-                <div class="avatar-circle">👑 TOP 1</div>
-                <div class="podium-name" id="podium-1-name">ID: Loading</div>
-                <div class="podium-score" id="podium-1-score">0 Coin</div>
-            </div>
-            <!-- Top 3 -->
-            <div class="podium-item top-3">
-                <div class="avatar-circle">TOP 3</div>
-                <div class="podium-name" id="podium-3-name">ID: 5521...</div>
-                <div class="podium-score" id="podium-3-score">9400 Coin</div>
-            </div>
+      <div class="podium-title">🌲 Bảng Xếp Hạng Top 3 Nhận Thẻ Tháng 🌲</div>
+      <div class="podium-flex">
+        <!-- Top 2 -->
+        <div class="podium-item top-2">
+          <div class="avatar-circle">TOP 2</div>
+          <div class="podium-name">ID: 8392...</div>
+          <div class="podium-score">11800 Coin</div>
         </div>
+        <!-- Top 1 -->
+        <div class="podium-item top-1">
+          <div class="avatar-circle">👑 TOP 1</div>
+          <div class="podium-name" id="top1Name">Đang cập nhật</div>
+          <div class="podium-score" id="top1Score">0 Coin</div>
+        </div>
+        <!-- Top 3 -->
+        <div class="podium-item top-3">
+          <div class="avatar-circle">TOP 3</div>
+          <div class="podium-name">ID: 5521...</div>
+          <div class="podium-score">9400 Coin</div>
+        </div>
+      </div>
+      
+      <div class="podium-actions">
+        <button class="podium-btn" onclick="scrollToKeySection()">Kiếm Vàng</button>
+        <button class="podium-btn" onclick="alert('Đã làm mới nhiệm vụ!')">Đổi Nhiệm Vụ</button>
+      </div>
+    </div>
+
+    <div class="marquee-container">
+      <marquee scrollamount="5">🎄 MÙA GIÁNG SINH ẤM ÁP - CHÚC ANH EM MỘT MÙA LỄ HỘI VUI VẺ! 🎄</marquee>
+    </div>
+
+    <div class="control-panel" id="controlPanelSection">
+      <label for="uidInput">Nhập ID Game (UID) của bạn:</label>
+      <input type="text" id="uidInput" class="input-box" placeholder="Ví dụ: 2230853045" oninput="saveUidLocal()">
+
+      <div class="btn-row">
+        <button class="btn-action btn-key" onclick="goToGetKey()">🔑 Lấy Key</button>
+        <button class="btn-action btn-guide" onclick="openGuide()">🎬 Hướng Dẫn</button>
+      </div>
+
+      <label for="keyInput" style="margin-top: 6px;">Nhập Mã Key đã lấy:</label>
+      <input type="text" id="keyInput" class="input-box" placeholder="Dán mã Key vào đây...">
+
+      <div class="btn-row" style="margin-bottom: 0;">
+        <button class="btn-action btn-buff" onclick="submitBuff()">⚡ TIẾN HÀNH BUFF LIKE ⚡</button>
+      </div>
+    </div>
+
+    <div class="notice">
+      <b>📌 THÔNG BÁO & LƯU Ý:</b><br>
+      ⏳ Thời gian: 09:00 - 23:00<br>
+      📊 1 ngày chỉ buff được tối đa 200 like.<br>
+      ⚠️ Buff bên khác buff thêm bên đây không được cộng thêm đâu nhé!<br>
+      • Nếu không thấy key là hết like quay lại 30p nha<br><br>
+      
+      <div style="margin-top: 4px; font-weight: bold; margin-bottom: 4px; color: #38bdf8;">💬 Support mua gói like ibox:</div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <a href="https://www.tiktok.com/@hvpcutis1tg" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #111827; color: #fff; padding: 6px; border-radius: 6px; text-decoration: none; border: 1px solid #374151; font-size: 11px;">
+          🎵 TikTok: @hvpcutis1tg
+        </a>
+        <a href="https://t.me/tlzproject" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #0284c7; color: #fff; padding: 6px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: bold;">
+          ✈️ Telegram: @tlzproject
+        </a>
+        <a href="https://t.me/tlzchat" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #1e293b; color: #fff; padding: 6px; border-radius: 6px; text-decoration: none; font-size: 11px;">
+          👥 Nhóm Chat Telegram: @tlzchat
+        </a>
+        <a href="https://tiktok.me/group/ZSgWYffCH/" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #111827; color: #38bdf8; padding: 6px; border-radius: 6px; text-decoration: none; font-size: 11px; border: 1px dashed #38bdf8;">
+          📢 Kênh Thông Báo TikTok
+        </a>
+      </div>
+    </div>
+
+    <div id="statusMsg"></div>
+  </div>
+
+  <div id="videoModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeGuide()">&times;</span>
+      <p style="text-align: left; font-size: 14px; font-weight: bold; color: #38bdf8;">🎬 Video hướng dẫn vượt link:</p>
+      <video id="guideVideo" controls>
+        <source src="lv_0_20261020044711.mp4" type="video/mp4">
+        Trình duyệt của bạn không hỗ trợ xem video.
+      </video>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyLs0JbLy82nCIuIXXmTZUIih6QNw43u9nyWHAPCGzH-AxuXhKgEV2vuAuHalkjI9GS/exec";
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedUid = localStorage.getItem("tiz_current_uid");
+      const savedKey = localStorage.getItem("tiz_last_key");
+      if (savedUid) {
+        document.getElementById("uidInput").value = savedUid;
+      }
+      if (savedKey) document.getElementById("keyInput").value = savedKey;
+    });
+
+    // --- DANH SÁCH ID BỊ CHẶN & THÔNG BÁO GẮT ---
+    const blacklistUids = ["2142371970"];
+    const bannedMessage = "❌ Không được phép buff like vì con tuất này fake VPN để vượt link nhiều lần!";
+
+    function isUidBlocked(uid) {
+      if (/^\d{11}$/.test(uid)) {
+        const prefix = parseInt(uid.substring(0, 4), 10);
+        if (prefix >= 1889 && prefix <= 1900) return true;
+      }
+      if (blacklistUids.includes(uid)) return true;
+      return false;
+    }
+
+    function saveUidLocal() {
+      const uid = document.getElementById("uidInput").value.trim();
+      if (uid) {
+        localStorage.setItem("tiz_current_uid", uid);
+      }
+    }
+
+    function scrollToKeySection() {
+      document.getElementById("controlPanelSection").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function openGuide() { document.getElementById("videoModal").style.display = "flex"; }
+    function closeGuide() {
+      const video = document.getElementById("guideVideo");
+      if (video) video.pause();
+      document.getElementById("videoModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target === document.getElementById("videoModal")) closeGuide();
+    }
+
+    async function goToGetKey() {
+      const uid = document.getElementById("uidInput").value.trim();
+      if (!uid) { alert("Vui lòng nhập ID Game (UID) của bạn trước khi đi lấy Key!"); return; }
+
+      if (isUidBlocked(uid)) {
+        alert(bannedMessage);
+        return;
+      }
+
+      const msgDiv = document.getElementById("statusMsg");
+      msgDiv.style.color = "#38bdf8";
+      msgDiv.innerText = "Đang tạo phiên vượt link bảo mật...";
+
+      try {
+        const res = await fetch(`${SCRIPT_URL}?action=create_onetime_token&uid=${encodeURIComponent(uid)}`);
+        const data = await res.json();
+        if (data.status === "success") {
+          const uniqueToken = data.token;
+          localStorage.setItem("tiz_current_uid", uid);
+          localStorage.setItem("tiz_pending_token", uniqueToken);
+          
+          let baseLink = "https://link4m.org/DRDP9J";
+
+          try {
+            const geoRes = await fetch('https://ipapi.co/json/');
+            const geoData = await geoRes.json();
+            if (geoData && geoData.country_code && geoData.country_code !== 'VN') {
+              baseLink = "https://link2m.com/0odue400";
+            }
+          } catch(e) {}
+
+          const finalRedirectUrl = baseLink + "?api=0&url=" + encodeURIComponent("https://bufflikeff.site/getkey.html?token=" + uniqueToken);
+          window.location.href = finalRedirectUrl;
+        } else {
+          alert("Lỗi tạo phiên: " + data.message);
+          msgDiv.innerText = "";
+        }
+      } catch (err) { alert("Lỗi kết nối đến máy chủ!"); msgDiv.innerText = ""; }
+    }
+
+    async function submitBuff() {
+      const uid = document.getElementById("uidInput").value.trim();
+      const key = document.getElementById("keyInput").value.trim();
+      const msgDiv = document.getElementById("statusMsg");
+      
+      if (!uid || !key) { alert("Vui lòng nhập đầy đủ UID và Mã Key!"); return; }
+
+      if (isUidBlocked(uid)) {
+        msgDiv.style.color = "#f87171";
+        msgDiv.innerText = bannedMessage;
+        alert(bannedMessage);
+        return;
+      }
+
+      msgDiv.style.color = "#38bdf8";
+      msgDiv.innerText = "Đang xác minh mã Key...";
+
+      try {
+        const response = await fetch(`${SCRIPT_URL}?action=verify_and_buff&uid=${encodeURIComponent(uid)}&key=${encodeURIComponent(key)}`);
+        const data = await response.json();
+        msgDiv.style.color = data.status === "success" ? "#4ade80" : "#f87171";
+        msgDiv.innerText = data.message;
         
-        <div class="podium-actions">
-            <button class="podium-btn" onclick="scrollToTask()">Kiếm Coin</button>
-            <button class="podium-btn" onclick="skipTask()">Đổi Nhiệm Vụ</button>
-        </div>
-    </div>
-
-    <!-- Khung Nhập ID Game -->
-    <div class="login-card" id="login-section">
-        <div class="login-title">🎮 Khóa ID Game Đua Top</div>
-        <div class="login-group">
-            <input type="text" id="game-id-input" class="login-input" placeholder="Nhập ID Game của bạn...">
-            <button class="login-btn" id="save-id-btn" onclick="saveGameId()">Khóa ID</button>
-        </div>
-        <div id="welcome-msg" class="user-welcome"></div>
-    </div>
-
-    <!-- Banner sự kiện -->
-    <div class="event-banner">
-        <h2>🔥 Đua Top Vượt Link 🔥</h2>
-        <p>Top 1 BXH nhận ngay <span class="highlight">🎁 Thẻ Tháng Free Fire</span></p>
-        <div class="event-time">📅 Thời gian: <b>09/07 - 10/07</b></div>
-    </div>
-
-    <!-- Bảng xếp hạng chi tiết -->
-    <div class="leaderboard-card">
-        <div class="leaderboard-title">🏆 Bảng Xếp Hạng Chi Tiết</div>
-        <ul class="leaderboard-list" id="leaderboard"></ul>
-    </div>
-
-    <div class="section-title">📌 Nhiệm Vụ Rút Gọn Chuỗi (40 Link)</div>
-    
-    <!-- Ô Nhiệm Vụ Chuỗi 40 Link -->
-    <div class="single-task-card" id="task-card-single"></div>
-</div>
-
-<!-- Nút Telegram -->
-<a href="https://t.me/tlzproject" target="_blank" class="telegram-float" title="Liên hệ Telegram">
-    <svg viewBox="0 0 24 24">
-        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-    </svg>
-</a>
-
-<script>
-    let savedGameId = localStorage.getItem('locked_game_id') || '';
-    let userScore = 0;
-    let completedCount = 0;
-
-    function getCurrentDate() {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
-
-    function loadUserData() {
-        if (savedGameId) {
-            userScore = parseInt(localStorage.getItem(`coin_score_${savedGameId}`) || '0');
-            
-            const today = getCurrentDate();
-            const lastActiveDate = localStorage.getItem(`active_date_${savedGameId}`) || '';
-            
-            if (lastActiveDate !== today) {
-                completedCount = 0;
-                localStorage.setItem(`completed_count_${savedGameId}`, 0);
-                localStorage.setItem(`active_date_${savedGameId}`, today);
-            } else {
-                completedCount = parseInt(localStorage.getItem(`completed_count_${savedGameId}`) || '0');
-            }
+        if (data.status === "success") {
+          alert(data.message + " 🎉 Đã buff like thành công cho ID: " + uid);
         }
+      } catch (err) { 
+        msgDiv.style.color = "#f87171"; 
+        msgDiv.innerText = "Không thể kết nối đến Server!"; 
+      }
     }
-    loadUserData();
-
-    const MAX_LINKS = 40;
-    const returnUrl = encodeURIComponent("https://bufflikeff.github.io/bufflike-key/?status=success");
-    const linkList = [];
-    for (let i = 1; i <= MAX_LINKS; i++) {
-        linkList.push(`https://link4m.co/st?api=69477252020111717c5cd887&url=${returnUrl}`);
-    }
-
-    let leaderboardData = [
-        { name: savedGameId ? `ID: ${savedGameId}` : "Chưa khóa ID", score: userScore, isUser: true },
-        { name: "ID: 83920192", score: 11800 },
-        { name: "ID: 55219384", score: 9400 },
-        { name: "ID: 99182341", score: 7600 },
-        { name: "ID: 11293847", score: 5200 }
-    ];
-
-    function checkUrlCallback() {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('status') === 'success') {
-            if (!savedGameId) {
-                alert('Vui lòng khóa ID Game trước khi nhận thưởng!');
-                return;
-            }
-            let lastProcessed = localStorage.getItem(`last_processed_${savedGameId}`) || '-1';
-            if (completedCount.toString() !== lastProcessed && completedCount < MAX_LINKS) {
-                completedCount++;
-                userScore += 300;
-
-                localStorage.setItem(`completed_count_${savedGameId}`, completedCount);
-                localStorage.setItem(`coin_score_${savedGameId}`, userScore);
-                localStorage.setItem(`last_processed_${savedGameId}`, completedCount.toString());
-                localStorage.setItem(`active_date_${savedGameId}`, getCurrentDate());
-
-                alert('🎉 Vượt link thành công! Đã cộng +300 Coin cho ID: ' + savedGameId);
-            }
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-    }
-
-    function checkLoginState() {
-        const input = document.getElementById('game-id-input');
-        const welcome = document.getElementById('welcome-msg');
-        const btn = document.getElementById('save-id-btn');
-        
-        if (savedGameId) {
-            input.value = savedGameId;
-            input.disabled = true;
-            btn.disabled = true;
-            btn.style.backgroundColor = "#334155";
-            welcome.style.display = 'block';
-            welcome.innerHTML = `🔒 Đã khóa cứng ID trên thiết bị này: <b>${savedGameId}</b>`;
-        }
-    }
-
-    function saveGameId() {
-        const inputVal = document.getElementById('game-id-input').value.trim();
-        if (!inputVal) {
-            alert('Vui lòng nhập ID Game hợp lệ!');
-            return;
-        }
-
-        if (confirm(`Bạn có chắc chắn muốn khóa ID: ${inputVal} không? Sau khi khóa sẽ KHÔNG THỂ thay đổi trên thiết bị này!`)) {
-            savedGameId = inputVal;
-            localStorage.setItem('locked_game_id', savedGameId);
-            localStorage.setItem(`active_date_${savedGameId}`, getCurrentDate());
-            
-            loadUserData();
-            leaderboardData[0].name = `ID: ${savedGameId}`;
-            leaderboardData.find(u => u.isUser).score = userScore;
-            
-            checkLoginState();
-            renderLeaderboard();
-            renderSingleTask();
-            alert('Đã khóa cứng ID thành công!');
-        }
-    }
-
-    function renderLeaderboard() {
-        leaderboardData.find(u => u.isUser).score = userScore;
-        leaderboardData.sort((a, b) => b.score - a.score);
-
-        // Cập nhật lên khung Podium Top 3 phía trên
-        if(leaderboardData.length >= 3) {
-            document.getElementById('podium-1-name').innerText = leaderboardData[0].name;
-            document.getElementById('podium-1-score').innerText = leaderboardData[0].score + ' Coin';
-
-            document.getElementById('podium-2-name'
+  </script>
+</body>
+</html>

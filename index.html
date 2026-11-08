@@ -127,6 +127,40 @@
       margin-bottom: 2px;
     }
 
+    /* 2 Nút thông tin ID & Số dư nằm ngay trong ô giao diện Top 1 */
+    .top1-info-container {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      width: 100%;
+      margin-top: 2px;
+    }
+    .info-btn-box {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid #38bdf8;
+      border-radius: 6px;
+      padding: 3px 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #38bdf8;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+    }
+    .info-btn-score {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid #eab308;
+      border-radius: 6px;
+      padding: 3px 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fde047;
+      text-align: center;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+    }
+
     .podium-score {
       font-size: 10px;
       font-weight: 600;
@@ -136,7 +170,7 @@
       border-radius: 8px;
     }
 
-    /* 3 Nút chức năng */
+    /* 3 Nút chức năng ở dưới */
     .podium-actions-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -238,23 +272,25 @@
         <!-- Top 2 -->
         <div class="podium-item top-2">
           <div class="avatar-circle">TOP 2</div>
-          <div id="top2NameWrapper" class="podium-name-running">
+          <div class="podium-name-running">
             <marquee scrollamount="3">ID: 83920192</marquee>
           </div>
           <div class="podium-score">11800 Vàng</div>
         </div>
-        <!-- Top 1 (Khách hàng) -->
+
+        <!-- Top 1 (Khách hàng tích hợp 2 nút ID & Số dư Vàng) -->
         <div class="podium-item top-1">
           <div class="avatar-circle">👑 TOP 1</div>
-          <div id="top1NameWrapper" class="podium-name-running">
-            <span id="top1Name">Chưa có ID</span>
+          <div class="top1-info-container">
+            <div id="top1IdBtn" class="info-btn-box" title="ID của bạn">Chưa có ID</div>
+            <div id="top1ScoreBtn" class="info-btn-score">0 Vàng</div>
           </div>
-          <div class="podium-score" id="top1Score">0 Vàng</div>
         </div>
+
         <!-- Top 3 -->
         <div class="podium-item top-3">
           <div class="avatar-circle">TOP 3</div>
-          <div id="top3NameWrapper" class="podium-name-running">
+          <div class="podium-name-running">
             <marquee scrollamount="3">ID: 55219384</marquee>
           </div>
           <div class="podium-score">9400 Vàng</div>
@@ -265,7 +301,7 @@
       <div class="podium-actions-3">
         <button class="podium-btn" onclick="scrollToKeySection()">Kiếm Vàng</button>
         <button class="podium-btn" onclick="alert('Đã làm mới nhiệm vụ!')">Đổi Nhiệm Vụ</button>
-        <button class="podium-btn" onclick="lockIdAction()">Khóa ID Đua Top</button>
+        <button class="podium-btn" onclick="lockIdAction()">Nhập ID Đua Top</button>
       </div>
     </div>
 
@@ -348,21 +384,22 @@
     });
 
     function updateTop1Display(uid) {
-        const wrapperEl = document.getElementById("top1NameWrapper");
-        const top1ScoreEl = document.getElementById("top1Score");
+        const idBtnEl = document.getElementById("top1IdBtn");
+        const scoreBtnEl = document.getElementById("top1ScoreBtn");
         
         if (uid) {
             let userScore = localStorage.getItem(`score_${uid}`) || '0';
-            top1ScoreEl.innerText = `${userScore} Vàng`;
+            scoreBtnEl.innerText = `${userScore} Vàng`;
             
-            if (uid.length > 7) {
-                wrapperEl.innerHTML = `<marquee scrollamount="3">${uid}</marquee>`;
+            // Hiệu ứng chạy ngang nếu ID dài
+            if (uid.length > 6) {
+                idBtnEl.innerHTML = `<marquee scrollamount="2">${uid}</marquee>`;
             } else {
-                wrapperEl.innerText = uid;
+                idBtnEl.innerText = uid;
             }
         } else {
-            wrapperEl.innerText = "Chưa có ID";
-            top1ScoreEl.innerText = "0 Vàng";
+            idBtnEl.innerText = "Chưa có ID";
+            scoreBtnEl.innerText = "0 Vàng";
         }
     }
 
@@ -378,13 +415,15 @@
       }
     }
 
+    // Chức năng Nhập/Khóa ID Đua Top ngay khi bấm nút
     function lockIdAction() {
       const inputEl = document.getElementById("uidInput");
       const uid = inputEl.value.trim();
 
       if (!uid) {
-        alert("Vui lòng nhập ID Game trước khi khóa!");
+        alert("Vui lòng nhập ID Game vào ô trước khi bấm khóa!");
         inputEl.focus();
+        scrollToKeySection();
         return;
       }
 
@@ -426,8 +465,17 @@
     }
 
     async function goToGetKey() {
-      const uid = document.getElementById("uidInput").value.trim();
+      const inputEl = document.getElementById("uidInput");
+      const uid = inputEl.value.trim();
       if (!uid) { alert("Vui lòng nhập ID Game (UID) của bạn trước khi đi lấy Key!"); return; }
+
+      // Tự động khóa cứng luôn khi bấm Lấy Key nếu chưa khóa
+      if (localStorage.getItem("tiz_id_locked") !== "true") {
+        localStorage.setItem("tiz_current_uid", uid);
+        localStorage.setItem("tiz_id_locked", "true");
+        inputEl.disabled = true;
+        updateTop1Display(uid);
+      }
 
       if (isUidBlocked(uid)) {
         alert(bannedMessage);
@@ -450,7 +498,7 @@
 
           try {
             const geoRes = await fetch('https://ipapi.co/json/');
-            const geoData = @json ? await geoRes.json() : {};
+            const geoData = await geoRes.json();
             if (geoData && geoData.country_code && geoData.country_code !== 'VN') {
               baseLink = "https://link2m.com/0odue400";
             }
@@ -489,13 +537,4 @@
         msgDiv.innerText = data.message;
         
         if (data.status === "success") {
-          alert(data.message + " 🎉 Đã buff like thành công cho ID: " + uid);
-        }
-      } catch (err) { 
-        msgDiv.style.color = "#f87171"; 
-        msgDiv.innerText = "Không thể kết nối đến Server!"; 
-      }
-    }
-  </script>
-</body>
-</html>
+          alert(data.mes

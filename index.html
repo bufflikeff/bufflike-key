@@ -85,7 +85,7 @@
     }
     .podium-item.top-1 {
       transform: translateY(-8px);
-      flex: 1.2;
+      flex: 1.3;
     }
     .avatar-circle {
       width: 50px;
@@ -128,6 +128,16 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    
+    /* Hiệu ứng chữ chạy ngang cho Top 1 nếu ID dài */
+    .podium-name-running {
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      width: 100%;
+      margin-bottom: 2px;
+    }
+
     .podium-score {
       font-size: 10px;
       font-weight: 600;
@@ -137,18 +147,19 @@
       border-radius: 8px;
     }
 
-    .podium-actions {
+    /* 3 Nút chức năng */
+    .podium-actions-3 {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
     }
     .podium-btn {
       background: #1e1b4b;
       color: #fff;
       border: 1px solid #7c3aed;
-      padding: 8px;
+      padding: 8px 4px;
       border-radius: 8px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       cursor: pointer;
       text-transform: uppercase;
@@ -176,6 +187,7 @@
     
     .input-box { width: 100%; padding: 9px 10px; border-radius: 6px; border: 1px solid #4b5563; background-color: #111827; color: #fff; font-size: 13px; outline: none; margin-bottom: 8px; }
     .input-box:focus { border-color: #38bdf8; box-shadow: 0 0 5px rgba(56, 189, 248, 0.5); }
+    .input-box:disabled { background-color: #1e293b; color: #9ca3af; cursor: not-allowed; }
 
     .btn-row { display: flex; gap: 6px; margin-bottom: 6px; }
     .btn-action { flex: 1; padding: 10px 6px; border-radius: 6px; font-size: 12px; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; text-align: center; }
@@ -240,10 +252,12 @@
           <div class="podium-name">ID: 8392...</div>
           <div class="podium-score">11800 Vàng</div>
         </div>
-        <!-- Top 1 (Khách hàng) -->
+        <!-- Top 1 (Khách hàng - Chạy chữ full ID) -->
         <div class="podium-item top-1">
           <div class="avatar-circle">👑 TOP 1</div>
-          <div class="podium-name" id="top1Name">Chưa có ID</div>
+          <div id="top1NameWrapper" class="podium-name-running">
+            <span id="top1Name">Chưa có ID</span>
+          </div>
           <div class="podium-score" id="top1Score">0 Vàng</div>
         </div>
         <!-- Top 3 -->
@@ -254,9 +268,11 @@
         </div>
       </div>
       
-      <div class="podium-actions">
-        <button class="podium-btn" onclick="scrollToKeySection()">Lấy Key</button>
-        <button class="podium-btn" onclick="openGuide()">Hướng Dẫn</button>
+      <!-- 3 Nút chức năng -->
+      <div class="podium-actions-3">
+        <button class="podium-btn" onclick="scrollToKeySection()">Kiếm Vàng</button>
+        <button class="podium-btn" onclick="alert('Đã làm mới nhiệm vụ!')">Đổi Nhiệm Vụ</button>
+        <button class="podium-btn" onclick="lockIdAction()">Khóa ID Đua Top</button>
       </div>
     </div>
 
@@ -324,44 +340,68 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const savedUid = localStorage.getItem("tiz_current_uid");
+      const isLocked = localStorage.getItem("tiz_id_locked") === "true";
       const savedKey = localStorage.getItem("tiz_last_key");
+
       if (savedUid) {
-        document.getElementById("uidInput").value = savedUid;
+        const inputEl = document.getElementById("uidInput");
+        inputEl.value = savedUid;
+        if (isLocked) {
+          inputEl.disabled = true;
+        }
         updateTop1Display(savedUid);
       }
       if (savedKey) document.getElementById("keyInput").value = savedKey;
     });
 
-    function formatDisplayUid(uid) {
-        if (!uid || uid === "Chưa có ID") return "Chưa có ID";
-        if (uid.length > 8) {
-            return uid.substring(0, 4) + '...' + uid.substring(uid.length - 4);
-        }
-        return uid;
-    }
-
     function updateTop1Display(uid) {
-        const top1NameEl = document.getElementById("top1Name");
+        const wrapperEl = document.getElementById("top1NameWrapper");
         const top1ScoreEl = document.getElementById("top1Score");
         
         if (uid) {
-            top1NameEl.innerText = formatDisplayUid(uid);
-            top1NameEl.title = "ID: " + uid;
             let userScore = localStorage.getItem(`score_${uid}`) || '0';
             top1ScoreEl.innerText = `${userScore} Vàng`;
+            
+            // Nếu ID dài hơn 7 ký tự, tự động bọc thẻ marquee cho nó chạy ngang mượt mà
+            if (uid.length > 7) {
+                wrapperEl.innerHTML = `<marquee scrollamount="3">${uid}</marquee>`;
+            } else {
+                wrapperEl.innerText = uid;
+            }
         } else {
-            top1NameEl.innerText = "Chưa có ID";
+            wrapperEl.innerText = "Chưa có ID";
             top1ScoreEl.innerText = "0 Vàng";
         }
     }
 
     function saveUidLocal() {
+      if (localStorage.getItem("tiz_id_locked") === "true") return;
+
       const uid = document.getElementById("uidInput").value.trim();
       if (uid) {
         localStorage.setItem("tiz_current_uid", uid);
         updateTop1Display(uid);
       } else {
         updateTop1Display("");
+      }
+    }
+
+    function lockIdAction() {
+      const inputEl = document.getElementById("uidInput");
+      const uid = inputEl.value.trim();
+
+      if (!uid) {
+        alert("Vui lòng nhập ID Game trước khi khóa!");
+        inputEl.focus();
+        return;
+      }
+
+      if (confirm(`Bạn có chắc chắn muốn khóa ID: ${uid} để đua top không? Sau khi khóa sẽ không thể thay đổi trên thiết bị này!`)) {
+        localStorage.setItem("tiz_current_uid", uid);
+        localStorage.setItem("tiz_id_locked", "true");
+        inputEl.disabled = true;
+        updateTop1Display(uid);
+        alert("🔒 Đã khóa cứng ID thành công trên thiết bị này!");
       }
     }
 

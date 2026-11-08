@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đua Top Vượt Link - Thẻ Tháng</title>
+    <title>Đua Top Vượt Link & Điểm Danh Chuỗi</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,8 +12,8 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         body {
-            background-color: #f4f6f9;
-            color: #333;
+            background-color: #0b0f19;
+            color: #fff;
             padding: 15px;
             padding-bottom: 70px;
         }
@@ -21,21 +21,116 @@
             max-width: 500px;
             margin: 0 auto;
         }
-        
-        /* Khung Nhập ID Game */
-        .login-card {
-            background: #ffffff;
+
+        /* Khung Tiến Trình Chuỗi Buff (Mới) */
+        .streak-card {
+            background: linear-gradient(135deg, #131c31, #0f172a);
+            border: 2px solid #3b82f6;
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: 2px solid #0066ff;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+        }
+        .streak-header-badge {
+            background: #10b981;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .streak-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .streak-subtitle {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 12px;
+        }
+        .progress-bar-container {
+            background: #1e293b;
+            border-radius: 10px;
+            height: 12px;
+            width: 100%;
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+        .milestones-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        .milestone-item {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 8px 4px;
+            text-align: center;
+        }
+        .milestone-days {
+            font-size: 11px;
+            color: #cbd5e1;
+            margin-bottom: 2px;
+        }
+        .milestone-reward {
+            font-size: 12px;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 6px;
+        }
+        .milestone-btn {
+            background: #3b82f6;
+            color: #white;
+            border: none;
+            width: 100%;
+            padding: 4px 0;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .milestone-btn.claimed {
+            background: #334155;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+        .milestone-btn.ready {
+            background: #10b981;
+            color: #fff;
+        }
+        
+        /* Khung Nhập ID Game */
+        .login-card {
+            background: #131c31;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 2px solid #3b82f6;
         }
         .login-title {
             font-size: 15px;
             font-weight: 700;
             margin-bottom: 10px;
-            color: #111;
+            color: #fff;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -47,21 +142,23 @@
         .login-input {
             flex: 1;
             padding: 10px 14px;
-            border: 1px solid #ddd;
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #fff;
             border-radius: 10px;
             font-size: 14px;
             outline: none;
         }
         .login-input:focus {
-            border-color: #0066ff;
+            border-color: #3b82f6;
         }
         .login-input:disabled {
-            background-color: #f1f3f5;
-            color: #555;
+            background-color: #1e293b;
+            color: #94a3b8;
             cursor: not-allowed;
         }
         .login-btn {
-            background-color: #0066ff;
+            background-color: #3b82f6;
             color: white;
             border: none;
             padding: 0 16px;
@@ -71,12 +168,13 @@
             font-size: 14px;
         }
         .login-btn:disabled {
-            background-color: #adb5bd;
+            background-color: #334155;
+            color: #64748b;
             cursor: not-allowed;
         }
         .user-welcome {
-            font-size: 14px;
-            color: #00b074;
+            font-size: 13px;
+            color: #10b981;
             font-weight: 600;
             margin-top: 8px;
             display: none;
@@ -93,13 +191,13 @@
             box-shadow: 0 4px 15px rgba(255, 65, 108, 0.3);
         }
         .event-banner h2 {
-            font-size: 20px;
+            font-size: 18px;
             margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .event-banner p {
-            font-size: 14px;
+            font-size: 13px;
             opacity: 0.95;
             font-weight: 500;
             margin-bottom: 8px;
@@ -122,11 +220,12 @@
 
         /* Bảng Xếp Hạng */
         .leaderboard-card {
-            background: #ffffff;
+            background: #131c31;
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid #1e293b;
         }
         .leaderboard-title {
             font-size: 16px;
@@ -135,7 +234,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #111;
+            color: #fff;
         }
         .leaderboard-list {
             list-style: none;
@@ -147,17 +246,17 @@
             padding: 10px 12px;
             border-radius: 10px;
             margin-bottom: 6px;
-            background: #f8f9fa;
+            background: #0f172a;
         }
         .leaderboard-item:nth-child(1) {
-            background: #fff9e6;
-            border: 1px solid #ffe0b2;
+            background: #3b280a;
+            border: 1px solid #f59e0b;
         }
         .leaderboard-item:nth-child(2) {
-            background: #f1f3f5;
+            background: #1e293b;
         }
         .leaderboard-item:nth-child(3) {
-            background: #fff4e6;
+            background: #3c1e18;
         }
         .user-rank {
             font-weight: bold;
@@ -170,7 +269,7 @@
         }
         .user-score {
             font-weight: 700;
-            color: #00b074;
+            color: #10b981;
             font-size: 14px;
         }
 
@@ -179,17 +278,17 @@
             font-size: 16px;
             font-weight: 700;
             margin-bottom: 12px;
-            color: #444;
+            color: #cbd5e1;
         }
 
         /* Task Card duy nhất */
         .single-task-card {
-            background: #ffffff;
+            background: #131c31;
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-            border: 1px solid #eef2ff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid #1e293b;
         }
         .task-header {
             display: flex;
@@ -205,7 +304,7 @@
         .task-icon {
             width: 40px;
             height: 40px;
-            background-color: #ffeef2;
+            background-color: rgba(255, 51, 102, 0.15);
             color: #ff3366;
             border-radius: 12px;
             display: flex;
@@ -216,10 +315,10 @@
         .task-title {
             font-size: 16px;
             font-weight: 700;
-            color: #111;
+            color: #fff;
         }
         .task-badge {
-            background-color: #ffeef2;
+            background-color: rgba(255, 51, 102, 0.15);
             color: #ff3366;
             font-size: 14px;
             font-weight: 700;
@@ -233,14 +332,14 @@
             margin-bottom: 12px;
         }
         .info-tag {
-            background: #f0f2f5;
+            background: #0f172a;
             padding: 4px 10px;
             border-radius: 6px;
-            color: #666;
+            color: #94a3b8;
         }
         .reward-tag {
-            color: #00b074;
-            background: #e6f9f2;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.15);
             padding: 4px 10px;
             border-radius: 6px;
             font-weight: 600;
@@ -250,7 +349,7 @@
         }
         .task-limit {
             font-size: 14px;
-            color: #666;
+            color: #94a3b8;
             font-weight: 500;
         }
         .task-actions {
@@ -259,7 +358,7 @@
         }
         .btn-do-task {
             flex: 2;
-            background-color: #0066ff;
+            background-color: #3b82f6;
             color: white;
             border: none;
             padding: 14px;
@@ -270,21 +369,21 @@
             text-align: center;
             display: block;
             text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
             transition: all 0.2s;
         }
         .btn-do-task.completed {
-            background-color: #e0e0e0;
-            color: #888;
+            background-color: #1e293b;
+            color: #64748b;
             cursor: not-allowed;
             box-shadow: none;
             flex: 1;
         }
         .btn-skip-task {
             flex: 1;
-            background-color: #f1f3f5;
-            color: #555;
-            border: 1px solid #ddd;
+            background-color: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid #334155;
             padding: 14px;
             border-radius: 12px;
             font-size: 14px;
@@ -294,7 +393,7 @@
             transition: background 0.2s;
         }
         .btn-skip-task:hover {
-            background-color: #e9ecef;
+            background-color: #334155;
         }
 
         /* Nút Telegram nổi */
@@ -329,6 +428,40 @@
 <body>
 
 <div class="container">
+    <!-- Khung Tiến Trình Chuỗi Buff (Mới Thêm) -->
+    <div class="streak-card" id="streak-section">
+        <div class="streak-header-badge">🎄 Giáng Sinh An Lành 🎄</div>
+        <div class="streak-title">🛡️ TIẾN TRÌNH CHUỖI BUFF</div>
+        <div class="streak-subtitle" id="streak-days-text">Chuỗi hiện tại: 0 / 120 Ngày</div>
+        
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+
+        <div class="milestones-grid">
+            <div class="milestone-item">
+                <div class="milestone-days">14 Ngày</div>
+                <div class="milestone-reward">25 KC</div>
+                <button class="milestone-btn" id="btn-m-14" onclick="claimMilestone(14)">Nhận</button>
+            </div>
+            <div class="milestone-item">
+                <div class="milestone-days">30 Ngày</div>
+                <div class="milestone-reward">50 KC</div>
+                <button class="milestone-btn" id="btn-m-30" onclick="claimMilestone(30)">Nhận</button>
+            </div>
+            <div class="milestone-item">
+                <div class="milestone-days">60 Ngày</div>
+                <div class="milestone-reward">113 KC</div>
+                <button class="milestone-btn" id="btn-m-60" onclick="claimMilestone(60)">Nhận</button>
+            </div>
+            <div class="milestone-item">
+                <div class="milestone-days">120 Ngày</div>
+                <div class="milestone-reward">Thẻ Tuần</div>
+                <button class="milestone-btn" id="btn-m-120" onclick="claimMilestone(120)">Nhận</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Khung Nhập ID Game -->
     <div class="login-card" id="login-section">
         <div class="login-title">🎮 Khóa ID Game Đua Top</div>
@@ -369,8 +502,8 @@
     let savedGameId = localStorage.getItem('locked_game_id') || '';
     let userScore = 0;
     let completedCount = 0;
+    let streakDays = 0; // Số ngày chuỗi buff
 
-    // Lấy ngày hiện tại định dạng YYYY-MM-DD theo giờ Việt Nam
     function getCurrentDate() {
         const now = new Date();
         const year = now.getFullYear();
@@ -382,13 +515,12 @@
     function loadUserData() {
         if (savedGameId) {
             userScore = parseInt(localStorage.getItem(`coin_score_${savedGameId}`) || '0');
+            streakDays = parseInt(localStorage.getItem(`streak_days_${savedGameId}`) || '0');
             
-            // Kiểm tra reset theo ngày cho số lượt hoàn thành nhiệm vụ
             const today = getCurrentDate();
             const lastActiveDate = localStorage.getItem(`active_date_${savedGameId}`) || '';
             
             if (lastActiveDate !== today) {
-                // Nếu sang ngày mới, reset số lượt làm trong ngày về 0 nhưng GIỮ NGUYÊN tổng Coin tích lũy
                 completedCount = 0;
                 localStorage.setItem(`completed_count_${savedGameId}`, 0);
                 localStorage.setItem(`active_date_${savedGameId}`, today);
@@ -403,7 +535,7 @@
     const returnUrl = encodeURIComponent("https://bufflikeff.github.io/bufflike-key/?status=success");
     const linkList = [];
     for (let i = 1; i <= MAX_LINKS; i++) {
-        linkList.push(`https://link4m.org/zeAYu${returnUrl}`);
+        linkList.push(`https://link4m.co/st?api=69477252020111717c5cd887&url=${returnUrl}`);
     }
 
     let leaderboardData = [
@@ -426,6 +558,18 @@
                 completedCount++;
                 userScore += 300;
 
+                // Nếu vừa hoàn thành đủ 40/40 link trong ngày, tăng 1 ngày chuỗi lên!
+                if (completedCount === MAX_LINKS) {
+                    let lastCompletedDayDate = localStorage.getItem(`streak_counted_date_${savedGameId}`) || '';
+                    const today = getCurrentDate();
+                    if (lastCompletedDayDate !== today) {
+                        streakDays++;
+                        localStorage.setItem(`streak_days_${savedGameId}`, streakDays);
+                        localStorage.setItem(`streak_counted_date_${savedGameId}`, today);
+                        alert(`🔥 Chúc mừng! Bạn đã hoàn thành đủ 40/40 link hôm nay và tích lũy thêm 1 ngày chuỗi (Tổng: ${streakDays} Ngày)!`);
+                    }
+                }
+
                 localStorage.setItem(`completed_count_${savedGameId}`, completedCount);
                 localStorage.setItem(`coin_score_${savedGameId}`, userScore);
                 localStorage.setItem(`last_processed_${savedGameId}`, completedCount.toString());
@@ -437,130 +581,35 @@
         }
     }
 
-    function checkLoginState() {
-        const input = document.getElementById('game-id-input');
-        const welcome = document.getElementById('welcome-msg');
-        const btn = document.getElementById('save-id-btn');
-        
-        if (savedGameId) {
-            input.value = savedGameId;
-            input.disabled = true;
-            btn.disabled = true;
-            btn.style.backgroundColor = "#adb5bd";
-            welcome.style.display = 'block';
-            welcome.innerHTML = `🔒 Đã khóa cứng ID trên thiết bị này: <b>${savedGameId}</b>`;
-        }
-    }
-
-    function saveGameId() {
-        const inputVal = document.getElementById('game-id-input').value.trim();
-        if (!inputVal) {
-            alert('Vui lòng nhập ID Game hợp lệ!');
-            return;
-        }
-
-        if (confirm(`Bạn có chắc chắn muốn khóa ID: ${inputVal} không? Sau khi khóa sẽ KHÔNG THỂ thay đổi trên thiết bị này!`)) {
-            savedGameId = inputVal;
-            localStorage.setItem('locked_game_id', savedGameId);
-            localStorage.setItem(`active_date_${savedGameId}`, getCurrentDate());
-            
-            loadUserData();
-            leaderboardData[0].name = `ID: ${savedGameId}`;
-            leaderboardData.find(u => u.isUser).score = userScore;
-            
-            checkLoginState();
-            renderLeaderboard();
-            renderSingleTask();
-            alert('Đã khóa cứng ID thành công!');
-        }
-    }
-
-    function renderLeaderboard() {
-        const lbContainer = document.getElementById('leaderboard');
-        lbContainer.innerHTML = '';
-        leaderboardData.sort((a, b) => b.score - a.score);
-
-        leaderboardData.forEach((item, index) => {
-            const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
-            const li = document.createElement('li');
-            li.className = 'leaderboard-item';
-            li.innerHTML = `
-                <span class="user-rank">${medal}</span>
-                <span class="user-name" style="${item.isUser ? 'color:#0066ff; font-weight:700;' : ''}">
-                    ${item.name} ${item.isUser ? '(Bạn)' : ''}
-                </span>
-                <span class="user-score">${item.score} Coin</span>
-            `;
-            lbContainer.appendChild(li);
-        });
-    }
-
-    function renderSingleTask() {
-        const cardContainer = document.getElementById('task-card-single');
-        const isFinishedAll = completedCount >= MAX_LINKS;
-        const currentLinkIndex = Math.min(completedCount, MAX_LINKS - 1);
-        const currentTargetUrl = linkList[currentLinkIndex];
-        const remaining = MAX_LINKS - completedCount;
-
-        cardContainer.innerHTML = `
-            <div class="task-header">
-                <div class="task-title-wrapper">
-                    <div class="task-icon">🔗</div>
-                    <div class="task-title">Vượt Link Tích Coin Đua Top</div>
-                </div>
-                <div class="task-badge">${completedCount}/${MAX_LINKS}</div>
-            </div>
-            <div class="task-info">
-                <span class="info-tag">⏱️ ~60s/link</span>
-                <span class="reward-tag">+300 Coin / link</span>
-            </div>
-            <div class="task-footer">
-                <span class="task-limit">
-                    ${isFinishedAll ? '🎉 Bạn đã hoàn thành toàn bộ 40/40 lượt hôm nay!' : `Còn <b>${remaining}/${MAX_LINKS}</b> lượt hôm nay`}
-                </span>
-            </div>
-            <div class="task-actions">
-                <a href="${isFinishedAll ? '#' : currentTargetUrl}" target="_blank" class="btn-do-task ${isFinishedAll ? 'completed' : ''}" onclick="handleTaskClick(event)">
-                    ${isFinishedAll ? 'Hết lượt hôm nay' : `▶ Làm nhiệm vụ (Lần ${completedCount + 1}/${MAX_LINKS})`}
-                </a>
-                ${!isFinishedAll ? `<button class="btn-skip-task" onclick="skipTask()">🔄 Đổi link</button>` : ''}
-            </div>
-        `;
-    }
-
-    function handleTaskClick(event) {
+    // Nhận thưởng mốc ngày (14, 30, 60, 120)
+    function claimMilestone(targetDays) {
         if (!savedGameId) {
-            event.preventDefault();
-            alert('Vui lòng khóa ID Game ở khung phía trên trước khi bắt đầu!');
-            document.getElementById('game-id-input').focus();
+            alert('Vui lòng khóa ID Game trước!');
+            return;
+        }
+        let claimedStatus = localStorage.getItem(`claimed_milestone_${savedGameId}_${targetDays}`) === 'true';
+        if (claimedStatus) {
+            alert('Bạn đã nhận phần thưởng mốc này rồi!');
+            return;
+        }
+        if (streakDays < targetDays) {
+            alert(`Chưa đủ điều kiện! Cần đạt ${targetDays} ngày chuỗi (Hiện tại: ${streakDays} ngày).`);
             return;
         }
 
-        if (completedCount >= MAX_LINKS) {
-            event.preventDefault();
-            alert('Bạn đã hoàn thành đủ 40 lượt vượt link hôm nay! Hãy quay lại vào ngày mai nhé.');
-            return;
-        }
+        localStorage.setItem(`claimed_milestone_${savedGameId}_${targetDays}`, 'true');
+        alert(`🎁 Thành công! Bạn đã nhận phần thưởng mốc ${targetDays} ngày. Hãy liên hệ Admin Telegram để nhận thưởng nhé!`);
+        updateStreakUI();
     }
 
-    function skipTask() {
-        if (completedCount >= MAX_LINKS - 1) {
-            alert('Đây là link cuối cùng rồi, không thể đổi thêm!');
-            return;
-        }
-        const skipped = linkList.shift();
-        linkList.push(skipped);
-        renderSingleTask();
-        alert('Đã chuyển sang link nhiệm vụ mới!');
-    }
+    function updateStreakUI() {
+        const streakText = document.getElementById('streak-days-text');
+        const progressBar = document.getElementById('progress-bar');
+        
+        streakText.innerHTML = `Chuỗi hiện tại: ${streakDays} / 120 Ngày`;
+        let percent = Math.min((streakDays / 120) * 100, 100);
+        progressBar.style.width = percent + '%';
 
-    // Khởi tạo
-    checkLoginState();
-    checkUrlCallback();
-    leaderboardData.find(u => u.isUser).score = userScore;
-    renderLeaderboard();
-    renderSingleTask();
-</script>
-
-</body>
-</html>
+        // Check trạng thái nút nhận của từng mốc
+        [14, 30, 60, 120].forEach(days => {
+            const btn = document.getElementById(`btn-m-${days}`

@@ -21,18 +21,9 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(-10px) translateX(0);
-        opacity: 0.8;
-      }
-      50% {
-        transform: translateY(50vh) translateX(20px);
-        opacity: 0.5;
-      }
-      100% {
-        transform: translateY(105vh) translateX(-20px);
-        opacity: 0;
-      }
+      0% { transform: translateY(-10px) translateX(0); opacity: 0.8; }
+      50% { transform: translateY(50vh) translateX(20px); opacity: 0.5; }
+      100% { transform: translateY(105vh) translateX(-20px); opacity: 0; }
     }
     /* ------------------------------------- */
 
@@ -49,145 +40,47 @@
       z-index: 10;
     }
     
-    .badge { display: inline-block; background-color: #22c55e; color: #000000; font-size: 12px; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+    .badge { display: inline-block; background-color: #22c55e; color: #000000; font-size: 12px; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; }
     
-    /* KHUNG TOP 3 ĐUA TOP */
-    .podium-card {
-      background: linear-gradient(135deg, #4c1d95, #3b0764, #581c87);
-      border: 2px solid #a855f7;
-      border-radius: 16px;
-      padding: 15px 12px;
+    /* --- BANNER SỰ KIỆN ĐUA TOP MỚI --- */
+    .event-banner {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 2px solid #f59e0b;
+      border-radius: 10px;
+      padding: 14px 10px;
       margin-bottom: 12px;
-      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
       text-align: center;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
     }
-    .podium-title {
-      font-size: 13px;
-      font-weight: 800;
+    .event-title {
+      color: #fbbf24;
+      font-size: 14px;
+      font-weight: bold;
       text-transform: uppercase;
-      color: #f3e8ff;
-      margin-bottom: 12px;
-      letter-spacing: 0.5px;
+      margin-bottom: 4px;
     }
-    .podium-flex {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-    .podium-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex: 1;
-      overflow: hidden;
-    }
-    .podium-item.top-1 {
-      transform: translateY(-8px);
-      flex: 1.2;
-    }
-    .avatar-circle {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
+    .event-desc {
+      color: #cbd5e1;
       font-size: 11px;
-      color: #fff;
-      margin-bottom: 5px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      border: 2px solid #fff;
+      margin-bottom: 10px;
+      line-height: 1.4;
     }
-    .top-1 .avatar-circle {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #ff416c, #ff4b2b);
-      border-color: #ffd700;
+    .event-btn {
+      display: inline-block;
+      width: 100%;
+      padding: 10px 0;
+      background: linear-gradient(90deg, #f59e0b, #d97706);
+      color: #ffffff;
+      font-weight: bold;
       font-size: 12px;
-      box-shadow: 0 0 15px rgba(255, 65, 108, 0.6);
-    }
-    .top-2 .avatar-circle {
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      border-color: #93c5fd;
-    }
-    .top-3 .avatar-circle {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      border-color: #fde68a;
-    }
-
-    .podium-name-running {
-      font-size: 11px;
-      font-weight: 700;
-      color: #38bdf8;
-      width: 100%;
-      margin-bottom: 2px;
-    }
-
-    /* 2 Nút thông tin ID & Số dư nằm ngay trong ô giao diện Top 1 */
-    .top1-info-container {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      width: 100%;
-      margin-top: 2px;
-    }
-    .info-btn-box {
-      background: rgba(15, 23, 42, 0.7);
-      border: 1px solid #38bdf8;
+      text-decoration: none;
       border-radius: 6px;
-      padding: 3px 4px;
-      font-size: 10px;
-      font-weight: 700;
-      color: #38bdf8;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
     }
-    .info-btn-score {
-      background: rgba(15, 23, 42, 0.7);
-      border: 1px solid #eab308;
-      border-radius: 6px;
-      padding: 3px 4px;
-      font-size: 10px;
-      font-weight: 700;
-      color: #fde047;
-      text-align: center;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+    .event-btn:hover {
+      opacity: 0.9;
     }
-
-    .podium-score {
-      font-size: 10px;
-      font-weight: 600;
-      color: #fde047;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 2px 6px;
-      border-radius: 8px;
-    }
-
-    /* 3 Nút chức năng ở dưới */
-    .podium-actions-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-    }
-    .podium-btn {
-      background: #1e1b4b;
-      color: #fff;
-      border: 1px solid #7c3aed;
-      padding: 8px 2px;
-      border-radius: 8px;
-      font-size: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      text-transform: uppercase;
-      transition: all 0.2s;
-    }
-    .podium-btn:hover { background: #7c3aed; }
 
     .marquee-container {
       background-color: #1f2937;
@@ -209,7 +102,6 @@
     
     .input-box { width: 100%; padding: 9px 10px; border-radius: 6px; border: 1px solid #4b5563; background-color: #111827; color: #fff; font-size: 13px; outline: none; margin-bottom: 8px; }
     .input-box:focus { border-color: #38bdf8; box-shadow: 0 0 5px rgba(56, 189, 248, 0.5); }
-    .input-box:disabled { background-color: #1e293b; color: #9ca3af; cursor: not-allowed; }
 
     .btn-row { display: flex; gap: 6px; margin-bottom: 6px; }
     .btn-action { flex: 1; padding: 10px 6px; border-radius: 6px; font-size: 12px; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; text-align: center; }
@@ -264,53 +156,20 @@
   <div class="container">
     <span class="badge">❄️ GIÁNG SINH AN LÀNH ❄️</span>
 
-    <!-- KHUNG TOP 3 ĐUA TOP -->
-    <div class="podium-card">
-      <div class="podium-title">🌲 Bảng Xếp Hạng Top 3 Nhận Thẻ Tháng 🌲</div>
-      <div class="podium-flex">
-        <!-- Top 2 -->
-        <div class="podium-item top-2">
-          <div class="avatar-circle">TOP 2</div>
-          <div class="podium-name-running">
-            <marquee scrollamount="3">ID: 83920192</marquee>
-          </div>
-          <div class="podium-score">11800 Vàng</div>
-        </div>
-
-        <!-- Top 1 (Khách hàng tích hợp 2 nút ID & Số dư Vàng) -->
-        <div class="podium-item top-1">
-          <div class="avatar-circle">👑 TOP 1</div>
-          <div class="top1-info-container">
-            <div id="top1IdBtn" class="info-btn-box" title="ID của bạn">Chưa có ID</div>
-            <div id="top1ScoreBtn" class="info-btn-score">0 Vàng</div>
-          </div>
-        </div>
-
-        <!-- Top 3 -->
-        <div class="podium-item top-3">
-          <div class="avatar-circle">TOP 3</div>
-          <div class="podium-name-running">
-            <marquee scrollamount="3">ID: 55219384</marquee>
-          </div>
-          <div class="podium-score">9400 Vàng</div>
-        </div>
-      </div>
-      
-      <!-- 3 Nút chức năng -->
-      <div class="podium-actions-3">
-        <button class="podium-btn" onclick="scrollToKeySection()">Kiếm Vàng</button>
-        <button class="podium-btn" onclick="alert('Đã làm mới nhiệm vụ!')">Đổi Nhiệm Vụ</button>
-        <button class="podium-btn" onclick="focusAndLockIdInput()">Nhập ID Đua Top</button>
-      </div>
+    <!-- BANNER CHUYỂN SANG TRANG SỰ KIỆN ĐUA TOP -->
+    <div class="event-banner">
+      <div class="event-title">🏆 SỰ KIỆN ĐUA TOP VƯỢT LINK 🏆</div>
+      <div class="event-desc">Tham gia cày Vàng vượt link nhận ngay Thẻ Tháng Free Fire & nhiều phần quà hấp dẫn!</div>
+      <a href="duatop.html" class="event-btn">🔥 NHẤP VÀO ĐÂY ĐỂ THAM GIA ĐUA TOP 🔥</a>
     </div>
 
     <div class="marquee-container">
       <marquee scrollamount="5">🎄 MÙA GIÁNG SINH ẤM ÁP - CHÚC ANH EM MỘT MÙA LỄ HỘI VUI VẺ! 🎄</marquee>
     </div>
 
-    <div class="control-panel" id="controlPanelSection">
+    <div class="control-panel">
       <label for="uidInput">Nhập ID Game (UID) của bạn:</label>
-      <input type="text" id="uidInput" class="input-box" placeholder="Ví dụ: 2230853045" oninput="saveUidLocal()">
+      <input type="text" id="uidInput" class="input-box" placeholder="Ví dụ: 2230853045">
 
       <div class="btn-row">
         <button class="btn-action btn-key" onclick="goToGetKey()">🔑 Lấy Key</button>
@@ -368,68 +227,10 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const savedUid = localStorage.getItem("tiz_current_uid");
-      const isLocked = localStorage.getItem("tiz_id_locked") === "true";
       const savedKey = localStorage.getItem("tiz_last_key");
-
-      if (savedUid) {
-        const inputEl = document.getElementById("uidInput");
-        inputEl.value = savedUid;
-        if (isLocked) {
-          inputEl.disabled = true;
-        }
-        updateTop1Display(savedUid);
-      }
+      if (savedUid) document.getElementById("uidInput").value = savedUid;
       if (savedKey) document.getElementById("keyInput").value = savedKey;
     });
-
-    function updateTop1Display(uid) {
-        const idBtnEl = document.getElementById("top1IdBtn");
-        const scoreBtnEl = document.getElementById("top1ScoreBtn");
-        
-        if (uid) {
-            let userScore = localStorage.getItem(`score_${uid}`) || '0';
-            scoreBtnEl.innerText = `${userScore} Vàng`;
-            
-            if (uid.length > 6) {
-                idBtnEl.innerHTML = `<marquee scrollamount="2">${uid}</marquee>`;
-            } else {
-                idBtnEl.innerText = uid;
-            }
-        } else {
-            idBtnEl.innerText = "Chưa có ID";
-            scoreBtnEl.innerText = "0 Vàng";
-        }
-    }
-
-    function saveUidLocal() {
-      if (localStorage.getItem("tiz_id_locked") === "true") return;
-
-      const uid = document.getElementById("uidInput").value.trim();
-      if (uid) {
-        localStorage.setItem("tiz_current_uid", uid);
-        updateTop1Display(uid);
-      } else {
-        updateTop1Display("");
-      }
-    }
-
-    // Hàm bấm nút "Nhập ID Đua Top" ở trên: tự động trượt xuống và focus vào ô nhập ID
-    function focusAndLockIdInput() {
-      const inputEl = document.getElementById("uidInput");
-      const isLocked = localStorage.getItem("tiz_id_locked") === "true";
-
-      if (isLocked) {
-        alert("🔒 ID của bạn đã được khóa cứng trên thiết bị này rồi!");
-        return;
-      }
-
-      document.getElementById("controlPanelSection").scrollIntoView({ behavior: 'smooth' });
-      inputEl.focus();
-    }
-
-    function scrollToKeySection() {
-      document.getElementById("controlPanelSection").scrollIntoView({ behavior: 'smooth' });
-    }
 
     // --- DANH SÁCH ID BỊ CHẶN & THÔNG BÁO GẮT ---
     const blacklistUids = ["2142371970"];
@@ -456,17 +257,8 @@
     }
 
     async function goToGetKey() {
-      const inputEl = document.getElementById("uidInput");
-      const uid = inputEl.value.trim();
-      if (!uid) { alert("Vui lòng nhập ID Game (UID) của bạn trước khi đi lấy Key!"); inputEl.focus(); return; }
-
-      // Tự động khóa cứng luôn khi bấm Lấy Key nếu chưa khóa
-      if (localStorage.getItem("tiz_id_locked") !== "true") {
-        localStorage.setItem("tiz_current_uid", uid);
-        localStorage.setItem("tiz_id_locked", "true");
-        inputEl.disabled = true;
-        updateTop1Display(uid);
-      }
+      const uid = document.getElementById("uidInput").value.trim();
+      if (!uid) { alert("Vui lòng nhập ID Game (UID) của bạn trước khi đi lấy Key!"); return; }
 
       if (isUidBlocked(uid)) {
         alert(bannedMessage);
@@ -528,7 +320,8 @@
         msgDiv.innerText = data.message;
         
         if (data.status === "success") {
-          alert(data.message + " 🎉 Đã buff like thành công cho ID: " + uid);
+          localStorage.setItem("tiz_last_key", key);
+          alert(data.message);
         }
       } catch (err) { 
         msgDiv.style.color = "#f87171"; 

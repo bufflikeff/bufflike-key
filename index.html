@@ -1,1 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh Sách Nhiệm Vụ Vượt Link</title>
+  <!-- Thêm Font Awesome để hiển thị icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
+    body {
+      background-color: #f4f6f9;
+      color: #333333;
+      display: flex;
+      justify-content: center;
+      padding: 20px 15px 80px 15px;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .task-container {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* CARD NHIỆM VỤ */
+    .task-card {
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 20px 18px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* PHẦN ĐẦU CARD */
+    .task-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .task-icon-box {
+      width: 50px;
+      height: 50px;
+      background-color: #ffe4e6;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 14px;
+      flex-shrink: 0;
+    }
+
+    .task-icon-box i {
+      color: #f43f5e;
+      font-size: 20px;
+    }
+
+    .task-info {
+      flex: 1;
+    }
+
+    .task-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .task-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .task-progress-badge {
+      color: #ec4899;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .task-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-time {
+      background-color: #f1f5f9;
+      color: #64748b;
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-reward {
+      background-color: #ecfdf5;
+      color: #10b981;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+
+    /* ĐƯỜNG PHÂN CÁCH & LƯỢT CÒN LẠI */
+    .task-body {
+      border-top: 1px solid #f1f5f9;
+      padding-top: 12px;
+      margin-bottom: 14px;
+    }
+
+    .task-remains {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    /* NÚT LÀM NHIỆM VỤ */
+    .btn-do-task {
+      background-color: #1d61f2;
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      box-shadow: 0 4px 12px rgba(29, 97, 242, 0.25);
+    }
+
+    .btn-do-task:hover {
+      background-color: #154ec1;
+    }
+
+    .btn-do-task:active {
+      transform: scale(0.98);
+    }
+
+    /* NÚT THÔNG BÁO TÁC VỤ (TELEGRAM/CHAT NỔI) */
+    .fab-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      background-color: #0088cc;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 22px;
+      box-shadow: 0 6px 16px rgba(0, 136, 204, 0.4);
+      cursor: pointer;
+      text-decoration: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="task-container">
+
+    <!-- NHIỆM VỤ 1 -->
+    <div class="task-card">
+      <div class="task-header">
+        <div class="task-icon-box">
+          <i class="fa-solid fa-link"></i>
+        </div>
+        <div class="task-info">
+          <div class="task-title-row">
+            <span class="task-title">Vượt Link4M</span>
+            <span class="task-progress-badge">0/2</span>
+          </div>
+          <div class="task-meta">
+            <span class="badge-time"><i class="fa-regular fa-clock"></i> ~90s</span>
+            <span class="badge-reward">+100 coin</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-body">
+        <div class="task-remains">Còn 2/2 lượt hôm nay</div>
+      </div>
+      <button class="btn-do-task" onclick="doTask('https://link4m.com/example1')">
+        <i class="fa-solid fa-play"></i> Làm nhiệm vụ
+      </button>
+    </div>
+
+    <!-- NHIỆM VỤ 2 -->
+    <div class="task-card">
+      <div class="task-header">
+        <div class="task-icon-box">
+          <i class="fa-solid fa-link"></i>
+        </div>
+        <div class="task-info">
+          <div class="task-title-row">
+            <span class="task-title">Link BBMKTS (CHECK)</span>
+            <span class="task-progress-badge">0/1</span>
+          </div>
+          <div class="task-meta">
+            <span class="badge-time"><i class="fa-regular fa-clock"></i> ~90s</span>
+            <span class="badge-reward">+100 coin</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-body">
+        <div class="task-remains">Còn 1/1 lượt hôm nay</div>
+      </div>
+      <button class="btn-do-task" onclick="doTask('https://link4m.com/example2')">
+        <i class="fa-solid fa-play"></i> Làm nhiệm vụ
+      </button>
+    </div>
+
+    <!-- NHIỆM VỤ 3 -->
+    <div class="task-card">
+      <div class="task-header">
+        <div class="task-icon-box" style="background-color: #f3e8ff;">
+          <i class="fa-solid fa-link" style="color: #9333ea;"></i>
+        </div>
+        <div class="task-info">
+          <div class="task-title-row">
+            <span class="task-title">Link Traffic Việt</span>
+            <span class="task-progress-badge">0/2</span>
+          </div>
+          <div class="task-meta">
+            <span class="badge-time"><i class="fa-regular fa-clock"></i> ~90s</span>
+            <span class="badge-reward">+350 Lúa</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-body">
+        <div class="task-remains">Còn 2/2 lượt hôm nay</div>
+      </div>
+      <button class="btn-do-task" onclick="doTask('https://link4m.com/example3')">
+        <i class="fa-solid fa-play"></i> Làm nhiệm vụ
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Nút Telegram nổi góc dưới -->
+  <a href="https://t.me/tlzproject" target="_blank" class="fab-btn">
+    <i class="fa-solid fa-paper-plane"></i>
+  </a>
+
+  <script>
+    function doTask(linkUrl) {
+      // Chuyển hướng người dùng tới trang link rút gọn khi bấm Làm nhiệm vụ
+      window.open(linkUrl, '_blank');
+    }
+  </script>
+
+</body>
+</html>

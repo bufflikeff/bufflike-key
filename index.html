@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BUFF LIKE Phi Phai - TRANG CHỦ</title>
+  <title>BUFF LIKE FF - TRANG CHỦ</title>
   <!-- 🛡️ Thêm thư viện Cloudflare Turnstile -->
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   
@@ -45,7 +45,13 @@
     
     .badge { display: inline-block; background-color: #22c55e; color: #000000; font-size: 12px; font-weight: bold; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
     
-    /* NÚT ĐUA TOP VƯỢT LINK */
+    /* 🔥 HIỆU ỨNG NHẤP NHÁY / PHÓNG TO THU NHỎ CHO NÚT ĐUA TOP */
+    @keyframes pulseGlow {
+      0% { transform: scale(1); box-shadow: 0 0 10px rgba(245, 158, 11, 0.3); }
+      50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(245, 158, 11, 0.8); }
+      100% { transform: scale(1); box-shadow: 0 0 10px rgba(245, 158, 11, 0.3); }
+    }
+
     .btn-top-event {
       display: block;
       background: linear-gradient(to right, #f59e0b, #d97706);
@@ -56,7 +62,8 @@
       border-radius: 8px;
       text-decoration: none;
       margin-bottom: 12px;
-      box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+      text-align: center;
+      animation: pulseGlow 1.5s infinite ease-in-out;
       transition: 0.2s;
     }
     .btn-top-event:hover {
@@ -137,9 +144,9 @@
   <div class="container">
     <span class="badge">❄️ GIÁNG SINH AN LÀNH ❄️</span>
 
-    <!-- Nút tham gia đua top dẫn sang trang web con của bạn -->
+    <!-- Nút tham gia đua top có hiệu ứng nhấp nháy thu hút -->
     <a href="https://bufflikeff.site/trang-con.html" target="_blank" class="btn-top-event">
-      🔥 NHẤP VÀO ĐÂY ĐỂ THAM GIA ĐUA TOP NHẬN THẺ THÁNG🔥
+      🔥 NHẤP VÀO ĐÂY ĐỂ THAM GIA ĐUA TOP NHẬN THẺ THÁNG FF🔥
     </a>
 
     <div class="marquee-container">

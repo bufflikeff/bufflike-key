@@ -18,8 +18,6 @@
       --bronze: #fb923c;
       --primary: #3b82f6;
       --primary-hover: #2563eb;
-      --green: #10b981;
-      --purple: #a855f7;
     }
 
     * {
@@ -100,7 +98,6 @@
       padding: 14px 8px;
       text-align: center;
       position: relative;
-      transition: transform 0.2s;
     }
 
     .podium-card.top-1 {
@@ -166,12 +163,20 @@
     .top-2 .reward-pill { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
     .top-3 .reward-pill { background: rgba(251, 146, 60, 0.2); color: #fdba74; }
 
-    /* ================= TOP 4 - 10 LIST ================= */
+    /* ================= TOP 4 - 10 COLLAPSIBLE ================= */
+    .rank-section {
+      margin-bottom: 26px;
+    }
+
     .rank-list {
-      display: flex;
+      display: none;
       flex-direction: column;
       gap: 8px;
-      margin-bottom: 28px;
+      margin-bottom: 10px;
+    }
+
+    .rank-list.expanded {
+      display: flex;
     }
 
     .rank-row {
@@ -206,10 +211,6 @@
       flex-shrink: 0;
     }
 
-    .rank-info {
-      min-width: 0;
-    }
-
     .rank-uid {
       font-size: 13px;
       font-weight: 700;
@@ -227,6 +228,24 @@
       font-weight: 800;
       color: #60a5fa;
       white-space: nowrap;
+    }
+
+    .btn-toggle-rank {
+      width: 100%;
+      background: rgba(59, 130, 246, 0.12);
+      color: #93c5fd;
+      border: 1px dashed rgba(96, 165, 250, 0.45);
+      border-radius: 11px;
+      padding: 11px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-toggle-rank:hover {
+      background: rgba(59, 130, 246, 0.22);
+      color: #fff;
     }
 
     /* ================= ID LOCK BOX ================= */
@@ -448,12 +467,13 @@
       </div>
     </div>
 
-    <!-- 7 GIẢI TIẾP THEO (TOP 4 - TOP 10) NẰM NGANG TỪ TRÊN XUỐNG -->
-    <div class="section-title">
-      <span>🎁 TOP 4 – TOP 10 (THẺ GARENA 20K)</span>
+    <!-- TOP 4 - 10 THU GỌN VỚI NÚT XEM THÊM -->
+    <div class="rank-section">
+      <div class="rank-list" id="rankList"></div>
+      <button class="btn-toggle-rank" id="toggleRankBtn" onclick="toggleRankList()">
+        ▾ Xem thêm Top 4 – Top 10 (7 giải Thẻ Garena 20K)
+      </button>
     </div>
-
-    <div class="rank-list" id="rankList"></div>
 
     <!-- Ô NHẬP & KHÓA ID BẮT BUỘC -->
     <div class="section-title">
@@ -482,7 +502,6 @@
   </div>
 
   <script>
-    // Dữ liệu mẫu Top 4 - Top 10 (sau này nối API Google Apps Script sẽ tự đổ vào đây)
     const top4To10Data = [
       { rank: 4, uid: '301928374', points: 3304 },
       { rank: 5, uid: '748392019', points: 2832 },
@@ -493,7 +512,6 @@
       { rank: 10, uid: '594837261', points: 1180 }
     ];
 
-    // Danh sách 10 mục nhiệm vụ (Link4m = 236 điểm, Link2m = 36 điểm)
     const missions = [
       { id: 1, name: 'Nhiệm vụ vượt link #1', type: '4m', label: 'Link4m', points: 236 },
       { id: 2, name: 'Nhiệm vụ vượt link #2', type: '4m', label: 'Link4m', points: 236 },
@@ -508,15 +526,15 @@
     ];
 
     const STORAGE_KEY = 'locked_ff_uid';
+    let isRankExpanded = false;
 
-    // Render Top 4 -> 10
     function renderRankList() {
       const container = document.getElementById('rankList');
       container.innerHTML = top4To10Data.map(item => `
         <div class="rank-row">
           <div class="rank-left">
             <div class="rank-badge">#${item.rank}</div>
-            <div class="rank-info">
+            <div>
               <div class="rank-uid">ID: ${item.uid}</div>
               <div class="rank-reward-tag">🎁 Thẻ Garena 20K</div>
             </div>
@@ -526,7 +544,20 @@
       `).join('');
     }
 
-    // Render 10 mục nhiệm vụ
+    function toggleRankList() {
+      isRankExpanded = !isRankExpanded;
+      const listEl = document.getElementById('rankList');
+      const btnEl = document.getElementById('toggleRankBtn');
+
+      if (isRankExpanded) {
+        listEl.classList.add('expanded');
+        btnEl.textContent = '▴ Thu gọn Top 4 – Top 10';
+      } else {
+        listEl.classList.remove('expanded');
+        btnEl.textContent = '▾ Xem thêm Top 4 – Top 10 (7 giải Thẻ Garena 20K)';
+      }
+    }
+
     function renderMissions() {
       const savedUid = localStorage.getItem(STORAGE_KEY);
       const container = document.getElementById('missionList');
@@ -553,7 +584,6 @@
       `).join('');
     }
 
-    // Kiểm tra trạng thái khóa ID khi tải trang
     function initIDLock() {
       const savedUid = localStorage.getItem(STORAGE_KEY);
       const input = document.getElementById('uidInput');
@@ -570,7 +600,6 @@
       }
     }
 
-    // Xử lý khóa ID bắt buộc
     function lockUserID() {
       const input = document.getElementById('uidInput');
       const uid = input.value.trim();
@@ -592,7 +621,6 @@
       renderMissions();
     }
 
-    // Bắt đầu làm 1 trong 10 nhiệm vụ
     function startMission(missionId, type, points) {
       const savedUid = localStorage.getItem(STORAGE_KEY);
       if (!savedUid) {
@@ -601,7 +629,6 @@
         return;
       }
 
-      // Giai đoạn tiếp theo: gọi API Google Apps Script để lấy link rút gọn thật theo UID + missionId
       alert(`Đang tạo nhiệm vụ #${missionId} (${type === '4m' ? 'Link4m' : 'Link2m'} +${points} điểm) cho ID: ${savedUid}`);
     }
 

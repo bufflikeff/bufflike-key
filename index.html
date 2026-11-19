@@ -3,803 +3,572 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sự Kiện Đua Top Vượt Link Nhận Quà</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <title>Đua Top Điểm Nhiệm Vụ Free Fire</title>
   <style>
     :root {
-      --bg: #0b0f19;
-      --card: #131a2b;
-      --card-border: #232f4b;
-      --text: #f1f5f9;
+      --bg: #070b14;
+      --card: #0f172a;
+      --card-2: #162036;
+      --border: #243354;
+      --text: #f8fafc;
       --muted: #94a3b8;
-      --gold: #facc15;
-      --silver: #cbd5e1;
-      --bronze: #fb923c;
-      --primary: #3b82f6;
-      --primary-hover: #2563eb;
+      --accent: #3b82f6;
+      --accent-2: #2563eb;
+      --success: #10b981;
+      --gold: #f59e0b;
+      --danger: #ef4444;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Be Vietnam Pro', sans-serif;
     }
 
     body {
-      background: radial-gradient(circle at top, #172038 0%, var(--bg) 60%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at top, #111c33 0%, var(--bg) 55%);
       color: var(--text);
       min-height: 100vh;
-      padding: 16px 12px 48px;
+      padding: 18px 14px 48px;
     }
 
     .container {
-      max-width: 680px;
+      max-width: 640px;
       margin: 0 auto;
-    }
-
-    .claim-banner {
-      display: none;
-      background: rgba(16, 185, 129, 0.16);
-      border: 1px solid rgba(52, 211, 153, 0.5);
-      color: #a7f3d0;
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      line-height: 1.45;
-    }
-
-    .claim-banner.error {
-      background: rgba(239, 68, 68, 0.16);
-      border-color: rgba(248, 113, 113, 0.5);
-      color: #fecaca;
-    }
-
-    .claim-banner.show {
-      display: block;
     }
 
     .header {
       text-align: center;
-      margin-bottom: 22px;
-    }
-
-    .header .badge-live {
-      display: inline-block;
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 999px;
-      margin-bottom: 8px;
-      letter-spacing: 0.5px;
+      margin-bottom: 18px;
     }
 
     .header h1 {
-      font-size: 24px;
+      font-size: 1.35rem;
       font-weight: 800;
-      background: linear-gradient(90deg, #fde047, #60a5fa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.3px;
       margin-bottom: 6px;
     }
 
     .header p {
-      font-size: 13px;
+      font-size: 0.88rem;
       color: var(--muted);
     }
 
-    .section-title {
-      font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* ================= TOP 3 PODIUM ================= */
+    /* Top 3 Podium */
     .podium {
       display: grid;
-      grid-template-columns: 1fr 1.12fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      align-items: end;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
-    .podium-card {
+    .top-box {
       background: var(--card);
-      border: 1px solid var(--card-border);
+      border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 14px 8px;
+      padding: 12px 8px;
       text-align: center;
-      position: relative;
     }
 
-    .podium-card.top-1 {
+    .top-box.rank-1 {
       border-color: var(--gold);
-      background: linear-gradient(180deg, rgba(250, 204, 21, 0.14) 0%, var(--card) 100%);
-      padding: 20px 8px 16px;
-      box-shadow: 0 8px 24px rgba(250, 204, 21, 0.15);
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.16);
     }
 
-    .podium-card.top-2 {
-      border-color: var(--silver);
-      background: linear-gradient(180deg, rgba(203, 213, 225, 0.1) 0%, var(--card) 100%);
-    }
-
-    .podium-card.top-3 {
-      border-color: var(--bronze);
-      background: linear-gradient(180deg, rgba(251, 146, 60, 0.1) 0%, var(--card) 100%);
-    }
-
-    .rank-crown {
-      font-size: 22px;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .rank-num {
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .rank-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold);
       margin-bottom: 4px;
     }
 
-    .top-1 .rank-num { color: var(--gold); }
-    .top-2 .rank-num { color: var(--silver); }
-    .top-3 .rank-num { color: var(--bronze); }
-
-    .podium-uid {
-      font-size: 13px;
+    .rank-uid {
+      font-size: 0.86rem;
       font-weight: 700;
-      color: #fff;
       word-break: break-all;
       margin-bottom: 4px;
     }
 
-    .podium-pts {
-      font-size: 13px;
-      font-weight: 800;
-      color: #38bdf8;
-      margin-bottom: 8px;
-    }
-
-    .reward-pill {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 6px;
-      line-height: 1.2;
-    }
-
-    .top-1 .reward-pill { background: rgba(250, 204, 21, 0.2); color: #fde047; }
-    .top-2 .reward-pill { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
-    .top-3 .reward-pill { background: rgba(251, 146, 60, 0.2); color: #fdba74; }
-
-    /* ================= TOP 4 - 10 COLLAPSIBLE ================= */
-    .rank-section {
-      margin-bottom: 26px;
-    }
-
-    .rank-list {
-      display: none;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .rank-list.expanded {
-      display: flex;
-    }
-
-    .rank-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 10px 14px;
-      gap: 10px;
-    }
-
-    .rank-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .rank-badge {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      background: #1e293b;
-      color: #e2e8f0;
-      font-size: 12px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .rank-uid {
-      font-size: 13px;
-      font-weight: 700;
-      color: #f8fafc;
-    }
-
-    .rank-reward-tag {
-      font-size: 11px;
-      color: #34d399;
-      font-weight: 600;
-    }
-
-    .rank-score {
-      font-size: 13px;
+    .rank-pts {
+      font-size: 0.92rem;
       font-weight: 800;
       color: #60a5fa;
-      white-space: nowrap;
+      margin-bottom: 6px;
     }
 
-    .btn-toggle-rank {
-      width: 100%;
-      background: rgba(59, 130, 246, 0.12);
+    .reward-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.15);
       color: #93c5fd;
-      border: 1px dashed rgba(96, 165, 250, 0.45);
-      border-radius: 11px;
-      padding: 11px 14px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      border: 1px solid rgba(59, 130, 246, 0.3);
     }
 
-    .btn-toggle-rank:hover {
-      background: rgba(59, 130, 246, 0.22);
-      color: #fff;
-    }
-
-    /* ================= ID LOCK BOX ================= */
-    .id-box {
+    .btn-expand {
+      width: 100%;
       background: var(--card);
-      border: 1px solid #2e3c5e;
-      border-radius: 14px;
-      padding: 16px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
       margin-bottom: 20px;
     }
 
-    .id-box label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: #e2e8f0;
+    .top4-10 {
+      display: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
     }
 
-    .id-input-group {
+    .top4-10.show {
+      display: block;
+    }
+
+    .top-row {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 4px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      font-size: 0.85rem;
+    }
+
+    .top-row:last-child {
+      border-bottom: none;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
       gap: 8px;
     }
 
-    .id-input-group input {
+    /* UID Lock Box */
+    .uid-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    .uid-box label {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #e2e8f0;
+    }
+
+    .uid-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .uid-input {
       flex: 1;
-      background: #0b0f19;
-      border: 1px solid #334155;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 11px 12px;
       border-radius: 10px;
-      padding: 11px 14px;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 0.92rem;
       outline: none;
     }
 
-    .id-input-group input:focus {
-      border-color: var(--primary);
-    }
-
-    .id-input-group input:disabled {
-      background: #162033;
-      color: #34d399;
-      border-color: rgba(16, 185, 129, 0.45);
-      cursor: not-allowed;
+    .uid-input:focus {
+      border-color: var(--accent);
     }
 
     .btn-lock {
-      background: var(--primary);
+      background: var(--success);
       color: #fff;
       border: none;
-      border-radius: 10px;
       padding: 0 16px;
-      font-size: 13px;
+      border-radius: 10px;
       font-weight: 700;
+      font-size: 0.86rem;
       cursor: pointer;
       white-space: nowrap;
-      transition: background 0.2s;
     }
 
-    .btn-lock:hover {
-      background: var(--primary-hover);
+    .btn-lock.unlocked {
+      background: var(--accent);
     }
 
-    .btn-lock.locked {
-      background: rgba(16, 185, 129, 0.2);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      cursor: default;
+    .uid-status {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: #6ee7b7;
+      display: none;
     }
 
-    .id-status {
-      margin-top: 8px;
-      font-size: 12px;
-      color: var(--muted);
+    .uid-status.show {
+      display: block;
     }
 
-    .id-status strong {
-      color: #facc15;
-    }
-
-    /* ================= 8 GROUPED MISSIONS ================= */
-    .mission-list {
+    /* Missions */
+    .missions-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
     .mission-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       gap: 12px;
     }
 
-    .mission-card.done-today {
+    .mission-card.mission-locked {
       opacity: 0.65;
-      border-color: rgba(16, 185, 129, 0.35);
-    }
-
-    .mission-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .mission-num {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      background: rgba(59, 130, 246, 0.15);
-      color: #60a5fa;
-      font-size: 13px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      border-color: #334155;
     }
 
     .mission-title {
-      font-size: 14px;
+      font-size: 0.95rem;
       font-weight: 700;
-      color: #f8fafc;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .mission-meta {
       display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
       flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.8rem;
     }
 
-    .tag-src {
-      background: rgba(168, 85, 247, 0.18);
-      color: #d8b4fe;
-      padding: 2px 7px;
-      border-radius: 5px;
+    .badge-tag {
+      background: rgba(139, 92, 246, 0.2);
+      color: #c4b5fd;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .badge-step {
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+      padding: 2px 8px;
+      border-radius: 6px;
       font-weight: 700;
     }
 
-    .tag-step {
-      background: rgba(56, 189, 248, 0.18);
-      color: #7dd3fc;
-      padding: 2px 7px;
-      border-radius: 5px;
+    .pts-text {
+      color: #34d399;
       font-weight: 700;
     }
 
-    .pts-plus {
-      color: #facc15;
-      font-weight: 800;
-    }
-
-    .btn-do {
-      background: linear-gradient(135deg, #2563eb, #3b82f6);
+    .btn-action {
+      background: var(--accent);
       color: #fff;
       border: none;
-      border-radius: 9px;
-      padding: 9px 14px;
-      font-size: 12px;
+      padding: 10px 16px;
+      border-radius: 10px;
       font-weight: 700;
+      font-size: 0.85rem;
       cursor: pointer;
       white-space: nowrap;
-      transition: opacity 0.2s, transform 0.1s;
     }
 
-    .btn-do:active {
-      transform: scale(0.97);
+    .btn-action:hover {
+      background: var(--accent-2);
     }
 
-    .btn-do.disabled {
-      background: #1e293b;
-      color: #64748b;
-      cursor: not-allowed;
-    }
-
-    .btn-do.completed {
-      background: rgba(16, 185, 129, 0.18);
-      color: #34d399;
-      border: 1px solid rgba(52, 211, 153, 0.35);
+    .btn-action.btn-disabled,
+    .btn-action:disabled {
+      background: #334155;
+      color: #94a3b8;
       cursor: not-allowed;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="claim-banner" id="claimBanner"></div>
-
     <div class="header">
-      <div class="badge-live">● SỰ KIỆN ĐUA TOP TÍCH ĐIỂM</div>
-      <h1>BẢNG XẾP HẠNG ĐUA TOP</h1>
-      <p>Cộng dồn điểm mỗi ngày • Chốt giải Top 10 cuối mùa</p>
+      <h1>ĐUA TOP ĐIỂM NHIỆM VỤ FREE FIRE</h1>
+      <p>Vượt link nhận điểm tích lũy — Top cao nhất nhận quà hấp dẫn</p>
     </div>
 
-    <div class="section-title">
-      <span>🏆 TOP 3 DẪN ĐẦU</span>
-    </div>
-
-    <div class="podium">
-      <div class="podium-card top-2">
-        <div class="rank-crown">🥈</div>
-        <div class="rank-num">Hạng 2</div>
-        <div class="podium-uid" id="top2-uid">---</div>
-        <div class="podium-pts" id="top2-pts">0 điểm</div>
-        <div class="reward-pill">Thẻ Tuần Xanh</div>
+    <div class="podium" id="podiumBox">
+      <div class="top-box">
+        <div class="rank-label">HẠNG 2</div>
+        <div class="rank-uid" id="top2Uid">Chưa có</div>
+        <div class="rank-pts" id="top2Pts">0 điểm</div>
+        <span class="reward-tag">Thẻ Tuần Xanh</span>
       </div>
-
-      <div class="podium-card top-1">
-        <div class="rank-crown">👑</div>
-        <div class="rank-num">Hạng 1</div>
-        <div class="podium-uid" id="top1-uid">---</div>
-        <div class="podium-pts" id="top1-pts">0 điểm</div>
-        <div class="reward-pill">1 Thẻ Tháng</div>
+      <div class="top-box rank-1">
+        <div class="rank-label">👑 HẠNG 1</div>
+        <div class="rank-uid" id="top1Uid">Chưa có</div>
+        <div class="rank-pts" id="top1Pts">0 điểm</div>
+        <span class="reward-tag">1 Thẻ Tháng</span>
       </div>
-
-      <div class="podium-card top-3">
-        <div class="rank-crown">🥉</div>
-        <div class="rank-num">Hạng 3</div>
-        <div class="podium-uid" id="top3-uid">---</div>
-        <div class="podium-pts" id="top3-pts">0 điểm</div>
-        <div class="reward-pill">Thẻ Bạc</div>
+      <div class="top-box">
+        <div class="rank-label">HẠNG 3</div>
+        <div class="rank-uid" id="top3Uid">Chưa có</div>
+        <div class="rank-pts" id="top3Pts">0 điểm</div>
+        <span class="reward-tag">Thẻ Bạc</span>
       </div>
     </div>
 
-    <div class="rank-section">
-      <div class="rank-list" id="rankList"></div>
-      <button class="btn-toggle-rank" id="toggleRankBtn" onclick="toggleRankList()">
-        ▾ Xem thêm Top 4 – Top 10 (7 giải Thẻ Garena 20K)
-      </button>
-    </div>
+    <button class="btn-expand" type="button" onclick="toggleTop10()">
+      ▾ Xem thêm Top 4 - Top 10 (7 giải Thẻ Garena 20K)
+    </button>
 
-    <div class="section-title">
-      <span>🎯 KHU VỰC LÀM NHIỆM VỤ</span>
-    </div>
+    <div class="top4-10" id="top4To10Box"></div>
 
-    <div class="id-box">
-      <label for="uidInput">Nhập ID Free Fire của bạn (Bắt buộc khóa ID trước khi làm):</label>
-      <div class="id-input-group">
+    <div class="section-title">🎯 KHU VỰC LÀM NHIỆM VỤ</div>
+
+    <div class="uid-box">
+      <label for="ffUidInput">Nhập ID Free Fire của bạn (Bắt buộc khóa ID trước khi làm):</label>
+      <div class="uid-controls">
         <input
           type="text"
-          id="uidInput"
+          id="ffUidInput"
+          class="uid-input"
+          placeholder="Ví dụ: 16456678988"
           inputmode="numeric"
-          placeholder="Ví dụ: 123456789"
-          maxlength="12"
         />
-        <button class="btn-lock" id="lockBtn" onclick="lockUserID()">Khóa ID</button>
+        <button type="button" id="lockUidBtn" class="btn-lock unlocked" onclick="toggleLockUid()">
+          🔓 Khóa ID
+        </button>
       </div>
-      <div class="id-status" id="idStatus">
-        ⚠️ Nhập đúng ID để hệ thống khóa cố định và cộng dồn điểm cho tài khoản của bạn.
-      </div>
+      <div class="uid-status" id="uidStatusText"></div>
     </div>
 
-    <div class="mission-list" id="missionList"></div>
+    <div class="missions-list" id="missionsList"></div>
   </div>
 
   <script>
-    // Dán link Web App Google Apps Script của bạn vào đây
-    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwK7ZzNu0JW1kogcVAJ9HZVRcEvt--nvShmJst1AWZifOId1xRLNp0PHhZBH3cYIWvf/exec';
+    // Thay bằng URL Web App Google Apps Script của bạn
+    const GAS_WEB_APP_URL = 'YOUR_GAS_WEB_APP_URL';
 
-    const missionGroups = [
-      { id: 'sitetop',    name: 'Nhiệm vụ Sitetop',    label: 'Sitetop',    points: 528,  maxDaily: 2 },
-      { id: 'link4m',     name: 'Nhiệm vụ Link4m',     label: 'Link4m',     points: 946,  maxDaily: 2 },
-      { id: 'gtraffic',   name: 'Nhiệm vụ Gtraffic',   label: 'Gtraffic',   points: 660,  maxDaily: 2 },
-      { id: 'trafficso1', name: 'Nhiệm vụ Trafficso1', label: 'Trafficso1', points: 675,  maxDaily: 2 },
-      { id: 'lentop',     name: 'Nhiệm vụ Lentop',     label: 'Lentop',     points: 500,  maxDaily: 1 },
-      { id: 'traffic24h', name: 'Nhiệm vụ Traffic24h', label: 'Traffic24h', points: 700,  maxDaily: 1 },
-      { id: 'phienchoso', name: 'Nhiệm vụ Phienchoso', label: 'Phienchoso', points: 3500, maxDaily: 1 },
-      { id: 'azlink',     name: 'Nhiệm vụ Azlink',     label: 'Azlink',     points: 763,  maxDaily: 2 }
+    const MISSIONS = [
+      { id: 'sitetop',    name: 'Nhiệm vụ Sitetop',    tag: 'Sitetop',    points: 528, maxDaily: 2 },
+      { id: 'link4m',     name: 'Nhiệm vụ Link4m',     tag: 'Link4m',     points: 946, maxDaily: 2 },
+      { id: 'gtraffic',   name: 'Nhiệm vụ Gtraffic',   tag: 'Gtraffic',   points: 660, maxDaily: 2 },
+      { id: 'trafficso1', name: 'Nhiệm vụ Trafficso1', tag: 'Trafficso1', points: 675, maxDaily: 2 }
     ];
 
-    const STORAGE_KEY = 'locked_ff_uid';
-    let isRankExpanded = false;
-    let isCreatingTask = false;
+    let lockedUid = localStorage.getItem('ff_locked_uid') || '';
     let dailyUsage = {};
 
-    function showBanner(msg, isError = false) {
-      const banner = document.getElementById('claimBanner');
-      banner.textContent = msg;
-      banner.className = 'claim-banner show' + (isError ? ' error' : '');
+    function formatNumber(n) {
+      return Number(n || 0).toLocaleString('vi-VN');
     }
 
-    function renderLeaderboardUI(top10) {
-      const t1 = top10[0] || { uid: 'Chưa có', points: 0 };
-      const t2 = top10[1] || { uid: 'Chưa có', points: 0 };
-      const t3 = top10[2] || { uid: 'Chưa có', points: 0 };
+    function syncUidUI() {
+      const input = document.getElementById('ffUidInput');
+      const btn = document.getElementById('lockUidBtn');
+      const status = document.getElementById('uidStatusText');
 
-      document.getElementById('top1-uid').textContent = t1.uid;
-      document.getElementById('top1-pts').textContent = `${Number(t1.points).toLocaleString()} điểm`;
-
-      document.getElementById('top2-uid').textContent = t2.uid;
-      document.getElementById('top2-pts').textContent = `${Number(t2.points).toLocaleString()} điểm`;
-
-      document.getElementById('top3-uid').textContent = t3.uid;
-      document.getElementById('top3-pts').textContent = `${Number(t3.points).toLocaleString()} điểm`;
-
-      const container = document.getElementById('rankList');
-      const rest = [];
-      for (let r = 4; r <= 10; r++) {
-        const found = top10[r - 1] || { rank: r, uid: 'Đang trống', points: 0 };
-        rest.push(found);
+      if (lockedUid) {
+        input.value = lockedUid;
+        input.disabled = true;
+        btn.textContent = '🔒 Đã Khóa ID';
+        btn.classList.remove('unlocked');
+        status.textContent = `✅ Đã khóa cố định ID: ${lockedUid}. Mọi điểm vượt link sẽ cộng dồn vào ID này.`;
+        status.classList.add('show');
+      } else {
+        input.disabled = false;
+        btn.textContent = '🔓 Khóa ID';
+        btn.classList.add('unlocked');
+        status.textContent = '';
+        status.classList.remove('show');
       }
-
-      container.innerHTML = rest.map(item => `
-        <div class="rank-row">
-          <div class="rank-left">
-            <div class="rank-badge">#${item.rank}</div>
-            <div>
-              <div class="rank-uid">${item.uid === 'Đang trống' ? 'Chưa có người xếp hạng' : 'ID: ' + item.uid}</div>
-              <div class="rank-reward-tag">🎁 Thẻ Garena 20K</div>
-            </div>
-          </div>
-          <div class="rank-score">${Number(item.points).toLocaleString()} điểm</div>
-        </div>
-      `).join('');
     }
 
-    async function fetchLeaderboard() {
-      if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL.startsWith('DAN_LINK')) {
-        renderLeaderboardUI([]);
+    function toggleLockUid() {
+      const input = document.getElementById('ffUidInput');
+      if (lockedUid) {
+        lockedUid = '';
+        localStorage.removeItem('ff_locked_uid');
+        dailyUsage = {};
+        syncUidUI();
+        renderMissions();
         return;
       }
-      try {
-        const res = await fetch(`${GAS_WEB_APP_URL}?action=leaderboard`);
-        const data = await res.json();
-        if (data.ok && Array.isArray(data.top10)) {
-          renderLeaderboardUI(data.top10);
-        }
-      } catch (err) {
-        console.error('Lỗi tải bảng xếp hạng:', err);
+
+      const clean = String(input.value || '').replace(/\D/g, '').trim();
+      if (!clean || clean.length < 5) {
+        alert('Vui lòng nhập ID Free Fire hợp lệ!');
+        return;
       }
+
+      lockedUid = clean;
+      localStorage.setItem('ff_locked_uid', lockedUid);
+      syncUidUI();
+      fetchDailyStatus();
     }
 
-    async function fetchDailyStatus() {
-      const savedUid = localStorage.getItem(STORAGE_KEY) || '';
-      if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL.startsWith('DAN_LINK')) return;
-
-      try {
-        const res = await fetch(`${GAS_WEB_APP_URL}?action=daily_status&uid=${encodeURIComponent(savedUid)}`);
-        const data = await res.json();
-        if (data.ok && data.usage) {
-          dailyUsage = data.usage;
-          renderMissions();
-        }
-      } catch (err) {
-        console.error('Lỗi tải trạng thái lượt trong ngày:', err);
-      }
-    }
-
-    async function checkAndClaimTokenOnLoad() {
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get('token');
-      if (!token) return;
-
-      const cleanUrl = window.location.origin + window.location.pathname;
-      window.history.replaceState({}, document.title, cleanUrl);
-
-      showBanner('⏳ Đang xác thực lượt vượt link và cộng điểm...');
-
-      try {
-        const res = await fetch(`${GAS_WEB_APP_URL}?action=claim_token&token=${encodeURIComponent(token)}`);
-        const data = await res.json();
-
-        if (data.ok) {
-          if (data.uid && !localStorage.getItem(STORAGE_KEY)) {
-            localStorage.setItem(STORAGE_KEY, data.uid);
-            initIDLock();
-          }
-          showBanner(`🎉 ${data.message}`);
-          await fetchLeaderboard();
-          await fetchDailyStatus();
-        } else {
-          showBanner(`⚠️ ${data.message || 'Không thể cộng điểm từ mã này.'}`, true);
-          await fetchDailyStatus();
-        }
-      } catch (err) {
-        showBanner('⚠️ Lỗi kết nối khi nhận điểm. Vui lòng thử tải lại trang.', true);
-      }
-    }
-
-    function toggleRankList() {
-      isRankExpanded = !isRankExpanded;
-      const listEl = document.getElementById('rankList');
-      const btnEl = document.getElementById('toggleRankBtn');
-
-      if (isRankExpanded) {
-        listEl.classList.add('expanded');
-        btnEl.textContent = '▴ Thu gọn Top 4 – Top 10';
-      } else {
-        listEl.classList.remove('expanded');
-        btnEl.textContent = '▾ Xem thêm Top 4 – Top 10 (7 giải Thẻ Garena 20K)';
-      }
+    function toggleTop10() {
+      document.getElementById('top4To10Box').classList.toggle('show');
     }
 
     function renderMissions() {
-      const savedUid = localStorage.getItem(STORAGE_KEY);
-      const container = document.getElementById('missionList');
+      const container = document.getElementById('missionsList');
+      if (!container) return;
 
-      container.innerHTML = missionGroups.map((g, index) => {
-        const u = dailyUsage[g.id] || { done: 0, maxDaily: g.maxDaily, remaining: g.maxDaily };
-        const isDoneAll = u.done >= g.maxDaily;
-        const nextStep = Math.min(u.done + 1, g.maxDaily);
-        const stepText = `${nextStep}/${g.maxDaily}`;
+      container.innerHTML = MISSIONS.map((g, idx) => {
+        const u = (dailyUsage && dailyUsage[g.id])
+          ? dailyUsage[g.id]
+          : { done: 0, maxDaily: g.maxDaily };
 
-        let btnClass = 'btn-do';
-        let btnText = 'Làm Ngay';
-        let btnDisabled = false;
-
-        if (!savedUid) {
-          btnClass = 'btn-do disabled';
-        } else if (isDoneAll) {
-          btnClass = 'btn-do completed';
-          btnText = 'Đã Xong';
-          btnDisabled = true;
-        }
+        // Hiển thị đúng số lượt đã làm: 0/2 -> 1/2 -> 2/2
+        const done = Math.min(Math.max(Number(u.done || 0), 0), g.maxDaily);
+        const isDoneAll = done >= g.maxDaily;
+        const counterText = `Lượt ${done}/${g.maxDaily}`;
 
         return `
-          <div class="mission-card ${isDoneAll ? 'done-today' : ''}">
-            <div class="mission-left">
-              <div class="mission-num">${index + 1}</div>
-              <div>
-                <div class="mission-title">${g.name}</div>
-                <div class="mission-meta">
-                  <span class="tag-src">${g.label}</span>
-                  <span class="tag-step">${isDoneAll ? `Xong ${g.maxDaily}/${g.maxDaily}` : `Lượt ${stepText}`}</span>
-                  <span class="pts-plus">+${g.points.toLocaleString()} điểm</span>
-                </div>
+          <div class="mission-card ${isDoneAll ? 'mission-locked' : ''}">
+            <div>
+              <div class="mission-title">${idx + 1}. ${g.name}</div>
+              <div class="mission-meta">
+                <span class="badge-tag">${g.tag}</span>
+                <span class="badge-step">${counterText}</span>
+                <span class="pts-text">+${formatNumber(g.points)} điểm</span>
               </div>
             </div>
             <button
-              class="${btnClass}"
-              ${btnDisabled ? 'disabled' : ''}
-              onclick="startMission('${g.id}', '${g.label}', ${g.points})"
+              type="button"
+              class="btn-action ${isDoneAll ? 'btn-disabled' : ''}"
+              ${isDoneAll ? 'disabled' : `onclick="startMission('${g.id}')"`}
             >
-              ${btnText}
+              ${isDoneAll ? 'Đã Hết Lượt' : 'Làm Ngay'}
             </button>
           </div>
         `;
       }).join('');
     }
 
-    function initIDLock() {
-      const savedUid = localStorage.getItem(STORAGE_KEY);
-      const input = document.getElementById('uidInput');
-      const btn = document.getElementById('lockBtn');
-      const status = document.getElementById('idStatus');
-
-      if (savedUid) {
-        input.value = savedUid;
-        input.disabled = true;
-        btn.textContent = '🔒 Đã Khóa ID';
-        btn.classList.add('locked');
-        btn.disabled = true;
-                status.innerHTML = `✅ Đã khóa cố định ID: <strong>${savedUid}</strong>. Mọi điểm vượt link sẽ cộng dồn vào ID này.`;
-      }
-    }
-
-    async function lockUserID() {
-      const input = document.getElementById('uidInput');
-      const uid = input.value.trim();
-
-      if (!/^\d{8,12}$/.test(uid)) {
-        alert('Vui lòng nhập ID Free Fire hợp lệ (từ 8 đến 12 chữ số)!');
-        input.focus();
+    async function startMission(groupId) {
+      if (!lockedUid) {
+        alert('Vui lòng nhập và khóa ID Free Fire trước khi làm nhiệm vụ!');
         return;
       }
-
-      const confirmLock = confirm(
-        `Xác nhận khóa ID "${uid}"?\n\nLưu ý: Sau khi khóa, bạn KHÔNG THỂ đổi sang ID khác trong suốt sự kiện.`
-      );
-
-      if (!confirmLock) return;
-
-      localStorage.setItem(STORAGE_KEY, uid);
-      initIDLock();
-      renderMissions();
-      await fetchDailyStatus();
-    }
-
-    async function startMission(groupId, label, points) {
-      if (isCreatingTask) return;
-
-      const savedUid = localStorage.getItem(STORAGE_KEY);
-      if (!savedUid) {
-        alert('Bạn phải nhập và Khóa ID ở phía trên trước khi làm nhiệm vụ!');
-        document.getElementById('uidInput').focus();
-        return;
-      }
-
-      const u = dailyUsage[groupId] || { done: 0, maxDaily: 1 };
-      if (u.done >= u.maxDaily) {
-        alert(`Bạn đã hoàn thành đủ ${u.maxDaily}/${u.maxDaily} lượt ${label} hôm nay!`);
-        return;
-      }
-
-      if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL.startsWith('DAN_LINK')) {
-        alert('Bạn chưa dán link Web App Google Apps Script vào biến GAS_WEB_APP_URL!');
-        return;
-      }
-
-      isCreatingTask = true;
-      showBanner(`🔄 Đang tạo link ${label} (+${points.toLocaleString()} điểm) cho ID ${savedUid}...`);
 
       try {
-        const url = `${GAS_WEB_APP_URL}?action=create_task&uid=${encodeURIComponent(savedUid)}&groupId=${encodeURIComponent(groupId)}`;
+        const url = `${GAS_WEB_APP_URL}?action=create_task&uid=${encodeURIComponent(lockedUid)}&groupId=${encodeURIComponent(groupId)}`;
         const res = await fetch(url);
         const data = await res.json();
 
-        if (data.ok && data.shortUrl) {
-          window.location.href = data.shortUrl;
-        } else {
-          showBanner(`⚠️ ${data.message || 'Không tạo được link nhiệm vụ.'}`, true);
-          isCreatingTask = false;
-          await fetchDailyStatus();
+        if (!data.ok || !data.shortUrl) {
+          alert(data.error || 'Không tạo được link nhiệm vụ!');
+          return;
         }
+
+        window.location.href = data.shortUrl;
       } catch (err) {
-        showBanner('⚠️ Lỗi kết nối máy chủ khi tạo link nhiệm vụ.', true);
-        isCreatingTask = false;
+        alert('Lỗi kết nối máy chủ khi tạo nhiệm vụ!');
       }
     }
 
-    initIDLock();
-    renderMissions();
-    renderLeaderboardUI([]);
-    fetchLeaderboard();
-    fetchDailyStatus();
-    checkAndClaimTokenOnLoad();
+    async function checkAndClaimTokenOnLoad() {
+      const currentUrl = new URL(window.location.href);
+      const token = currentUrl.searchParams.get('token');
+      if (!token) return;
+
+      // Xóa ?token= khỏi thanh địa chỉ để tránh F5 gọi trùng
+      currentUrl.searchParams.delete('token');
+      window.history.replaceState({}, document.title, currentUrl.toString());
+
+      try {
+        const res = await fetch(`${GAS_WEB_APP_URL}?action=claim_token&token=${encodeURIComponent(token)}`);
+        const data = await res.json();
+
+        if (data.ok) {
+          if (data.uid) {
+            lockedUid = String(data.uid).replace(/\D/g, '').trim();
+            localStorage.setItem('ff_locked_uid', lockedUid);
+            syncUidUI();
+          }
+          alert(`Nhận thành công +${formatNumber(data.addedPoints)} điểm!`);
+        } else {
+          alert(data.error || 'Token không hợp lệ hoặc đã sử dụng!');
+        }
+      } catch (err) {
+        alert('Lỗi khi xác nhận điểm từ token!');
+      }
+    }
+
+    async function fetchDailyStatus() {
+      if (!lockedUid) {
+        dailyUsage = {};
+        renderMissions();
+        return;
+      }
+
+      try {
+        const res = await fetch(`${GAS_WEB_APP_URL}?action=daily_status&uid=${encodeURIComponent(lockedUid)}`);
+        const data = await res.json();
+        if (data.ok && data.usage) {
+          dailyUsage = data.usage;
+        }
+      } catch (_) {
+        // Giữ nguyên trạng thái hiện tại nếu lỗi mạng tạm thời
+      }
+      renderMissions();
+    }
+
+    async function loadLeaderboard() {
+      try {
+        const res = await fetch(`${GAS_WEB_APP_URL}?action=leaderboard`);
+        const data = await res.json();
+        if (!data.ok || !Array.isArray(data.leaderboard)) return;
+
+        const list = data.leaderboard;
+        const setSlot = (idx, uidId, ptsId) => {
+          const item = list[idx];
+          document.getElementById(uidId).textContent = item ? item.uid : 'Chưa có';
+          document.getElementById(ptsId).textContent = `${formatNumber(item ? item.points : 0)} điểm`;
+        };
+
+        setSlot(0, 'top1Uid', 'top1Pts');
+        setSlot(1, 'top2Uid', 'top2Pts');
+        setSlot(2, 'top3Uid', 'top3Pts');
+
+        const box4_10 = document.getElementById('top4To10Box');
+        const sub = list.slice(3, 10);
+        if (!sub.length) {
+          box4_10.innerHTML = '<div class="top-row"><span>Chưa có dữ liệu Top 4 - Top 10</span><span>—</span></div>';
+        } else {
+          box4_10.innerHTML = sub.map((item, i) => `
+            <div class="top-row">
+              <span>#${i + 4} — ${item.uid}</span>
+              <strong>${formatNumber(item.points)} điểm</strong>
+            </div>
+          `).join('');
+        }
+      } catch (_) {}
+    }
+
+    (async function init() {
+      syncUidUI();
+      renderMissions();
+      await checkAndClaimTokenOnLoad();
+      await Promise.all([
+        fetchDailyStatus(),
+        loadLeaderboard()
+      ]);
+    })();
   </script>
 </body>
 </html>

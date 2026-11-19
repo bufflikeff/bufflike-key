@@ -359,14 +359,18 @@
 
   <script>
     // Thay bằng URL Web App Google Apps Script của bạn
-    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwK7ZzNu0JW1kogcVAJ9HZVRcEvt--nvShmJst1AWZifOId1xRLNp0PHhZBH3cYIWvf/exec';
+    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxGrIAkQd6t5-sqSx_Jz4C3RY-nhwwECo75VEwPaaSzN-0HrWk7_csQKWImWACDtsBx/exec';
 
     const MISSIONS = [
-      { id: 'sitetop',    name: 'Nhiệm vụ Sitetop',    tag: 'Sitetop',    points: 528, maxDaily: 2 },
-      { id: 'link4m',     name: 'Nhiệm vụ Link4m',     tag: 'Link4m',     points: 946, maxDaily: 2 },
-      { id: 'gtraffic',   name: 'Nhiệm vụ Gtraffic',   tag: 'Gtraffic',   points: 660, maxDaily: 2 },
-      { id: 'trafficso1', name: 'Nhiệm vụ Trafficso1', tag: 'Trafficso1', points: 675, maxDaily: 2 }
-    ];
+  { id: 'sitetop',    name: 'Nhiệm vụ Sitetop',    tag: 'Sitetop',    points: 528, maxDaily: 2 },
+  { id: 'link4m',     name: 'Nhiệm vụ Link4m',     tag: 'Link4m',     points: 946, maxDaily: 2 },
+  { id: 'gtraffic',   name: 'Nhiệm vụ Gtraffic',   tag: 'Gtraffic',   points: 660, maxDaily: 2 },
+  { id: 'trafficso1', name: 'Nhiệm vụ Trafficso1', tag: 'Trafficso1', points: 675, maxDaily: 2 },
+  { id: 'lentop',     name: 'Nhiệm vụ Lentop',     tag: 'Lentop',     points: 600, maxDaily: 2 },
+  { id: 'traffic24h', name: 'Nhiệm vụ Traffic24h', tag: 'Traffic24h', points: 600, maxDaily: 2 },
+  { id: 'phienchoso', name: 'Nhiệm vụ Phienchoso', tag: 'Phienchoso', points: 600, maxDaily: 2 },
+  { id: 'azlink',     name: 'Nhiệm vụ Azlink',     tag: 'Azlink',     points: 600, maxDaily: 2 }
+];
 
     let lockedUid = localStorage.getItem('ff_locked_uid') || '';
     let dailyUsage = {};

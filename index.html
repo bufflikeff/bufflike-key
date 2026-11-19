@@ -726,3 +726,80 @@
         btn.textContent = '🔒 Đã Khóa ID';
         btn.classList.add('locked');
         btn.disabled = true;
+                status.innerHTML = `✅ Đã khóa cố định ID: <strong>${savedUid}</strong>. Mọi điểm vượt link sẽ cộng dồn vào ID này.`;
+      }
+    }
+
+    async function lockUserID() {
+      const input = document.getElementById('uidInput');
+      const uid = input.value.trim();
+
+      if (!/^\d{8,12}$/.test(uid)) {
+        alert('Vui lòng nhập ID Free Fire hợp lệ (từ 8 đến 12 chữ số)!');
+        input.focus();
+        return;
+      }
+
+      const confirmLock = confirm(
+        `Xác nhận khóa ID "${uid}"?\n\nLưu ý: Sau khi khóa, bạn KHÔNG THỂ đổi sang ID khác trong suốt sự kiện.`
+      );
+
+      if (!confirmLock) return;
+
+      localStorage.setItem(STORAGE_KEY, uid);
+      initIDLock();
+      renderMissions();
+      await fetchDailyStatus();
+    }
+
+    async function startMission(groupId, label, points) {
+      if (isCreatingTask) return;
+
+      const savedUid = localStorage.getItem(STORAGE_KEY);
+      if (!savedUid) {
+        alert('Bạn phải nhập và Khóa ID ở phía trên trước khi làm nhiệm vụ!');
+        document.getElementById('uidInput').focus();
+        return;
+      }
+
+      const u = dailyUsage[groupId] || { done: 0, maxDaily: 1 };
+      if (u.done >= u.maxDaily) {
+        alert(`Bạn đã hoàn thành đủ ${u.maxDaily}/${u.maxDaily} lượt ${label} hôm nay!`);
+        return;
+      }
+
+      if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL.startsWith('DAN_LINK')) {
+        alert('Bạn chưa dán link Web App Google Apps Script vào biến GAS_WEB_APP_URL!');
+        return;
+      }
+
+      isCreatingTask = true;
+      showBanner(`🔄 Đang tạo link ${label} (+${points.toLocaleString()} điểm) cho ID ${savedUid}...`);
+
+      try {
+        const url = `${GAS_WEB_APP_URL}?action=create_task&uid=${encodeURIComponent(savedUid)}&groupId=${encodeURIComponent(groupId)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data.ok && data.shortUrl) {
+          window.location.href = data.shortUrl;
+        } else {
+          showBanner(`⚠️ ${data.message || 'Không tạo được link nhiệm vụ.'}`, true);
+          isCreatingTask = false;
+          await fetchDailyStatus();
+        }
+      } catch (err) {
+        showBanner('⚠️ Lỗi kết nối máy chủ khi tạo link nhiệm vụ.', true);
+        isCreatingTask = false;
+      }
+    }
+
+    initIDLock();
+    renderMissions();
+    renderLeaderboardUI([]);
+    fetchLeaderboard();
+    fetchDailyStatus();
+    checkAndClaimTokenOnLoad();
+  </script>
+</body>
+</html>

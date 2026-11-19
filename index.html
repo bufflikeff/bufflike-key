@@ -1,274 +1,613 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Danh Sách Nhiệm Vụ Vượt Link</title>
-  <!-- Thêm Font Awesome để hiển thị icon -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sự Kiện Đua Top Vượt Link Nhận Quà</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #131a2b;
+      --card-border: #232f4b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --gold: #facc15;
+      --silver: #cbd5e1;
+      --bronze: #fb923c;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --green: #10b981;
+      --purple: #a855f7;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Be Vietnam Pro', sans-serif;
     }
 
     body {
-      background-color: #f4f6f9;
-      color: #333333;
-      display: flex;
-      justify-content: center;
-      padding: 20px 15px 80px 15px;
+      background: radial-gradient(circle at top, #172038 0%, var(--bg) 60%);
+      color: var(--text);
       min-height: 100vh;
-      position: relative;
+      padding: 16px 12px 48px;
     }
 
-    .task-container {
-      width: 100%;
-      max-width: 440px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
     }
 
-    /* CARD NHIỆM VỤ */
-    .task-card {
-      background-color: #ffffff;
-      border-radius: 20px;
-      padding: 20px 18px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-      display: flex;
-      flex-direction: column;
-      position: relative;
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 22px;
     }
 
-    /* PHẦN ĐẦU CARD */
-    .task-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
+    .header .badge-live {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
     }
 
-    .task-icon-box {
-      width: 50px;
-      height: 50px;
-      background-color: #ffe4e6;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 14px;
-      flex-shrink: 0;
-    }
-
-    .task-icon-box i {
-      color: #f43f5e;
-      font-size: 20px;
-    }
-
-    .task-info {
-      flex: 1;
-    }
-
-    .task-title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .header h1 {
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #fde047, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-bottom: 6px;
     }
 
-    .task-title {
-      font-size: 17px;
-      font-weight: 700;
-      color: #1e293b;
-    }
-
-    .task-progress-badge {
-      color: #ec4899;
-      font-weight: 700;
-      font-size: 15px;
-    }
-
-    .task-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .badge-time {
-      background-color: #f1f5f9;
-      color: #64748b;
-      font-size: 12px;
-      padding: 3px 8px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .badge-reward {
-      background-color: #ecfdf5;
-      color: #10b981;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 12px;
-    }
-
-    /* ĐƯỜNG PHÂN CÁCH & LƯỢT CÒN LẠI */
-    .task-body {
-      border-top: 1px solid #f1f5f9;
-      padding-top: 12px;
-      margin-bottom: 14px;
-    }
-
-    .task-remains {
+    .header p {
       font-size: 13px;
-      color: #64748b;
+      color: var(--muted);
     }
 
-    /* NÚT LÀM NHIỆM VỤ */
-    .btn-do-task {
-      background-color: #1d61f2;
-      color: #ffffff;
-      border: none;
+    /* Section Title */
+    .section-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ================= TOP 3 PODIUM ================= */
+    .podium {
+      display: grid;
+      grid-template-columns: 1fr 1.12fr 1fr;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 16px;
+    }
+
+    .podium-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
       border-radius: 14px;
-      padding: 14px;
-      font-size: 15px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.2s ease, transform 0.1s ease;
-      box-shadow: 0 4px 12px rgba(29, 97, 242, 0.25);
+      padding: 14px 8px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.2s;
     }
 
-    .btn-do-task:hover {
-      background-color: #154ec1;
+    .podium-card.top-1 {
+      border-color: var(--gold);
+      background: linear-gradient(180deg, rgba(250, 204, 21, 0.14) 0%, var(--card) 100%);
+      padding: 20px 8px 16px;
+      box-shadow: 0 8px 24px rgba(250, 204, 21, 0.15);
     }
 
-    .btn-do-task:active {
-      transform: scale(0.98);
+    .podium-card.top-2 {
+      border-color: var(--silver);
+      background: linear-gradient(180deg, rgba(203, 213, 225, 0.1) 0%, var(--card) 100%);
     }
 
-    /* NÚT THÔNG BÁO TÁC VỤ (TELEGRAM/CHAT NỔI) */
-    .fab-btn {
-      position: fixed;
-      bottom: 25px;
-      right: 20px;
-      width: 56px;
-      height: 56px;
-      background-color: #0088cc;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
+    .podium-card.top-3 {
+      border-color: var(--bronze);
+      background: linear-gradient(180deg, rgba(251, 146, 60, 0.1) 0%, var(--card) 100%);
+    }
+
+    .rank-crown {
       font-size: 22px;
-      box-shadow: 0 6px 16px rgba(0, 136, 204, 0.4);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .rank-num {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .top-1 .rank-num { color: var(--gold); }
+    .top-2 .rank-num { color: var(--silver); }
+    .top-3 .rank-num { color: var(--bronze); }
+
+    .podium-uid {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      word-break: break-all;
+      margin-bottom: 4px;
+    }
+
+    .podium-pts {
+      font-size: 13px;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 8px;
+    }
+
+    .reward-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      line-height: 1.2;
+    }
+
+    .top-1 .reward-pill { background: rgba(250, 204, 21, 0.2); color: #fde047; }
+    .top-2 .reward-pill { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
+    .top-3 .reward-pill { background: rgba(251, 146, 60, 0.2); color: #fdba74; }
+
+    /* ================= TOP 4 - 10 LIST ================= */
+    .rank-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .rank-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      gap: 10px;
+    }
+
+    .rank-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .rank-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #1e293b;
+      color: #e2e8f0;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .rank-info {
+      min-width: 0;
+    }
+
+    .rank-uid {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .rank-reward-tag {
+      font-size: 11px;
+      color: #34d399;
+      font-weight: 600;
+    }
+
+    .rank-score {
+      font-size: 13px;
+      font-weight: 800;
+      color: #60a5fa;
+      white-space: nowrap;
+    }
+
+    /* ================= ID LOCK BOX ================= */
+    .id-box {
+      background: var(--card);
+      border: 1px solid #2e3c5e;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .id-box label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #e2e8f0;
+    }
+
+    .id-input-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .id-input-group input {
+      flex: 1;
+      background: #0b0f19;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 11px 14px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      outline: none;
+    }
+
+    .id-input-group input:focus {
+      border-color: var(--primary);
+    }
+
+    .id-input-group input:disabled {
+      background: #162033;
+      color: #34d399;
+      border-color: rgba(16, 185, 129, 0.45);
+      cursor: not-allowed;
+    }
+
+    .btn-lock {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 700;
       cursor: pointer;
-      text-decoration: none;
-      z-index: 1000;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .btn-lock:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-lock.locked {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      cursor: default;
+    }
+
+    .id-status {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .id-status strong {
+      color: #facc15;
+    }
+
+    /* ================= 10 MISSIONS ================= */
+    .mission-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mission-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      gap: 12px;
+    }
+
+    .mission-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mission-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .mission-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 3px;
+    }
+
+    .mission-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+    }
+
+    .tag-4m {
+      background: rgba(168, 85, 247, 0.18);
+      color: #d8b4fe;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-weight: 700;
+    }
+
+    .tag-2m {
+      background: rgba(56, 189, 248, 0.18);
+      color: #7dd3fc;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-weight: 700;
+    }
+
+    .pts-plus {
+      color: #facc15;
+      font-weight: 800;
+    }
+
+    .btn-do {
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      padding: 9px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    .btn-do:active {
+      transform: scale(0.97);
+    }
+
+    .btn-do.disabled {
+      background: #1e293b;
+      color: #64748b;
+      cursor: not-allowed;
     }
   </style>
 </head>
 <body>
-
-  <div class="task-container">
-
-    <!-- NHIỆM VỤ 1 -->
-    <div class="task-card">
-      <div class="task-header">
-        <div class="task-icon-box">
-          <i class="fa-solid fa-link"></i>
-        </div>
-        <div class="task-info">
-          <div class="task-title-row">
-            <span class="task-title">Vượt Link4M</span>
-            <span class="task-progress-badge">0/2</span>
-          </div>
-          <div class="task-meta">
-            <span class="badge-time"><i class="fa-regular fa-clock"></i> ~90s</span>
-            <span class="badge-reward">+100 coin</span>
-          </div>
-        </div>
-      </div>
-      <div class="task-body">
-        <div class="task-remains">Còn 2/2 lượt hôm nay</div>
-      </div>
-      <button class="btn-do-task" onclick="doTask('https://link4m.com/example1')">
-        <i class="fa-solid fa-play"></i> Làm nhiệm vụ
-      </button>
+  <div class="container">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="badge-live">● SỰ KIỆN ĐUA TOP TÍCH ĐIỂM</div>
+      <h1>BẢNG XẾP HẠNG ĐUA TOP</h1>
+      <p>Cộng dồn điểm mỗi ngày • Chốt giải Top 10 cuối mùa</p>
     </div>
 
-    <!-- NHIỆM VỤ 2 -->
-    <div class="task-card">
-      <div class="task-header">
-        <div class="task-icon-box">
-          <i class="fa-solid fa-link"></i>
-        </div>
-        <div class="task-info">
-          <div class="task-title-row">
-            <span class="task-title">Link BBMKTS (CHECK)</span>
-            <span class="task-progress-badge">0/1</span>
-          </div>
-          <div class="task-meta">
-            <span class="badge-time"><i class="fa-regular fa-clock"></i> ~90s</span>
-            <span class="badge-reward">+100 coin</span>
-          </div>
-        </div>
-      </div>
-      <div class="task-body">
-        <div class="task-remains">Còn 1/1 lượt hôm nay</div>
-      </div>
-      <button class="btn-do-task" onclick="doTask('https://link4m.com/example2')">
-        <i class="fa-solid fa-play"></i> Làm nhiệm vụ
-      </button>
+    <!-- TOP 3 CAO NHẤT -->
+    <div class="section-title">
+      <span>🏆 TOP 3 DẪN ĐẦU</span>
     </div>
 
-    <!-- NHIỆM VỤ 3 -->
-    <div class="task-card">
-      <div class="task-header">
-        <div class="task-icon-box" style="background-color: #f3e8ff;">
-          <i class="fa-solid fa-link" style="color: #9333ea;"></i>
-        </div>
-        <div class="task-info">
-          <div class="task-title-row">
-            <span class="task-title">Link Traffic Việt</span>
-            <span class="task-progress-badge">0/2</span>
-          </div>
-          <div class="task-meta">
-            <span class="badge-time"><i class="fa-regular fa-clock"></i> ~90s</span>
-            <span class="badge-reward">+136 coin</span>
-          </div>
-        </div>
+    <div class="podium">
+      <!-- TOP 2 -->
+      <div class="podium-card top-2">
+        <div class="rank-crown">🥈</div>
+        <div class="rank-num">Hạng 2</div>
+        <div class="podium-uid" id="top2-uid">849201942</div>
+        <div class="podium-pts" id="top2-pts">4,720 điểm</div>
+        <div class="reward-pill">Thẻ Tuần Xanh</div>
       </div>
-      <div class="task-body">
-        <div class="task-remains">Còn 2/2 lượt hôm nay</div>
+
+      <!-- TOP 1 -->
+      <div class="podium-card top-1">
+        <div class="rank-crown">👑</div>
+        <div class="rank-num">Hạng 1</div>
+        <div class="podium-uid" id="top1-uid">192837465</div>
+        <div class="podium-pts" id="top1-pts">6,136 điểm</div>
+        <div class="reward-pill">1 Thẻ Tháng</div>
       </div>
-      <button class="btn-do-task" onclick="doTask('https://link4m.com/example3')">
-        <i class="fa-solid fa-play"></i> Làm nhiệm vụ
-      </button>
+
+      <!-- TOP 3 -->
+      <div class="podium-card top-3">
+        <div class="rank-crown">🥉</div>
+        <div class="rank-num">Hạng 3</div>
+        <div class="podium-uid" id="top3-uid">564738291</div>
+        <div class="podium-pts" id="top3-pts">3,892 điểm</div>
+        <div class="reward-pill">Thẻ Bạc</div>
+      </div>
     </div>
 
+    <!-- 7 GIẢI TIẾP THEO (TOP 4 - TOP 10) NẰM NGANG TỪ TRÊN XUỐNG -->
+    <div class="section-title">
+      <span>🎁 TOP 4 – TOP 10 (THẺ GARENA 20K)</span>
+    </div>
+
+    <div class="rank-list" id="rankList"></div>
+
+    <!-- Ô NHẬP & KHÓA ID BẮT BUỘC -->
+    <div class="section-title">
+      <span>🎯 KHU VỰC LÀM NHIỆM VỤ</span>
+    </div>
+
+    <div class="id-box">
+      <label for="uidInput">Nhập ID Free Fire của bạn (Bắt buộc khóa ID trước khi làm):</label>
+      <div class="id-input-group">
+        <input
+          type="text"
+          id="uidInput"
+          inputmode="numeric"
+          placeholder="Ví dụ: 123456789"
+          maxlength="12"
+        />
+        <button class="btn-lock" id="lockBtn" onclick="lockUserID()">Khóa ID</button>
+      </div>
+      <div class="id-status" id="idStatus">
+        ⚠️ Nhập đúng ID để hệ thống khóa cố định và cộng dồn điểm cho tài khoản của bạn.
+      </div>
+    </div>
+
+    <!-- 10 MỤC NHIỆM VỤ VƯỢT LINK -->
+    <div class="mission-list" id="missionList"></div>
   </div>
 
-  <!-- Nút Telegram nổi góc dưới -->
-  <a href="https://t.me/tlzproject" target="_blank" class="fab-btn">
-    <i class="fa-solid fa-paper-plane"></i>
-  </a>
-
   <script>
-    function doTask(linkUrl) {
-      // Chuyển hướng người dùng tới trang link rút gọn khi bấm Làm nhiệm vụ
-      window.open(linkUrl, '_blank');
-    }
-  </script>
+    // Dữ liệu mẫu Top 4 - Top 10 (sau này nối API Google Apps Script sẽ tự đổ vào đây)
+    const top4To10Data = [
+      { rank: 4, uid: '301928374', points: 3304 },
+      { rank: 5, uid: '748392019', points: 2832 },
+      { rank: 6, uid: '918273645', points: 2596 },
+      { rank: 7, uid: '625143890', points: 2124 },
+      { rank: 8, uid: '482910394', points: 1888 },
+      { rank: 9, uid: '102938475', points: 1416 },
+      { rank: 10, uid: '594837261', points: 1180 }
+    ];
 
+    // Danh sách 10 mục nhiệm vụ (Link4m = 236 điểm, Link2m = 36 điểm)
+    const missions = [
+      { id: 1, name: 'Nhiệm vụ vượt link #1', type: '4m', label: 'Link4m', points: 236 },
+      { id: 2, name: 'Nhiệm vụ vượt link #2', type: '4m', label: 'Link4m', points: 236 },
+      { id: 3, name: 'Nhiệm vụ vượt link #3', type: '4m', label: 'Link4m', points: 236 },
+      { id: 4, name: 'Nhiệm vụ vượt link #4', type: '4m', label: 'Link4m', points: 236 },
+      { id: 5, name: 'Nhiệm vụ vượt link #5', type: '4m', label: 'Link4m', points: 236 },
+      { id: 6, name: 'Nhiệm vụ vượt link #6', type: '2m', label: 'Link2m', points: 36 },
+      { id: 7, name: 'Nhiệm vụ vượt link #7', type: '2m', label: 'Link2m', points: 36 },
+      { id: 8, name: 'Nhiệm vụ vượt link #8', type: '2m', label: 'Link2m', points: 36 },
+      { id: 9, name: 'Nhiệm vụ vượt link #9', type: '2m', label: 'Link2m', points: 36 },
+      { id: 10, name: 'Nhiệm vụ vượt link #10', type: '2m', label: 'Link2m', points: 36 }
+    ];
+
+    const STORAGE_KEY = 'locked_ff_uid';
+
+    // Render Top 4 -> 10
+    function renderRankList() {
+      const container = document.getElementById('rankList');
+      container.innerHTML = top4To10Data.map(item => `
+        <div class="rank-row">
+          <div class="rank-left">
+            <div class="rank-badge">#${item.rank}</div>
+            <div class="rank-info">
+              <div class="rank-uid">ID: ${item.uid}</div>
+              <div class="rank-reward-tag">🎁 Thẻ Garena 20K</div>
+            </div>
+          </div>
+          <div class="rank-score">${item.points.toLocaleString()} điểm</div>
+        </div>
+      `).join('');
+    }
+
+    // Render 10 mục nhiệm vụ
+    function renderMissions() {
+      const savedUid = localStorage.getItem(STORAGE_KEY);
+      const container = document.getElementById('missionList');
+
+      container.innerHTML = missions.map(m => `
+        <div class="mission-card">
+          <div class="mission-left">
+            <div class="mission-num">${m.id}</div>
+            <div>
+              <div class="mission-title">${m.name}</div>
+              <div class="mission-meta">
+                <span class="${m.type === '4m' ? 'tag-4m' : 'tag-2m'}">${m.label}</span>
+                <span class="pts-plus">+${m.points} điểm</span>
+              </div>
+            </div>
+          </div>
+          <button
+            class="btn-do ${savedUid ? '' : 'disabled'}"
+            onclick="startMission(${m.id}, '${m.type}', ${m.points})"
+          >
+            Làm Ngay
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // Kiểm tra trạng thái khóa ID khi tải trang
+    function initIDLock() {
+      const savedUid = localStorage.getItem(STORAGE_KEY);
+      const input = document.getElementById('uidInput');
+      const btn = document.getElementById('lockBtn');
+      const status = document.getElementById('idStatus');
+
+      if (savedUid) {
+        input.value = savedUid;
+        input.disabled = true;
+        btn.textContent = '🔒 Đã Khóa ID';
+        btn.classList.add('locked');
+        btn.disabled = true;
+        status.innerHTML = `✅ Đã khóa cố định ID: <strong>${savedUid}</strong>. Mọi điểm vượt link sẽ cộng dồn vào ID này.`;
+      }
+    }
+
+    // Xử lý khóa ID bắt buộc
+    function lockUserID() {
+      const input = document.getElementById('uidInput');
+      const uid = input.value.trim();
+
+      if (!/^\d{8,12}$/.test(uid)) {
+        alert('Vui lòng nhập ID Free Fire hợp lệ (từ 8 đến 12 chữ số)!');
+        input.focus();
+        return;
+      }
+
+      const confirmLock = confirm(
+        `Xác nhận khóa ID "${uid}"?\n\nLưu ý: Sau khi khóa, bạn KHÔNG THỂ đổi sang ID khác trong suốt sự kiện.`
+      );
+
+      if (!confirmLock) return;
+
+      localStorage.setItem(STORAGE_KEY, uid);
+      initIDLock();
+      renderMissions();
+    }
+
+    // Bắt đầu làm 1 trong 10 nhiệm vụ
+    function startMission(missionId, type, points) {
+      const savedUid = localStorage.getItem(STORAGE_KEY);
+      if (!savedUid) {
+        alert('Bạn phải nhập và Khóa ID ở phía trên trước khi làm nhiệm vụ!');
+        document.getElementById('uidInput').focus();
+        return;
+      }
+
+      // Giai đoạn tiếp theo: gọi API Google Apps Script để lấy link rút gọn thật theo UID + missionId
+      alert(`Đang tạo nhiệm vụ #${missionId} (${type === '4m' ? 'Link4m' : 'Link2m'} +${points} điểm) cho ID: ${savedUid}`);
+    }
+
+    renderRankList();
+    initIDLock();
+    renderMissions();
+  </script>
 </body>
 </html>

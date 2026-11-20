@@ -6,299 +6,52 @@
   <title>Đua Top Điểm Nhiệm Vụ Free Fire</title>
   <style>
     :root {
-      --bg: #070b14;
-      --card: #0f172a;
-      --card-2: #162036;
-      --border: #243354;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --accent: #3b82f6;
-      --accent-2: #2563eb;
-      --success: #10b981;
-      --gold: #f59e0b;
-      --danger: #ef4444;
+      --bg: #070b14; --card: #0f172a; --border: #243354;
+      --text: #f8fafc; --muted: #94a3b8; --accent: #3b82f6;
+      --accent-2: #2563eb; --success: #10b981; --gold: #f59e0b;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: radial-gradient(circle at top, #111c33 0%, var(--bg) 55%);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 18px 14px 48px;
+      color: var(--text); min-height: 100vh; padding: 18px 14px 48px;
     }
-
-    .container {
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    .header {
-      text-align: center;
-      margin-bottom: 18px;
-    }
-
-    .header h1 {
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: 0.3px;
-      margin-bottom: 6px;
-    }
-
-    .header p {
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-
-    /* Top 3 Podium */
-    .podium {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .top-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px 8px;
-      text-align: center;
-    }
-
-    .top-box.rank-1 {
-      border-color: var(--gold);
-      box-shadow: 0 0 18px rgba(245, 158, 11, 0.16);
-    }
-
-    .rank-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 4px;
-    }
-
-    .rank-uid {
-      font-size: 0.86rem;
-      font-weight: 700;
-      word-break: break-all;
-      margin-bottom: 4px;
-    }
-
-    .rank-pts {
-      font-size: 0.92rem;
-      font-weight: 800;
-      color: #60a5fa;
-      margin-bottom: 6px;
-    }
-
-    .reward-tag {
-      display: inline-block;
-      font-size: 0.72rem;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(59, 130, 246, 0.15);
-      color: #93c5fd;
-      border: 1px solid rgba(59, 130, 246, 0.3);
-    }
-
-    .btn-expand {
-      width: 100%;
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-size: 0.86rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-bottom: 20px;
-    }
-
-    .top4-10 {
-      display: none;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 10px 14px;
-      margin-bottom: 20px;
-    }
-
-    .top4-10.show {
-      display: block;
-    }
-
-    .top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 4px;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
-      font-size: 0.85rem;
-    }
-
-    .top-row:last-child {
-      border-bottom: none;
-    }
-
-    .section-title {
-      font-size: 1rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* UID Lock Box */
-    .uid-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 16px;
-    }
-
-    .uid-box label {
-      display: block;
-      font-size: 0.86rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #e2e8f0;
-    }
-
-    .uid-controls {
-      display: flex;
-      gap: 10px;
-    }
-
-    .uid-input {
-      flex: 1;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 11px 12px;
-      border-radius: 10px;
-      font-size: 0.92rem;
-      outline: none;
-    }
-
-    .uid-input:focus {
-      border-color: var(--accent);
-    }
-
-    .btn-lock {
-      background: var(--success);
-      color: #fff;
-      border: none;
-      padding: 0 16px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.86rem;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .btn-lock.unlocked {
-      background: var(--accent);
-    }
-
-    .uid-status {
-      margin-top: 10px;
-      font-size: 0.82rem;
-      color: #6ee7b7;
-      display: none;
-    }
-
-    .uid-status.show {
-      display: block;
-    }
-
-    /* Missions */
-    .missions-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .mission-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .mission-card.mission-locked {
-      opacity: 0.65;
-      border-color: #334155;
-    }
-
-    .mission-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .mission-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      font-size: 0.8rem;
-    }
-
-    .badge-tag {
-      background: rgba(139, 92, 246, 0.2);
-      color: #c4b5fd;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-weight: 600;
-    }
-
-    .badge-step {
-      background: rgba(59, 130, 246, 0.2);
-      color: #93c5fd;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-weight: 700;
-    }
-
-    .pts-text {
-      color: #34d399;
-      font-weight: 700;
-    }
-
-    .btn-action {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .btn-action:hover {
-      background: var(--accent-2);
-    }
-
-    .btn-action.btn-disabled,
-    .btn-action:disabled {
-      background: #334155;
-      color: #94a3b8;
-      cursor: not-allowed;
-    }
+    .container { max-width: 640px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 18px; }
+    .header h1 { font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; }
+    .header p { font-size: 0.88rem; color: var(--muted); }
+    .podium { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+    .top-box { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 12px 8px; text-align: center; }
+    .top-box.rank-1 { border-color: var(--gold); box-shadow: 0 0 18px rgba(245, 158, 11, 0.16); }
+    .rank-label { font-size: 0.75rem; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+    .rank-uid { font-size: 0.86rem; font-weight: 700; word-break: break-all; margin-bottom: 4px; }
+    .rank-pts { font-size: 0.92rem; font-weight: 800; color: #60a5fa; margin-bottom: 6px; }
+    .reward-tag { display: inline-block; font-size: 0.72rem; padding: 3px 8px; border-radius: 999px; background: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .btn-expand { width: 100%; background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: 12px; font-size: 0.86rem; font-weight: 600; cursor: pointer; margin-bottom: 20px; }
+    .top4-10 { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 10px 14px; margin-bottom: 20px; }
+    .top4-10.show { display: block; }
+    .top-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 4px; border-bottom: 1px solid rgba(148, 163, 184, 0.12); font-size: 0.85rem; }
+    .top-row:last-child { border-bottom: none; }
+    .section-title { font-size: 1rem; font-weight: 800; margin-bottom: 12px; }
+    .uid-box { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 16px; }
+    .uid-box label { display: block; font-size: 0.86rem; font-weight: 600; margin-bottom: 10px; color: #e2e8f0; }
+    .uid-controls { display: flex; gap: 10px; }
+    .uid-input { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 11px 12px; border-radius: 10px; font-size: 0.92rem; outline: none; }
+    .btn-lock { background: var(--success); color: #fff; border: none; padding: 0 16px; border-radius: 10px; font-weight: 700; font-size: 0.86rem; cursor: pointer; white-space: nowrap; }
+    .btn-lock.unlocked { background: var(--accent); }
+    .uid-status { margin-top: 10px; font-size: 0.82rem; color: #6ee7b7; display: none; }
+    .uid-status.show { display: block; }
+    .missions-list { display: flex; flex-direction: column; gap: 10px; }
+    .mission-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .mission-card.mission-locked { opacity: 0.65; border-color: #334155; }
+    .mission-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .mission-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 0.8rem; }
+    .badge-tag { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; padding: 2px 8px; border-radius: 6px; font-weight: 600; }
+    .badge-step { background: rgba(59, 130, 246, 0.2); color: #93c5fd; padding: 2px 8px; border-radius: 6px; font-weight: 700; }
+    .pts-text { color: #34d399; font-weight: 700; }
+    .btn-action { background: var(--accent); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; cursor: pointer; white-space: nowrap; }
+    .btn-action:hover { background: var(--accent-2); }
+    .btn-action.btn-disabled, .btn-action:disabled { background: #334155; color: #94a3b8; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -308,7 +61,7 @@
       <p>Vượt link nhận điểm tích lũy — Top cao nhất nhận quà hấp dẫn</p>
     </div>
 
-    <div class="podium" id="podiumBox">
+    <div class="podium">
       <div class="top-box">
         <div class="rank-label">HẠNG 2</div>
         <div class="rank-uid" id="top2Uid">Chưa có</div>
@@ -332,7 +85,6 @@
     <button class="btn-expand" type="button" onclick="toggleTop10()">
       ▾ Xem thêm Top 4 - Top 10 (7 giải Thẻ Garena 20K)
     </button>
-
     <div class="top4-10" id="top4To10Box"></div>
 
     <div class="section-title">🎯 KHU VỰC LÀM NHIỆM VỤ</div>
@@ -340,16 +92,8 @@
     <div class="uid-box">
       <label for="ffUidInput">Nhập ID Free Fire của bạn (Bắt buộc khóa ID trước khi làm):</label>
       <div class="uid-controls">
-        <input
-          type="text"
-          id="ffUidInput"
-          class="uid-input"
-          placeholder="Ví dụ: 16456678988"
-          inputmode="numeric"
-        />
-        <button type="button" id="lockUidBtn" class="btn-lock unlocked" onclick="toggleLockUid()">
-          🔓 Khóa ID
-        </button>
+        <input type="text" id="ffUidInput" class="uid-input" placeholder="Ví dụ: 16456678988" inputmode="numeric" />
+        <button type="button" id="lockUidBtn" class="btn-lock unlocked" onclick="toggleLockUid()">🔓 Khóa ID</button>
       </div>
       <div class="uid-status" id="uidStatusText"></div>
     </div>
@@ -358,104 +102,70 @@
   </div>
 
   <script>
-    // Thay bằng URL Web App Google Apps Script của bạn
-    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwfLb86mpo-pXxtCVUr4OTFLbh4rLSQ74fLAnIpDwXaJr-p4hsqSK6ERQ9mqJGQT70Y/exec';
+    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxnPV7HDRE9st9Mafq-tMBXjVtMVg6PvQ_Y9aA7sefBN9wefLHD8nppVctkmZ8PoMVz/exec';
 
     const MISSIONS = [
-  { id: 'sitetop',    name: 'Nhiệm vụ Sitetop',    tag: 'Sitetop',    points: 528, maxDaily: 2 },
-  { id: 'link4m',     name: 'Nhiệm vụ Link4m',     tag: 'Link4m',     points: 946, maxDaily: 2 },
-  { id: 'gtraffic',   name: 'Nhiệm vụ Gtraffic',   tag: 'Gtraffic',   points: 660, maxDaily: 2 },
-  { id: 'trafficso1', name: 'Nhiệm vụ Trafficso1', tag: 'Trafficso1', points: 675, maxDaily: 2 },
-  { id: 'lentop',     name: 'Nhiệm vụ Lentop',     tag: 'Lentop',     points: 600, maxDaily: 2 },
-  { id: 'traffic24h', name: 'Nhiệm vụ Traffic24h', tag: 'Traffic24h', points: 600, maxDaily: 2 },
-  { id: 'phienchoso', name: 'Nhiệm vụ Phienchoso', tag: 'Phienchoso', points: 600, maxDaily: 2 },
-  { id: 'azlink',     name: 'Nhiệm vụ Azlink',     tag: 'Azlink',     points: 600, maxDaily: 2 }
-];
+      { id: 'sitetop',    name: 'Nhiệm vụ Sitetop',    tag: 'Sitetop',    points: 528, maxDaily: 2 },
+      { id: 'link4m',     name: 'Nhiệm vụ Link4m',     tag: 'Link4m',     points: 946, maxDaily: 2 },
+      { id: 'gtraffic',   name: 'Nhiệm vụ Gtraffic',   tag: 'Gtraffic',   points: 660, maxDaily: 2 },
+      { id: 'trafficso1', name: 'Nhiệm vụ Trafficso1', tag: 'Trafficso1', points: 675, maxDaily: 2 },
+      { id: 'lentop',     name: 'Nhiệm vụ Lentop',     tag: 'Lentop',     points: 600, maxDaily: 2 },
+      { id: 'azlink',     name: 'Nhiệm vụ Azlink',     tag: 'Azlink',     points: 600, maxDaily: 2 }
+    ];
 
     let lockedUid = localStorage.getItem('ff_locked_uid') || '';
     let dailyUsage = {};
 
-    function formatNumber(n) {
-      return Number(n || 0).toLocaleString('vi-VN');
-    }
+    function formatNumber(n) { return Number(n || 0).toLocaleString('vi-VN'); }
 
     function syncUidUI() {
       const input = document.getElementById('ffUidInput');
       const btn = document.getElementById('lockUidBtn');
       const status = document.getElementById('uidStatusText');
-
       if (lockedUid) {
-        input.value = lockedUid;
-        input.disabled = true;
-        btn.textContent = '🔒 Đã Khóa ID';
-        btn.classList.remove('unlocked');
+        input.value = lockedUid; input.disabled = true;
+        btn.textContent = '🔒 Đã Khóa ID'; btn.classList.remove('unlocked');
         status.textContent = `✅ Đã khóa cố định ID: ${lockedUid}. Mọi điểm vượt link sẽ cộng dồn vào ID này.`;
         status.classList.add('show');
       } else {
-        input.disabled = false;
-        btn.textContent = '🔓 Khóa ID';
-        btn.classList.add('unlocked');
-        status.textContent = '';
-        status.classList.remove('show');
+        input.value = ''; input.disabled = false;
+        btn.textContent = '🔓 Khóa ID'; btn.classList.add('unlocked');
+        status.textContent = ''; status.classList.remove('show');
       }
     }
 
     function toggleLockUid() {
       const input = document.getElementById('ffUidInput');
       if (lockedUid) {
-        lockedUid = '';
-        localStorage.removeItem('ff_locked_uid');
-        dailyUsage = {};
-        syncUidUI();
-        renderMissions();
-        return;
+        lockedUid = ''; localStorage.removeItem('ff_locked_uid');
+        dailyUsage = {}; syncUidUI(); renderMissions(); return;
       }
-
       const clean = String(input.value || '').replace(/\D/g, '').trim();
-      if (!clean || clean.length < 5) {
-        alert('Vui lòng nhập ID Free Fire hợp lệ!');
-        return;
-      }
-
-      lockedUid = clean;
-      localStorage.setItem('ff_locked_uid', lockedUid);
-      syncUidUI();
-      fetchDailyStatus();
+      if (!clean || clean.length < 5) { alert('Vui lòng nhập ID Free Fire hợp lệ!'); return; }
+      lockedUid = clean; localStorage.setItem('ff_locked_uid', lockedUid);
+      syncUidUI(); fetchDailyStatus();
     }
 
-    function toggleTop10() {
-      document.getElementById('top4To10Box').classList.toggle('show');
-    }
+    function toggleTop10() { document.getElementById('top4To10Box').classList.toggle('show'); }
 
     function renderMissions() {
       const container = document.getElementById('missionsList');
       if (!container) return;
-
       container.innerHTML = MISSIONS.map((g, idx) => {
-        const u = (dailyUsage && dailyUsage[g.id])
-          ? dailyUsage[g.id]
-          : { done: 0, maxDaily: g.maxDaily };
-
-        // Hiển thị đúng số lượt đã làm: 0/2 -> 1/2 -> 2/2
+        const u = (dailyUsage && dailyUsage[g.id]) ? dailyUsage[g.id] : { done: 0, maxDaily: g.maxDaily };
         const done = Math.min(Math.max(Number(u.done || 0), 0), g.maxDaily);
         const isDoneAll = done >= g.maxDaily;
-        const counterText = `Lượt ${done}/${g.maxDaily}`;
-
         return `
           <div class="mission-card ${isDoneAll ? 'mission-locked' : ''}">
             <div>
               <div class="mission-title">${idx + 1}. ${g.name}</div>
               <div class="mission-meta">
                 <span class="badge-tag">${g.tag}</span>
-                <span class="badge-step">${counterText}</span>
+                <span class="badge-step">Lượt ${done}/${g.maxDaily}</span>
                 <span class="pts-text">+${formatNumber(g.points)} điểm</span>
               </div>
             </div>
-            <button
-              type="button"
-              class="btn-action ${isDoneAll ? 'btn-disabled' : ''}"
-              ${isDoneAll ? 'disabled' : `onclick="startMission('${g.id}')"`}
-            >
+            <button type="button" class="btn-action ${isDoneAll ? 'btn-disabled' : ''}" ${isDoneAll ? 'disabled' : `onclick="startMission('${g.id}')"`}>
               ${isDoneAll ? 'Đã Hết Lượt' : 'Làm Ngay'}
             </button>
           </div>
@@ -464,40 +174,25 @@
     }
 
     async function startMission(groupId) {
-      if (!lockedUid) {
-        alert('Vui lòng nhập và khóa ID Free Fire trước khi làm nhiệm vụ!');
-        return;
-      }
-
+      if (!lockedUid) { alert('Vui lòng nhập và khóa ID Free Fire trước khi làm nhiệm vụ!'); return; }
       try {
         const url = `${GAS_WEB_APP_URL}?action=create_task&uid=${encodeURIComponent(lockedUid)}&groupId=${encodeURIComponent(groupId)}`;
         const res = await fetch(url);
         const data = await res.json();
-
-        if (!data.ok || !data.shortUrl) {
-          alert(data.error || 'Không tạo được link nhiệm vụ!');
-          return;
-        }
-
+        if (!data.ok || !data.shortUrl) { alert(data.error || 'Không tạo được link nhiệm vụ!'); return; }
         window.location.href = data.shortUrl;
-      } catch (err) {
-        alert('Lỗi kết nối máy chủ khi tạo nhiệm vụ!');
-      }
+      } catch (err) { alert('Lỗi kết nối máy chủ khi tạo nhiệm vụ!'); }
     }
 
     async function checkAndClaimTokenOnLoad() {
       const currentUrl = new URL(window.location.href);
       const token = currentUrl.searchParams.get('token');
       if (!token) return;
-
-      // Xóa ?token= khỏi thanh địa chỉ để tránh F5 gọi trùng
       currentUrl.searchParams.delete('token');
       window.history.replaceState({}, document.title, currentUrl.toString());
-
       try {
         const res = await fetch(`${GAS_WEB_APP_URL}?action=claim_token&token=${encodeURIComponent(token)}`);
         const data = await res.json();
-
         if (data.ok) {
           if (data.uid) {
             lockedUid = String(data.uid).replace(/\D/g, '').trim();
@@ -508,27 +203,16 @@
         } else {
           alert(data.error || 'Token không hợp lệ hoặc đã sử dụng!');
         }
-      } catch (err) {
-        alert('Lỗi khi xác nhận điểm từ token!');
-      }
+      } catch (err) { alert('Lỗi khi xác nhận điểm từ token!'); }
     }
 
     async function fetchDailyStatus() {
-      if (!lockedUid) {
-        dailyUsage = {};
-        renderMissions();
-        return;
-      }
-
+      if (!lockedUid) { dailyUsage = {}; renderMissions(); return; }
       try {
         const res = await fetch(`${GAS_WEB_APP_URL}?action=daily_status&uid=${encodeURIComponent(lockedUid)}`);
         const data = await res.json();
-        if (data.ok && data.usage) {
-          dailyUsage = data.usage;
-        }
-      } catch (_) {
-        // Giữ nguyên trạng thái hiện tại nếu lỗi mạng tạm thời
-      }
+        if (data.ok && data.usage) dailyUsage = data.usage;
+      } catch (_) {}
       renderMissions();
     }
 
@@ -537,30 +221,20 @@
         const res = await fetch(`${GAS_WEB_APP_URL}?action=leaderboard`);
         const data = await res.json();
         if (!data.ok || !Array.isArray(data.leaderboard)) return;
-
         const list = data.leaderboard;
         const setSlot = (idx, uidId, ptsId) => {
           const item = list[idx];
           document.getElementById(uidId).textContent = item ? item.uid : 'Chưa có';
           document.getElementById(ptsId).textContent = `${formatNumber(item ? item.points : 0)} điểm`;
         };
-
         setSlot(0, 'top1Uid', 'top1Pts');
         setSlot(1, 'top2Uid', 'top2Pts');
         setSlot(2, 'top3Uid', 'top3Pts');
-
         const box4_10 = document.getElementById('top4To10Box');
         const sub = list.slice(3, 10);
-        if (!sub.length) {
-          box4_10.innerHTML = '<div class="top-row"><span>Chưa có dữ liệu Top 4 - Top 10</span><span>—</span></div>';
-        } else {
-          box4_10.innerHTML = sub.map((item, i) => `
-            <div class="top-row">
-              <span>#${i + 4} — ${item.uid}</span>
-              <strong>${formatNumber(item.points)} điểm</strong>
-            </div>
-          `).join('');
-        }
+        box4_10.innerHTML = !sub.length
+          ? '<div class="top-row"><span>Chưa có dữ liệu Top 4 - Top 10</span><span>—</span></div>'
+          : sub.map((item, i) => `<div class="top-row"><span>#${i + 4} — ${item.uid}</span><strong>${formatNumber(item.points)} điểm</strong></div>`).join('');
       } catch (_) {}
     }
 
@@ -568,10 +242,7 @@
       syncUidUI();
       renderMissions();
       await checkAndClaimTokenOnLoad();
-      await Promise.all([
-        fetchDailyStatus(),
-        loadLeaderboard()
-      ]);
+      await Promise.all([fetchDailyStatus(), loadLeaderboard()]);
     })();
   </script>
 </body>

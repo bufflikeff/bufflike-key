@@ -55,7 +55,7 @@
       position: relative;
       text-align: center;
       padding: 22px 16px 20px;
-      margin-bottom: 20px;
+      margin-bottom: 14px;
       border-radius: 20px;
       background: linear-gradient(145deg, rgba(15, 23, 42, 0.92), rgba(9, 13, 26, 0.96));
       border: 1px solid rgba(59, 130, 246, 0.28);
@@ -169,6 +169,71 @@
       margin-top: 2px;
     }
 
+    /* Notice Banner with Shaking Bell */
+    .notice-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(239, 68, 68, 0.1));
+      border: 1px solid rgba(251, 191, 36, 0.42);
+      border-radius: 15px;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px -10px rgba(245, 158, 11, 0.28);
+    }
+
+    .bell-wrap {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: rgba(251, 191, 36, 0.18);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .bell-shake {
+      display: inline-flex;
+      transform-origin: 50% 4px;
+      animation: bellRing 2.2s ease-in-out infinite;
+    }
+
+    @keyframes bellRing {
+      0%, 100% { transform: rotate(0deg); }
+      6%  { transform: rotate(18deg); }
+      12% { transform: rotate(-16deg); }
+      18% { transform: rotate(14deg); }
+      24% { transform: rotate(-12deg); }
+      30% { transform: rotate(8deg); }
+      36% { transform: rotate(-5deg); }
+      42% { transform: rotate(0deg); }
+    }
+
+    .notice-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .notice-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #fde047;
+      margin-bottom: 3px;
+    }
+
+    .notice-text {
+      font-size: 0.81rem;
+      font-weight: 600;
+      color: #fef3c7;
+      line-height: 1.45;
+    }
+
     /* Podium 3D */
     .podium-wrap {
       display: grid;
@@ -176,7 +241,18 @@
       align-items: end;
       gap: 9px;
       margin-bottom: 14px;
-      padding-top: 8px;
+      padding-top: 4px;
+    }
+
+    .podium-card {
+      position: relative;
+      background: var(--bg-panel);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 14px 8px 12px;
+      text-align: center;
+      border: 1px solid var(--border-subtle);
+      transition: transform 0.25s ease;
     }
 
     .podium-card {
@@ -208,7 +284,7 @@
       background: linear-gradient(180deg, rgba(45, 25, 16, 0.65) 0%, rgba(15, 23, 42, 0.92) 100%);
       box-shadow: 0 10px 25px -10px var(--bronze-glow);
     }
- 
+
     .medal-icon {
       width: 38px;
       height: 38px;
@@ -304,7 +380,7 @@
       transition: border-color 0.2s, background 0.2s;
     }
 
-    .btn-top10:hover {
+        .btn-top10:hover {
       border-color: rgba(59, 130, 246, 0.45);
       background: rgba(30, 41, 59, 0.85);
     }
@@ -483,7 +559,7 @@
       padding-top: 12px;
       border-top: 1px solid rgba(148, 163, 184, 0.14);
     }
-    
+
     .player-stats.show {
       display: grid;
     }
@@ -645,7 +721,7 @@
       transition: transform 0.15s, opacity 0.2s;
     }
 
-    .btn-go:active:not(:disabled) {
+        .btn-go:active:not(:disabled) {
       transform: scale(0.96);
     }
 
@@ -678,7 +754,7 @@
       transition: transform 0.28s ease, opacity 0.28s ease;
     }
 
-       .toast.show {
+    .toast.show {
       transform: translate(-50%, 0);
       opacity: 1;
     }
@@ -720,6 +796,22 @@
         </div>
       </div>
     </header>
+
+    <!-- Notice Box with Shaking Bell -->
+    <div class="notice-card" role="alert">
+      <div class="bell-wrap">
+        <span class="bell-shake">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+        </span>
+      </div>
+      <div class="notice-body">
+        <div class="notice-title">Thông Báo Hệ Thống</div>
+        <div class="notice-text">Mọi điểm được tính hợp lệ, số điểm đã được lưu vào data check ra gian lận điểm sẽ bị trừ điểm gian lận đó !</div>
+      </div>
+    </div>
 
     <!-- Top 1 - 3 Podium -->
     <section class="podium-wrap">
@@ -813,7 +905,7 @@
         </div>
         <div class="stat-chip">
           <div class="stat-k">Lượt hôm nay</div>
-          <div class="stat-v green" id="myQuotaVal">0/12</div>
+          <div class="stat-v green" id="myQuotaVal">0/24</div>
         </div>
       </div>
     </div>
@@ -828,16 +920,23 @@
     // Dán URL Web App Google Apps Script của bạn vào đây
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwPYmmowiaLOSyZclq6tKU2DzxVQNnBUjC2OUCxn3W8xlATYnkhf2K5mFWlirUbZOzL/exec';
 
-    // Mốc đích: 31/12/2026 23:59:59 giờ Việt Nam (+07:00)
+        // Mốc đích: 31/12/2026 23:59:59 giờ Việt Nam (+07:00)
     const EVENT_END_TIMESTAMP = new Date('2026-12-31T23:59:59+07:00').getTime();
 
     const MISSIONS = [
-      { id: 'sitetop',    name: 'Nhiệm vụ Sitetop',    tag: 'Sitetop',    points: 528, maxDaily: 2 },
-      { id: 'link4m',     name: 'Nhiệm vụ Link4m',     tag: 'Link4m',     points: 946, maxDaily: 2 },
-      { id: 'gtraffic',   name: 'Nhiệm vụ Gtraffic',   tag: 'Gtraffic',   points: 660, maxDaily: 2 },
-      { id: 'trafficso1', name: 'Nhiệm vụ Trafficso1', tag: 'Trafficso1', points: 675, maxDaily: 2 },
-      { id: 'lentop',     name: 'Nhiệm vụ Lentop',     tag: 'Lentop',     points: 600, maxDaily: 2 },
-      { id: 'azlink',     name: 'Nhiệm vụ Azlink',     tag: 'Azlink',     points: 600, maxDaily: 2 }
+      { id: 'sitetop',    name: 'Nhiệm vụ Sitetop',                     tag: 'Sitetop',    points: 528,  maxDaily: 2 },
+      { id: 'link4m',     name: 'Nhiệm vụ Link4m',                      tag: 'Link4m',     points: 250,  maxDaily: 2 },
+      { id: 'gtraffic',   name: 'Nhiệm vụ Gtraffic',                    tag: 'Gtraffic',   points: 660,  maxDaily: 2 },
+      { id: 'trafficso1', name: 'Nhiệm vụ Trafficso1',                  tag: 'Trafficso1', points: 675,  maxDaily: 2 },
+      { id: 'lentop',     name: 'Nhiệm vụ Lentop',                      tag: 'Lentop',     points: 600,  maxDaily: 2 },
+      { id: 'azlink',     name: 'Nhiệm vụ Azlink',                      tag: 'Azlink',     points: 888,  maxDaily: 2 },
+      { id: 'trafficvn',  name: 'Nhiệm vụ Trafficvn',                   tag: 'Trafficvn',  points: 400,  maxDaily: 3 },
+      { id: 'traffictop', name: 'Nhiệm vụ TrafficTop',                  tag: 'TrafficTop', points: 636,  maxDaily: 1 },
+      { id: 'bbmtks',     name: 'Nhiệm vụ Bbmtks',                      tag: 'Bbmtks',     points: 767,  maxDaily: 1 },
+      { id: 'traffic24h', name: 'Nhiệm vụ Traffic24h',                  tag: 'Traffic24h', points: 760,  maxDaily: 1 },
+      { id: 'phienchoso', name: 'Nhiệm vụ Phienchoso (Sớm thì còn NV)', tag: 'Phienchoso', points: 3500, maxDaily: 1 },
+      { id: 'traffic2k',  name: 'Nhiệm vụ 2ktraffic',                   tag: '2ktraffic',  points: 1250, maxDaily: 4 },
+      { id: 'alolink',    name: 'Nhiệm vụ Alolink',                     tag: 'Alolink',    points: 100,  maxDaily: 1 }
     ];
 
     let lockedUid = localStorage.getItem('ff_locked_uid') || '';
@@ -904,7 +1003,7 @@
       }
     }
 
-       function syncUidUI() {
+    function syncUidUI() {
       const input = document.getElementById('ffUidInput');
       const btn = document.getElementById('lockUidBtn');
       const hint = document.getElementById('uidHint');
@@ -1060,9 +1159,9 @@
       } catch (err) {
         showToast('Lỗi khi xác nhận điểm từ token!', 'err');
       }
-    }
+          }
 
-    async function fetchDailyStatus() {
+        async function fetchDailyStatus() {
       if (!lockedUid) {
         dailyUsage = {};
         renderMissions();

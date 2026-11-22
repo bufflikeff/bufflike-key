@@ -2,1221 +2,669 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Đua Top Điểm Nhiệm Vụ Free Fire</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khu Vực Làm Nhiệm Vụ & Bảng Xếp Hạng</title>
   <style>
     :root {
-      --bg-base: #050811;
-      --bg-panel: rgba(15, 23, 42, 0.78);
-      --bg-panel-solid: #0f172a;
-      --border-subtle: rgba(148, 163, 184, 0.16);
-      --text-main: #f8fafc;
-      --text-dim: #94a3b8;
-      --gold: #fbbf24;
-      --gold-glow: rgba(251, 191, 36, 0.28);
-      --silver: #cbd5e1;
-      --silver-glow: rgba(203, 213, 225, 0.18);
-      --bronze: #f97316;
-      --bronze-glow: rgba(249, 115, 22, 0.2);
-      --primary: #3b82f6;
-      --emerald: #10b981;
+      --bg: #0b0f19;
+      --card: #121826;
+      --card-2: #182134;
+      --border: #25324d;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #3b82f6;
+      --accent-2: #2563eb;
+      --success: #10b981;
+      --warn: #f59e0b;
+      --danger: #ef4444;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
-      font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-base);
-      background-image:
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59, 130, 246, 0.24), transparent),
-        radial-gradient(ellipse 60% 40% at 85% 25%, rgba(251, 191, 36, 0.08), transparent),
-        linear-gradient(180deg, #070c1a 0%, #04060d 100%);
-      color: var(--text-main);
-      min-height: 100vh;
-      padding: 20px 14px 60px;
+      background: var(--bg);
+      color: var(--text);
+      padding: 16px;
       line-height: 1.45;
     }
 
     .container {
-      max-width: 600px;
+      max-width: 560px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
-    /* Header Banner */
-    .hero-banner {
-      position: relative;
-      text-align: center;
-      padding: 22px 16px 20px;
-      margin-bottom: 14px;
-      border-radius: 20px;
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.92), rgba(9, 13, 26, 0.96));
-      border: 1px solid rgba(59, 130, 246, 0.28);
-      box-shadow: 0 18px 40px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      overflow: hidden;
-    }
-
-    .hero-banner::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 20%;
-      right: 20%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), var(--primary), transparent);
-    }
-
-    .live-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      color: #fde68a;
-      background: rgba(251, 191, 36, 0.12);
-      border: 1px solid rgba(251, 191, 36, 0.32);
-      margin-bottom: 10px;
-    }
-
-    .live-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 8px #22c55e;
-      animation: pulse 1.6s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.45; transform: scale(0.8); }
-    }
-
-    .hero-banner h1 {
-      font-family: 'Chakra Petch', 'Be Vietnam Pro', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      background: linear-gradient(180deg, #ffffff 25%, #93c5fd 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
-    }
-
-    .hero-banner p {
-      font-size: 0.84rem;
-      color: var(--text-dim);
-      max-width: 430px;
-      margin: 0 auto 14px;
-    }
-
-    /* Countdown Box */
-    .countdown-box {
-      background: rgba(6, 10, 20, 0.82);
-      border: 1px solid rgba(59, 130, 246, 0.25);
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 10px 12px;
-      max-width: 440px;
-      margin: 0 auto;
+      padding: 16px;
     }
 
-    .countdown-label {
-      font-size: 0.71rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: #93c5fd;
-      margin-bottom: 8px;
-    }
-
-    .countdown-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
-    }
-
-    .cd-cell {
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      border-radius: 10px;
-      padding: 6px 4px;
-    }
-
-    .cd-num {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #fde047;
-      line-height: 1.15;
-    }
-
-    .cd-unit {
-      font-size: 0.66rem;
-      color: var(--text-dim);
-      font-weight: 600;
-      margin-top: 2px;
-    }
-
-    /* Notice Banner with Shaking Bell */
-    .notice-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 11px;
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(239, 68, 68, 0.1));
-      border: 1px solid rgba(251, 191, 36, 0.42);
-      border-radius: 15px;
-      padding: 12px 14px;
-      margin-bottom: 18px;
-      box-shadow: 0 8px 24px -10px rgba(245, 158, 11, 0.28);
-    }
-
-    .bell-wrap {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: rgba(251, 191, 36, 0.18);
-      border: 1px solid rgba(251, 191, 36, 0.4);
+    .notice-banner {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .bell-shake {
-      display: inline-flex;
-      transform-origin: 50% 4px;
-      animation: bellRing 2.2s ease-in-out infinite;
-    }
-
-    @keyframes bellRing {
-      0%, 100% { transform: rotate(0deg); }
-      6%  { transform: rotate(18deg); }
-      12% { transform: rotate(-16deg); }
-      18% { transform: rotate(14deg); }
-      24% { transform: rotate(-12deg); }
-      30% { transform: rotate(8deg); }
-      36% { transform: rotate(-5deg); }
-      42% { transform: rotate(0deg); }
-    }
-
-    .notice-body {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .notice-title {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      color: #fde047;
-      margin-bottom: 3px;
-    }
-
-    .notice-text {
-      font-size: 0.81rem;
-      font-weight: 600;
-      color: #fef3c7;
-      line-height: 1.45;
-    }
-
-    /* Podium 3D */
-    .podium-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1.12fr 1fr;
-      align-items: end;
-      gap: 9px;
-      margin-bottom: 14px;
-      padding-top: 4px;
-    }
-
-    .podium-card {
-      position: relative;
-      background: var(--bg-panel);
-      backdrop-filter: blur(12px);
-      border-radius: 16px;
-      padding: 14px 8px 12px;
-      text-align: center;
-      border: 1px solid var(--border-subtle);
-      transition: transform 0.25s ease;
-    }
-
-    .podium-card {
-      position: relative;
-      background: var(--bg-panel);
-      backdrop-filter: blur(12px);
-      border-radius: 16px;
-      padding: 14px 8px 12px;
-      text-align: center;
-      border: 1px solid var(--border-subtle);
-      transition: transform 0.25s ease;
-    }
-
-    .podium-card.rank-2 {
-      border-color: rgba(203, 213, 225, 0.35);
-      background: linear-gradient(180deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.92) 100%);
-      box-shadow: 0 10px 25px -10px var(--silver-glow);
-    }
-
-    .podium-card.rank-1 {
-      padding: 18px 8px 15px;
-      border: 1.5px solid rgba(251, 191, 36, 0.65);
-      background: linear-gradient(180deg, rgba(66, 46, 14, 0.55) 0%, rgba(15, 23, 42, 0.95) 65%);
-      box-shadow: 0 14px 32px -8px var(--gold-glow), inset 0 1px 0 rgba(253, 230, 138, 0.35);
-    }
-
-    .podium-card.rank-3 {
-      border-color: rgba(249, 115, 22, 0.35);
-      background: linear-gradient(180deg, rgba(45, 25, 16, 0.65) 0%, rgba(15, 23, 42, 0.92) 100%);
-      box-shadow: 0 10px 25px -10px var(--bronze-glow);
-    }
-
-    .medal-icon {
-      width: 38px;
-      height: 38px;
-      margin: 0 auto 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      gap: 10px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
       border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #fde68a;
     }
 
-    .rank-1 .medal-icon {
-      width: 44px;
-      height: 44px;
-      background: radial-gradient(circle, rgba(251, 191, 36, 0.25), transparent 70%);
+    .bell {
+      font-size: 18px;
+      display: inline-block;
+      transform-origin: top center;
+      animation: swing 2.2s ease-in-out infinite;
     }
 
-    .rank-badge {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.74rem;
+    @keyframes swing {
+      0%, 100% { transform: rotate(0deg); }
+      15% { transform: rotate(14deg); }
+      30% { transform: rotate(-12deg); }
+      45% { transform: rotate(8deg); }
+      60% { transform: rotate(-5deg); }
+      75% { transform: rotate(2deg); }
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+
+    .title {
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.3px;
+    }
+
+    .sub-pill {
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--card-2);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    .uid-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .uid-change-btn {
+      background: none;
+      border: none;
+      color: #60a5fa;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .uid-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .uid-input {
+      flex: 1;
+      background: #0d1320;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 12px;
+      color: var(--text);
+      font-size: 15px;
+      outline: none;
+    }
+
+    .uid-input:focus {
+      border-color: var(--accent);
+    }
+
+    .btn-lock {
+      background: var(--success);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0 16px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-lock.unlocked {
+      background: var(--accent);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .stat-box {
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
       margin-bottom: 4px;
     }
 
-    .rank-1 .rank-badge { color: var(--gold); font-size: 0.8rem; }
-    .rank-2 .rank-badge { color: var(--silver); }
-    .rank-3 .rank-badge { color: #fdba74; }
-
-    .podium-uid {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #f1f5f9;
-      word-break: break-all;
-      margin-bottom: 3px;
-    }
-
-    .podium-pts {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: #60a5fa;
-      margin-bottom: 8px;
-    }
-
-    .rank-1 .podium-pts {
-      color: #fde047;
-      font-size: 1rem;
-    }
-
-    .prize-pill {
-      display: inline-block;
-      width: 100%;
-      padding: 4px 6px;
-      border-radius: 8px;
-      font-size: 0.69rem;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-    }
-
-    .rank-1 .prize-pill {
-      background: linear-gradient(90deg, rgba(245, 158, 11, 0.25), rgba(234, 179, 8, 0.15));
-      color: #fef08a;
-      border: 1px solid rgba(251, 191, 36, 0.4);
-    }
-
-    .rank-2 .prize-pill {
-      background: rgba(56, 189, 248, 0.14);
-      color: #7dd3fc;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-    }
-
-    .rank-3 .prize-pill {
-      background: rgba(249, 115, 22, 0.14);
-      color: #fdba74;
-      border: 1px solid rgba(249, 115, 22, 0.3);
-    }
-
-    /* Expand Top 4-10 */
-    .btn-top10 {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--bg-panel);
-      border: 1px solid var(--border-subtle);
-      color: #e2e8f0;
-      padding: 11px 14px;
-      border-radius: 12px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-bottom: 20px;
-      transition: border-color 0.2s, background 0.2s;
-    }
-
-        .btn-top10:hover {
-      border-color: rgba(59, 130, 246, 0.45);
-      background: rgba(30, 41, 59, 0.85);
-    }
-
-    .btn-top10 .sub-prize {
-      font-size: 0.72rem;
-      color: #fde68a;
-      background: rgba(251, 191, 36, 0.15);
-      border: 1px solid rgba(251, 191, 36, 0.3);
-      padding: 2px 8px;
-      border-radius: 6px;
-    }
-
-    .top10-drawer {
-      display: none;
-      background: var(--bg-panel-solid);
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 8px 14px;
-      margin-top: -12px;
-      margin-bottom: 20px;
-    }
-
-    .top10-drawer.open {
-      display: block;
-      animation: fadeSlide 0.22s ease;
-    }
-
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(-6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .top10-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 9px 2px;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-      font-size: 0.83rem;
-    }
-
-    .top10-item:last-child { border-bottom: none; }
-
-    .top10-rank {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      background: rgba(148, 163, 184, 0.12);
-      font-family: 'Chakra Petch', sans-serif;
-      font-weight: 700;
-      font-size: 0.75rem;
-      color: #cbd5e1;
-      margin-right: 8px;
-    }
-
-    .top10-reward {
-      font-size: 0.72rem;
-      color: #fde047;
-      background: rgba(251, 191, 36, 0.12);
-      padding: 2px 7px;
-      border-radius: 6px;
-      margin-left: 6px;
+    .stat-value {
+      font-size: 15px;
       font-weight: 700;
     }
 
-    /* Section Heading */
-    .sec-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .sec-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 1.02rem;
-      font-weight: 700;
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
-      color: #f8fafc;
-    }
-
-    .sec-reset-note {
-      font-size: 0.73rem;
-      color: var(--text-dim);
-    }
-
-    /* UID Locker Panel */
-    .uid-panel {
-      background: linear-gradient(160deg, rgba(15, 23, 42, 0.92), rgba(10, 15, 30, 0.96));
-      border: 1px solid rgba(59, 130, 246, 0.25);
-      border-radius: 16px;
-      padding: 15px;
-      margin-bottom: 16px;
-      box-shadow: 0 10px 28px -12px rgba(0, 0, 0, 0.6);
-    }
-
-    .uid-label {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #cbd5e1;
-      margin-bottom: 10px;
-    }
-
-    .uid-row {
-      display: flex;
-      gap: 9px;
-    }
-
-    .uid-field {
-      flex: 1;
-      background: #060a14;
-      border: 1px solid rgba(148, 163, 184, 0.24);
-      color: #ffffff;
-      padding: 11px 13px;
-      border-radius: 11px;
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.98rem;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .uid-field:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-    }
-
-    .uid-field:disabled {
-      color: #6ee7b7;
-      border-color: rgba(16, 185, 129, 0.4);
-      background: rgba(6, 78, 59, 0.18);
-    }
-
-    .btn-uid {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: #fff;
-      border: none;
-      padding: 0 16px;
-      border-radius: 11px;
-      font-size: 0.83rem;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      box-shadow: 0 6px 16px -4px rgba(37, 99, 235, 0.55);
-      transition: transform 0.15s, filter 0.2s;
-    }
-
-    .btn-uid:active { transform: scale(0.97); }
-
-    .btn-uid.locked {
-      background: linear-gradient(135deg, #059669, #047857);
-      box-shadow: 0 6px 16px -4px rgba(16, 185, 129, 0.45);
-    }
-
-    /* Player Quick Stats Bar */
-    .player-stats {
-      display: none;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(148, 163, 184, 0.14);
-    }
-
-    .player-stats.show {
-      display: grid;
-    }
-
-    .stat-chip {
-      background: rgba(6, 10, 20, 0.75);
-      border: 1px solid rgba(148, 163, 184, 0.14);
-      border-radius: 10px;
-      padding: 8px 6px;
-      text-align: center;
-    }
-
-    .stat-k {
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      margin-bottom: 2px;
-    }
-
-    .stat-v {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: #f8fafc;
-    }
-
-    .stat-v.gold { color: var(--gold); }
-    .stat-v.green { color: #34d399; }
-
-    /* Mission Cards */
-    .mission-stack {
+    .mission-list {
       display: flex;
       flex-direction: column;
-      gap: 11px;
+      gap: 10px;
     }
 
-    .m-card {
-      position: relative;
-      background: var(--bg-panel);
-      border: 1px solid var(--border-subtle);
-      border-radius: 15px;
+    .mission-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
       padding: 14px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
-      transition: border-color 0.2s, transform 0.2s;
     }
 
-    .m-card:not(.done):hover {
-      border-color: rgba(59, 130, 246, 0.45);
-    }
-
-    .m-card.done {
-      opacity: 0.62;
-      background: rgba(15, 23, 42, 0.45);
-    }
-
-    .m-left {
-      flex: 1;
+        .mission-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
       min-width: 0;
     }
 
-    .m-top {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-
-    .m-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
-      border-radius: 6px;
-      background: rgba(59, 130, 246, 0.18);
-      color: #93c5fd;
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.78rem;
+    .mission-name {
+      font-size: 15px;
       font-weight: 700;
-      flex-shrink: 0;
     }
 
-    .m-name {
-      font-size: 0.94rem;
-      font-weight: 700;
-      color: #f8fafc;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .m-tags {
+    .mission-meta {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 7px;
-      margin-bottom: 8px;
+      gap: 8px;
+      font-size: 12px;
     }
 
-    .tag-gate {
-      font-size: 0.72rem;
+    .badge {
+      background: rgba(139, 92, 246, 0.2);
+      color: #c4b5fd;
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      padding: 2px 8px;
+      border-radius: 6px;
       font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 6px;
-      background: rgba(168, 85, 247, 0.16);
-      color: #d8b4fe;
-      border: 1px solid rgba(168, 85, 247, 0.28);
     }
 
-    .tag-quota {
-      font-size: 0.72rem;
-      font-weight: 700;
+    .turn-pill {
+      background: var(--card-2);
+      color: #cbd5e1;
+      border: 1px solid var(--border);
       padding: 2px 8px;
       border-radius: 6px;
-      background: rgba(59, 130, 246, 0.15);
-      color: #93c5fd;
     }
 
-    .tag-pts {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.84rem;
-      font-weight: 700;
+    .pts-text {
       color: #34d399;
-    }
-
-    .m-bar-bg {
-      width: 100%;
-      height: 5px;
-      border-radius: 999px;
-      background: rgba(148, 163, 184, 0.14);
-      overflow: hidden;
-    }
-
-    .m-bar-fill {
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #3b82f6, #10b981);
-      transition: width 0.35s ease;
-    }
-
-    .btn-go {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      min-width: 104px;
-      padding: 11px 14px;
-      border-radius: 11px;
-      border: none;
-      font-size: 0.82rem;
       font-weight: 700;
-      color: #ffffff;
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-      box-shadow: 0 6px 16px -4px rgba(37, 99, 235, 0.55);
+    }
+
+    .btn-do {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 13px;
       cursor: pointer;
-      flex-shrink: 0;
-      transition: transform 0.15s, opacity 0.2s;
+      white-space: nowrap;
     }
 
-        .btn-go:active:not(:disabled) {
-      transform: scale(0.96);
-    }
-
-    .btn-go:disabled {
-      background: #1e293b;
-      color: #64748b;
-      box-shadow: none;
+    .btn-do:disabled {
+      background: #334155;
+      color: #94a3b8;
       cursor: not-allowed;
-      border: 1px solid rgba(148, 163, 184, 0.14);
     }
 
-    /* Toast Notification */
+    .lb-toggle {
+      width: 100%;
+      background: var(--card-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .lb-list {
+      margin-top: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lb-list.open {
+      display: flex;
+    }
+
+    .lb-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-2);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
     .toast {
       position: fixed;
       left: 50%;
-      bottom: 24px;
-      transform: translate(-50%, 120%);
-      background: #0f172a;
-      color: #f8fafc;
-      border: 1px solid rgba(59, 130, 246, 0.45);
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-size: 0.84rem;
+      bottom: 20px;
+      transform: translateX(-50%) translateY(20px);
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid #475569;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
       font-weight: 600;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.65);
-      z-index: 9999;
-      max-width: 90vw;
-      text-align: center;
       opacity: 0;
-      transition: transform 0.28s ease, opacity 0.28s ease;
+      pointer-events: none;
+      transition: all 0.22s ease;
+      z-index: 999;
+      max-width: 92vw;
+      text-align: center;
     }
 
     .toast.show {
-      transform: translate(-50%, 0);
       opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
-    .toast.ok { border-color: rgba(16, 185, 129, 0.65); color: #6ee7b7; }
-    .toast.err { border-color: rgba(239, 68, 68, 0.65); color: #fca5a5; }
+    .toast.error {
+      background: rgba(127, 29, 29, 0.95);
+      border-color: #f87171;
+      color: #fecaca;
+    }
+
+    .toast.success {
+      background: rgba(6, 78, 59, 0.95);
+      border-color: #34d399;
+      color: #d1fae5;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Hero Header -->
-    <header class="hero-banner">
-      <div class="live-pill">
-        <span class="live-dot"></span> SỰ KIỆN ĐANG DIỄN RA
-      </div>
-      <h1>Đua Top Nhiệm Vụ Free Fire</h1>
-      <p>Hoàn thành vượt link mỗi ngày để tích lũy điểm — Top cao nhất nhận quà trực tiếp vào UID</p>
-
-      <!-- Countdown to 31/12/2026 23:59:59 (+07:00) -->
-      <div class="countdown-box">
-        <div class="countdown-label">Thời gian đua top còn lại</div>
-        <div class="countdown-grid">
-          <div class="cd-cell">
-            <div class="cd-num" id="cdDays">00</div>
-            <div class="cd-unit">Ngày</div>
-          </div>
-          <div class="cd-cell">
-            <div class="cd-num" id="cdHours">00</div>
-            <div class="cd-unit">Giờ</div>
-          </div>
-          <div class="cd-cell">
-            <div class="cd-num" id="cdMins">00</div>
-            <div class="cd-unit">Phút</div>
-          </div>
-          <div class="cd-cell">
-            <div class="cd-num" id="cdSecs">00</div>
-            <div class="cd-unit">Giây</div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- Notice Box with Shaking Bell -->
-    <div class="notice-card" role="alert">
-      <div class="bell-wrap">
-        <span class="bell-shake">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-          </svg>
-        </span>
-      </div>
-      <div class="notice-body">
-        <div class="notice-title">Thông Báo Hệ Thống</div>
-        <div class="notice-text">Mọi điểm được tính hợp lệ, số điểm đã được lưu vào data check ra gian lận điểm sẽ bị trừ điểm gian lận đó !</div>
+    <div class="notice-banner">
+      <span class="bell">🔔</span>
+      <div>
+        Điểm hợp lệ khi vượt link hoàn chỉnh. Hệ thống giới hạn <b>24 token/ngày/UID</b> và yêu cầu chờ <b>1 phút 30 giây</b> giữa các lần nhận điểm; hành vi spam hoặc gian lận sẽ bị trừ điểm/loại khỏi BXH.
       </div>
     </div>
 
-    <!-- Top 1 - 3 Podium -->
-    <section class="podium-wrap">
-      <!-- Rank 2 -->
-      <div class="podium-card rank-2">
-        <div class="medal-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2L15 8L21 9L16.5 14L17.5 20L12 17L6.5 20L7.5 14L3 9L9 8L12 2Z" fill="#cbd5e1" stroke="#f8fafc" stroke-width="1.2"/>
-          </svg>
+    <div class="card">
+      <div class="header-row">
+        <div class="title">◎ KHU VỰC LÀM NHIỆM VỤ</div>
+        <div class="sub-pill" id="resetLabel">Tối đa 24 token/ngày</div>
+      </div>
+
+      <div class="uid-label-row">
+        <span style="color: var(--muted);">Nhập ID Free Fire nhận điểm</span>
+        <button type="button" class="uid-change-btn" id="btnChangeUid">Bấm để đổi UID</button>
+      </div>
+
+      <div class="uid-box">
+        <input type="text" inputmode="numeric" id="uidInput" class="uid-input" placeholder="Ví dụ: 415388855" />
+        <button type="button" id="btnLockUid" class="btn-lock">🔒 Đã Khóa</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">Điểm của bạn</div>
+          <div class="stat-value" id="myPoints">0</div>
         </div>
-        <div class="rank-badge">HẠNG 2</div>
-        <div class="podium-uid" id="top2Uid">Chưa có</div>
-        <div class="podium-pts" id="top2Pts">0 điểm</div>
-        <span class="prize-pill">x2 Thẻ Tuần</span>
-      </div>
-
-      <!-- Rank 1 -->
-      <div class="podium-card rank-1">
-        <div class="medal-icon">
-          <svg width="38" height="38" viewBox="0 0 24 24" fill="none">
-            <path d="M3 17L5 7L9.5 11L12 5L14.5 11L19 7L21 17H3Z" fill="#fbbf24" stroke="#fef08a" stroke-width="1.3" stroke-linejoin="round"/>
-            <rect x="4" y="18.5" width="16" height="2.2" rx="1" fill="#f59e0b"/>
-          </svg>
+        <div class="stat-box">
+          <div class="stat-label">Thứ hạng BXH</div>
+          <div class="stat-value" id="myRank">Chưa xếp hạng</div>
         </div>
-        <div class="rank-badge">👑 HẠNG 1</div>
-        <div class="podium-uid" id="top1Uid">Chưa có</div>
-        <div class="podium-pts" id="top1Pts">0 điểm</div>
-        <span class="prize-pill">x3 Thẻ Tuần</span>
-      </div>
-
-      <!-- Rank 3 -->
-      <div class="podium-card rank-3">
-        <div class="medal-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2L15 8L21 9L16.5 14L17.5 20L12 17L6.5 20L7.5 14L3 9L9 8L12 2Z" fill="#fb923c" stroke="#fed7aa" stroke-width="1.2"/>
-          </svg>
-        </div>
-        <div class="rank-badge">HẠNG 3</div>
-        <div class="podium-uid" id="top3Uid">Chưa có</div>
-        <div class="podium-pts" id="top3Pts">0 điểm</div>
-        <span class="prize-pill">x1 Thẻ Tuần</span>
-      </div>
-    </section>
-
-    <!-- Top 4 - 10 Drawer -->
-    <button type="button" class="btn-top10" onclick="toggleTop10()">
-      <span>▾ Bảng xếp hạng Top 4 – Top 10</span>
-      <span class="sub-prize">50 KC / giải</span>
-    </button>
-    <div class="top10-drawer" id="top4To10Box"></div>
-
-    <!-- Mission Section -->
-    <div class="sec-head">
-      <div class="sec-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.4">
-          <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/>
-        </svg>
-        Khu Vực Làm Nhiệm Vụ
-      </div>
-      <span class="sec-reset-note">Reset lượt 00:00</span>
-    </div>
-
-    <!-- UID Panel -->
-    <div class="uid-panel">
-      <div class="uid-label">
-        <span>Nhập ID Free Fire nhận điểm</span>
-        <span id="uidHint" style="color:#93c5fd;font-size:0.74rem;">Bắt buộc khóa ID</span>
-      </div>
-      <div class="uid-row">
-        <input
-          type="text"
-          id="ffUidInput"
-          class="uid-field"
-          placeholder="Nhập UID (VD: 2230853045)"
-          inputmode="numeric"
-        />
-        <button type="button" id="lockUidBtn" class="btn-uid" onclick="toggleLockUid()">
-          🔓 Khóa ID
-        </button>
-      </div>
-
-      <!-- Quick Stats for Locked UID -->
-      <div class="player-stats" id="playerStatsBox">
-        <div class="stat-chip">
-          <div class="stat-k">Điểm của bạn</div>
-          <div class="stat-v gold" id="myPointsVal">0</div>
-        </div>
-        <div class="stat-chip">
-          <div class="stat-k">Thứ hạng BXH</div>
-          <div class="stat-v" id="myRankVal">—</div>
-        </div>
-        <div class="stat-chip">
-          <div class="stat-k">Lượt hôm nay</div>
-          <div class="stat-v green" id="myQuotaVal">0/24</div>
+        <div class="stat-box">
+          <div class="stat-label">Lượt hôm nay</div>
+          <div class="stat-value" id="myTurns">0/24</div>
         </div>
       </div>
     </div>
 
-    <!-- Mission Cards -->
-    <div class="mission-stack" id="missionsList"></div>
+    <div class="card">
+      <button type="button" class="lb-toggle" id="lbToggle">
+        <span>▾ Bảng xếp hạng Top 20</span>
+        <span id="lbCount">Đang tải...</span>
+      </button>
+      <div class="lb-list" id="lbList"></div>
+    </div>
+
+    <div class="mission-list" id="missionList"></div>
   </div>
 
-  <div class="toast" id="toastBox"></div>
+  <div class="toast" id="toast"></div>
 
   <script>
-    // Dán URL Web App Google Apps Script của bạn vào đây
-    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzuyqMI_vMMDILE3Scz4VSQfFx0PhuNUN0kRe16Njd0teMnMlxRhk-zh2V6Y_FMBnz2/exec';
+    // ============================================================
+    // ĐIỀN LINK WEB APP (/exec) CỦA GOOGLE APPS SCRIPT TẠI ĐÂY
+    // ============================================================
+    const GAS_WEB_APP_URL = 'DAN_LINK_WEB_APP_EXEC_CUA_BAN';
+    const STORAGE_UID_KEY = 'ff_task_locked_uid_v1';
+    const MAX_DAILY_UID_TOKENS = 24;
 
-        // Mốc đích: 31/12/2026 23:59:59 giờ Việt Nam (+07:00)
-    const EVENT_END_TIMESTAMP = new Date('2026-12-31T23:59:59+07:00').getTime();
-
-    const MISSIONS = [
-      { id: 'sitetop',    name: 'Nhiệm vụ Sitetop',                     tag: 'Sitetop',    points: 528,  maxDaily: 2 },
-      { id: 'link4m',     name: 'Nhiệm vụ Link4m',                      tag: 'Link4m',     points: 250,  maxDaily: 2 },
-      { id: 'gtraffic',   name: 'Nhiệm vụ Gtraffic',                    tag: 'Gtraffic',   points: 660,  maxDaily: 2 },
-      { id: 'trafficso1', name: 'Nhiệm vụ Trafficso1',                  tag: 'Trafficso1', points: 675,  maxDaily: 2 },
-      { id: 'lentop',     name: 'Nhiệm vụ Lentop',                      tag: 'Lentop',     points: 600,  maxDaily: 2 },
-      { id: 'azlink',     name: 'Nhiệm vụ Azlink',                      tag: 'Azlink',     points: 888,  maxDaily: 2 },
-      { id: 'trafficvn',  name: 'Nhiệm vụ Trafficvn',                   tag: 'Trafficvn',  points: 400,  maxDaily: 3 },
-      { id: 'traffictop', name: 'Nhiệm vụ TrafficTop',                  tag: 'TrafficTop', points: 636,  maxDaily: 1 },
-      { id: 'bbmtks',     name: 'Nhiệm vụ Bbmtks',                      tag: 'Bbmtks',     points: 767,  maxDaily: 1 },
-      { id: 'traffic24h', name: 'Nhiệm vụ Traffic24h',                  tag: 'Traffic24h', points: 760,  maxDaily: 1 },
-      { id: 'phienchoso', name: 'Nhiệm vụ Phienchoso (Sớm thì còn NV)', tag: 'Phienchoso', points: 3500, maxDaily: 1 },
-      { id: 'traffic2k',  name: 'Nhiệm vụ 2ktraffic',                   tag: '2ktraffic',  points: 1250, maxDaily: 4 },
-      { id: 'alolink',    name: 'Nhiệm vụ Alolink',                     tag: 'Alolink',    points: 100,  maxDaily: 1 }
+    const MISSIONS_UI = [
+      { id: 'link4m',            name: 'Nhiệm vụ Link4m',              badge: 'Link4m',            points: 990,  maxDaily: 2 },
+      { id: 'gtraffic',          name: 'Nhiệm vụ Gtraffic',            badge: 'Gtraffic',          points: 660,  maxDaily: 2 },
+      { id: 'trafficso1',        name: 'Nhiệm vụ TrafficSo1',          badge: 'TrafficSo1',        points: 660,  maxDaily: 2 },
+      { id: 'azlink',            name: 'Nhiệm vụ Azlink',              badge: 'Azlink',            points: 1000, maxDaily: 2 },
+      { id: 'traffictop',        name: 'Nhiệm vụ TrafficTop',          badge: 'TrafficTop',        points: 350,  maxDaily: 2 },
+      { id: '2ktraffic',         name: 'Nhiệm vụ 2ktraffic',           badge: '2ktraffic',         points: 605,  maxDaily: 4 },
+      { id: 'lentop',            name: 'Nhiệm vụ Lentop',              badge: 'Lentop',            points: 400,  maxDaily: 2 },
+      { id: 'phienchoso_tukhoa', name: 'Nhiệm vụ Phienchoso (Từ khóa)', badge: 'Phienchoso Từ khóa', points: 500,  maxDaily: 1 },
+      { id: 'phienchoso_review', name: 'Nhiệm vụ Phienchoso (Review)', badge: 'Phienchoso Review', points: 3000, maxDaily: 1 },
+      { id: 'taskdaily',         name: 'Nhiệm vụ Taskdaily',           badge: 'Taskdaily',         points: 450,  maxDaily: 3 }
     ];
 
-    let lockedUid = localStorage.getItem('ff_locked_uid') || '';
-    let dailyUsage = {};
+    let isUidLocked = true;
     let cachedLeaderboard = [];
-    let toastTimer = null;
+    let cachedUsage = {};
+    let totalDoneToday = 0;
 
-    function pad2(n) {
-      return String(Math.max(0, Math.floor(n))).padStart(2, '0');
+    const uidInput = document.getElementById('uidInput');
+    const btnLockUid = document.getElementById('btnLockUid');
+    const btnChangeUid = document.getElementById('btnChangeUid');
+    const myPointsEl = document.getElementById('myPoints');
+    const myRankEl = document.getElementById('myRank');
+    const myTurnsEl = document.getElementById('myTurns');
+    const missionListEl = document.getElementById('missionList');
+    const lbToggleEl = document.getElementById('lbToggle');
+    const lbListEl = document.getElementById('lbList');
+    const lbCountEl = document.getElementById('lbCount');
+    const toastEl = document.getElementById('toast');
+
+    function showToast(msg, type) {
+      toastEl.textContent = msg;
+      toastEl.className = 'toast show' + (type ? ' ' + type : '');
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => {
+        toastEl.className = 'toast';
+      }, 3600);
     }
 
-    function updateCountdown() {
-      const diff = Math.max(0, EVENT_END_TIMESTAMP - Date.now());
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / (1000 * 60)) % 60);
-      const secs = Math.floor((diff / 1000) % 60);
-
-      document.getElementById('cdDays').textContent = String(days).padStart(2, '0');
-      document.getElementById('cdHours').textContent = pad2(hours);
-      document.getElementById('cdMins').textContent = pad2(mins);
-      document.getElementById('cdSecs').textContent = pad2(secs);
+    function cleanUid(val) {
+      return String(val || '').replace(/\D+/g, '').trim();
     }
 
-    function showToast(msg, type = '') {
-      const el = document.getElementById('toastBox');
-      if (!el) return;
-      el.textContent = msg;
-      el.className = 'toast show' + (type ? ' ' + type : '');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        el.classList.remove('show');
-      }, 3400);
-    }
-
-    function formatNumber(n) {
-      return Number(n || 0).toLocaleString('vi-VN');
-    }
-
-    function updatePlayerStats() {
-      const box = document.getElementById('playerStatsBox');
-      if (!lockedUid) {
-        box.classList.remove('show');
-        return;
-      }
-      box.classList.add('show');
-
-      let totalDone = 0;
-      let totalMax = 0;
-      MISSIONS.forEach(m => {
-        const done = (dailyUsage[m.id] && Number(dailyUsage[m.id].done)) || 0;
-        totalDone += Math.min(done, m.maxDaily);
-        totalMax += m.maxDaily;
-      });
-      document.getElementById('myQuotaVal').textContent = `${totalDone}/${totalMax}`;
-
-      const idx = cachedLeaderboard.findIndex(item => String(item.uid) === String(lockedUid));
-      if (idx !== -1) {
-        document.getElementById('myPointsVal').textContent = formatNumber(cachedLeaderboard[idx].points);
-        document.getElementById('myRankVal').textContent = `#${idx + 1}`;
+    function setUidLockState(locked) {
+      isUidLocked = Boolean(locked);
+      uidInput.readOnly = isUidLocked;
+      if (isUidLocked) {
+        btnLockUid.textContent = '🔒 Đã Khóa';
+        btnLockUid.classList.remove('unlocked');
       } else {
-        document.getElementById('myPointsVal').textContent = '0';
-        document.getElementById('myRankVal').textContent = 'Chưa xếp hạng';
+        btnLockUid.textContent = '🔓 Lưu & Khóa';
+        btnLockUid.classList.add('unlocked');
+        uidInput.focus();
       }
-    }
-
-    function syncUidUI() {
-      const input = document.getElementById('ffUidInput');
-      const btn = document.getElementById('lockUidBtn');
-      const hint = document.getElementById('uidHint');
-
-      if (lockedUid) {
-        input.value = lockedUid;
-        input.disabled = true;
-        btn.textContent = '🔒 Đã Khóa';
-        btn.classList.add('locked');
-        hint.textContent = 'Bấm để đổi UID';
-        hint.style.color = '#6ee7b7';
-      } else {
-        input.value = '';
-        input.disabled = false;
-        btn.textContent = '🔓 Khóa ID';
-        btn.classList.remove('locked');
-        hint.textContent = 'Bắt buộc khóa ID';
-        hint.style.color = '#93c5fd';
-      }
-      updatePlayerStats();
-    }
-
-    function toggleLockUid() {
-      const input = document.getElementById('ffUidInput');
-      if (lockedUid) {
-        lockedUid = '';
-        localStorage.removeItem('ff_locked_uid');
-        dailyUsage = {};
-        syncUidUI();
-        renderMissions();
-        showToast('Đã mở khóa ID, bạn có thể nhập UID mới.');
-        return;
-      }
-
-      const clean = String(input.value || '').replace(/\D/g, '').trim();
-      if (!clean || clean.length < 5) {
-        showToast('Vui lòng nhập ID Free Fire hợp lệ (tối thiểu 5 số)!', 'err');
-        return;
-      }
-
-      lockedUid = clean;
-      localStorage.setItem('ff_locked_uid', lockedUid);
-      syncUidUI();
-      fetchDailyStatus();
-      showToast(`Đã khóa cố định UID: ${lockedUid}`, 'ok');
-    }
-
-    function toggleTop10() {
-      document.getElementById('top4To10Box').classList.toggle('open');
     }
 
     function renderMissions() {
-      const container = document.getElementById('missionsList');
-      if (!container) return;
-
-      container.innerHTML = MISSIONS.map((g, idx) => {
-        const u = (dailyUsage && dailyUsage[g.id]) ? dailyUsage[g.id] : { done: 0, maxDaily: g.maxDaily };
-        const done = Math.min(Math.max(Number(u.done || 0), 0), g.maxDaily);
-        const pct = Math.round((done / g.maxDaily) * 100);
-        const isDoneAll = done >= g.maxDaily;
+      const uidLimitReached = totalDoneToday >= MAX_DAILY_UID_TOKENS;
+      missionListEl.innerHTML = MISSIONS_UI.map((m, idx) => {
+        const u = cachedUsage[m.id] || { done: 0, maxDaily: m.maxDaily };
+        const done = Number(u.done || 0);
+        const maxD = Number(u.maxDaily || m.maxDaily);
+        const isDone = done >= maxD || uidLimitReached;
 
         return `
-          <div class="m-card ${isDoneAll ? 'done' : ''}">
-            <div class="m-left">
-              <div class="m-top">
-                <span class="m-num">${idx + 1}</span>
-                <span class="m-name">${g.name}</span>
-              </div>
-              <div class="m-tags">
-                <span class="tag-gate">${g.tag}</span>
-                <span class="tag-quota">Lượt ${done}/${g.maxDaily}</span>
-                <span class="tag-pts">+${formatNumber(g.points)} điểm</span>
-              </div>
-              <div class="m-bar-bg">
-                <div class="m-bar-fill" style="width:${pct}%"></div>
+          <div class="mission-card">
+            <div class="mission-left">
+              <div class="mission-name">${idx + 1}. ${m.name}</div>
+              <div class="mission-meta">
+                <span class="badge">${m.badge}</span>
+                <span class="turn-pill">Lượt ${done}/${maxD}</span>
+                <span class="pts-text">+${m.points.toLocaleString('vi-VN')} điểm</span>
               </div>
             </div>
-            <button
-              type="button"
-              id="btn_${g.id}"
-              class="btn-go"
-              ${isDoneAll ? 'disabled' : `onclick="startMission('${g.id}')"`}
-            >
-              ${isDoneAll ? '✓ Hết Lượt' : 'Làm Ngay →'}
+            <button type="button" class="btn-do" data-group="${m.id}" ${isDone ? 'disabled' : ''}>
+              ${isDone ? (uidLimitReached ? 'Đủ 24/ngày' : 'Hết Lượt') : 'Làm Ngay →'}
             </button>
           </div>
         `;
       }).join('');
 
-      updatePlayerStats();
+      missionListEl.querySelectorAll('.btn-do:not(:disabled)').forEach((btn) => {
+        btn.addEventListener('click', () => onStartMission(btn.getAttribute('data-group'), btn));
+      });
     }
 
-    async function startMission(groupId) {
-      if (!lockedUid) {
-        showToast('Vui lòng nhập và khóa ID Free Fire trước!', 'err');
-        document.getElementById('ffUidInput').focus();
+    function updatePlayerStats() {
+      const uid = cleanUid(uidInput.value);
+      myTurnsEl.textContent = `${totalDoneToday}/${MAX_DAILY_UID_TOKENS}`;
+
+      if (!uid) {
+        myPointsEl.textContent = '0';
+        myRankEl.textContent = 'Chưa xếp hạng';
         return;
       }
 
-      const btn = document.getElementById(`btn_${groupId}`);
-      const oldText = btn ? btn.textContent : '';
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = 'Đang tạo...';
-      }
-
-      try {
-        const url = `${GAS_WEB_APP_URL}?action=create_task&uid=${encodeURIComponent(lockedUid)}&groupId=${encodeURIComponent(groupId)}`;
-        const res = await fetch(url);
-        const data = await res.json();
-
-        if (!data.ok || !data.shortUrl) {
-          showToast(data.error || 'Không tạo được link nhiệm vụ!', 'err');
-          if (btn) {
-            btn.disabled = false;
-            btn.textContent = oldText;
-          }
-          return;
-        }
-
-        window.location.href = data.shortUrl;
-      } catch (err) {
-        showToast('Lỗi kết nối máy chủ khi tạo nhiệm vụ!', 'err');
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = oldText;
-        }
+      const idx = cachedLeaderboard.findIndex((item) => cleanUid(item.uid) === uid);
+      if (idx !== -1) {
+        myPointsEl.textContent = Number(cachedLeaderboard[idx].points || 0).toLocaleString('vi-VN');
+        myRankEl.textContent = `#${idx + 1}`;
+      } else {
+        myPointsEl.textContent = '0';
+        myRankEl.textContent = 'Chưa xếp hạng';
       }
     }
 
-    async function checkAndClaimTokenOnLoad() {
-      const currentUrl = new URL(window.location.href);
-      const token = currentUrl.searchParams.get('token');
+    function renderLeaderboard() {
+      lbCountEl.textContent = `${cachedLeaderboard.length} người chơi`;
+      if (!cachedLeaderboard.length) {
+        lbListEl.innerHTML = '<div class="lb-item"><span>Chưa có dữ liệu xếp hạng</span><span>0 điểm</span></div>';
+        return;
+      }
+      lbListEl.innerHTML = cachedLeaderboard.map((row, idx) => `
+        <div class="lb-item">
+          <span><b>#${idx + 1}</b> — UID: ${row.uid}</span>
+          <span style="color:#34d399;font-weight:700;">${Number(row.points || 0).toLocaleString('vi-VN')} điểm</span>
+        </div>
+      `).join('');
+    }
+
+    async function fetchDailyStatus() {
+      const uid = cleanUid(uidInput.value);
+      if (!uid || !GAS_WEB_APP_URL || GAS_WEB_APP_URL.indexOf('http') !== 0) {
+        cachedUsage = {};
+        totalDoneToday = 0;
+        updatePlayerStats();
+        renderMissions();
+        return;
+      }
+
+      try {
+        const res = await fetch(`${GAS_WEB_APP_URL}?action=daily_status&uid=${encodeURIComponent(uid)}`);
+        const data = await res.json();
+        if (data && data.ok) {
+          cachedUsage = data.usage || {};
+          totalDoneToday = Number(data.totalDoneToday || 0);
+        }
+      } catch (e) {
+        // Giữ trạng thái hiện tại nếu lỗi mạng tạm thời
+      }
+      updatePlayerStats();
+      renderMissions();
+    }
+
+    async function fetchLeaderboard() {
+      if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL.indexOf('http') !== 0) {
+        renderLeaderboard();
+        return;
+      }
+
+      try {
+        const res = await fetch(`${GAS_WEB_APP_URL}?action=leaderboard`);
+        const data = await res.json();
+        if (data && data.ok && Array.isArray(data.leaderboard)) {
+          cachedLeaderboard = data.leaderboard;
+        }
+      } catch (e) {
+        // Bỏ qua lỗi mạng tạm thời
+      }
+      renderLeaderboard();
+      updatePlayerStats();
+    }
+
+    async function onStartMission(groupId, btnEl) {
+      const uid = cleanUid(uidInput.value);
+      if (!uid) {
+        showToast('Vui lòng nhập UID Free Fire trước khi làm nhiệm vụ', 'error');
+        setUidLockState(false);
+        return;
+      }
+
+      if (totalDoneToday >= MAX_DAILY_UID_TOKENS) {
+        showToast('UID này đã đạt giới hạn tối đa 24 token/ngày', 'error');
+        return;
+      }
+
+      if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL.indexOf('http') !== 0) {
+        showToast('Chưa cấu hình GAS_WEB_APP_URL trong index.html', 'error');
+        return;
+      }
+
+      const oldText = btnEl.textContent;
+      btnEl.disabled = true;
+      btnEl.textContent = 'Đang tạo link...';
+
+      try {
+        const res = await fetch(`${GAS_WEB_APP_URL}?action=create_task&uid=${encodeURIComponent(uid)}&group=${encodeURIComponent(groupId)}`);
+        const data = await res.json();
+
+        if (!data || !data.ok || !data.url) {
+          showToast((data && data.error) || 'Không thể tạo link nhiệm vụ', 'error');
+          btnEl.disabled = false;
+          btnEl.textContent = oldText;
+          return;
+        }
+
+        window.location.href = data.url;
+      } catch (err) {
+        showToast('Lỗi kết nối tới máy chủ tạo nhiệm vụ', 'error');
+        btnEl.disabled = false;
+        btnEl.textContent = oldText;
+      }
+    }
+
+    async function handleClaimTokenFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const token = (params.get('claim_token') || '').trim();
       if (!token) return;
 
-      currentUrl.searchParams.delete('token');
-      window.history.replaceState({}, document.title, currentUrl.toString());
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
 
+      if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL.indexOf('http') !== 0) {
+        showToast('Chưa cấu hình GAS_WEB_APP_URL để nhận điểm', 'error');
+        return;
+      }
+
+      showToast('Đang xác nhận token và cộng điểm...', '');
       try {
         const res = await fetch(`${GAS_WEB_APP_URL}?action=claim_token&token=${encodeURIComponent(token)}`);
         const data = await res.json();
 
-        if (data.ok) {
+        if (data && data.ok) {
           if (data.uid) {
-            lockedUid = String(data.uid).replace(/\D/g, '').trim();
-            localStorage.setItem('ff_locked_uid', lockedUid);
-            syncUidUI();
+            uidInput.value = cleanUid(data.uid);
+            localStorage.setItem(STORAGE_UID_KEY, uidInput.value);
           }
-          showToast(`🎉 Cộng thành công +${formatNumber(data.addedPoints)} điểm!`, 'ok');
+          showToast(`+${Number(data.addedPoints || 0).toLocaleString('vi-VN')} điểm! Tổng điểm: ${Number(data.totalPoints || 0).toLocaleString('vi-VN')}`, 'success');
+          await Promise.all([fetchDailyStatus(), fetchLeaderboard()]);
         } else {
-          showToast(data.error || 'Token không hợp lệ hoặc đã dùng!', 'err');
+          showToast((data && data.error) || 'Token không hợp lệ hoặc bị chặn', 'error');
         }
       } catch (err) {
-        showToast('Lỗi khi xác nhận điểm từ token!', 'err');
+        showToast('Lỗi kết nối khi nhận điểm token', 'error');
       }
-          }
-
-        async function fetchDailyStatus() {
-      if (!lockedUid) {
-        dailyUsage = {};
-        renderMissions();
-        return;
-      }
-      try {
-        const res = await fetch(`${GAS_WEB_APP_URL}?action=daily_status&uid=${encodeURIComponent(lockedUid)}`);
-        const data = await res.json();
-        if (data.ok && data.usage) dailyUsage = data.usage;
-      } catch (_) {}
-      renderMissions();
     }
 
-    async function loadLeaderboard() {
-      try {
-        const res = await fetch(`${GAS_WEB_APP_URL}?action=leaderboard`);
-        const data = await res.json();
-        if (!data.ok || !Array.isArray(data.leaderboard)) return;
+    btnLockUid.addEventListener('click', async () => {
+      if (!isUidLocked) {
+        const cleaned = cleanUid(uidInput.value);
+        if (!cleaned) {
+          showToast('Vui lòng nhập UID hợp lệ', 'error');
+          return;
+        }
+        uidInput.value = cleaned;
+        localStorage.setItem(STORAGE_UID_KEY, cleaned);
+        setUidLockState(true);
+        await Promise.all([fetchDailyStatus(), fetchLeaderboard()]);
+      } else {
+        setUidLockState(false);
+      }
+    });
 
-        cachedLeaderboard = data.leaderboard;
-        const setSlot = (idx, uidId, ptsId) => {
-          const item = cachedLeaderboard[idx];
-          document.getElementById(uidId).textContent = item ? item.uid : 'Chưa có';
-          document.getElementById(ptsId).textContent = `${formatNumber(item ? item.points : 0)} điểm`;
-        };
+    btnChangeUid.addEventListener('click', () => {
+      setUidLockState(false);
+    });
 
-        setSlot(0, 'top1Uid', 'top1Pts');
-        setSlot(1, 'top2Uid', 'top2Pts');
-        setSlot(2, 'top3Uid', 'top3Pts');
-
-        const box4_10 = document.getElementById('top4To10Box');
-        const sub = cachedLeaderboard.slice(3, 10);
-        box4_10.innerHTML = !sub.length
-          ? '<div class="top10-item"><span style="color:#94a3b8;">Chưa có dữ liệu Top 4 – Top 10</span><span class="top10-reward">50 KC</span></div>'
-          : sub.map((item, i) => `
-              <div class="top10-item">
-                <span><span class="top10-rank">#${i + 4}</span>${item.uid}</span>
-                <span>
-                  <strong style="color:#60a5fa;font-family:'Chakra Petch',sans-serif;">${formatNumber(item.points)} điểm</strong>
-                  <span class="top10-reward">50 KC</span>
-                </span>
-              </div>
-            `).join('');
-
-        updatePlayerStats();
-      } catch (_) {}
-    }
+    lbToggleEl.addEventListener('click', () => {
+      lbListEl.classList.toggle('open');
+    });
 
     (async function init() {
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-      syncUidUI();
-      renderMissions();
-      await checkAndClaimTokenOnLoad();
-      await Promise.all([fetchDailyStatus(), loadLeaderboard()]);
+      const savedUid = cleanUid(localStorage.getItem(STORAGE_UID_KEY) || '');
+      if (savedUid) {
+        uidInput.value = savedUid;
+        setUidLockState(true);
+      } else {
+        setUidLockState(false);
+                }
+
+           renderMissions();
+      await Promise.all([fetchLeaderboard(), fetchDailyStatus()]);
+      await handleClaimTokenFromUrl();
     })();
   </script>
 </body>
